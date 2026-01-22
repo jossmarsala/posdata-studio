@@ -1,21 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
-
-:root {
-    --color-bg: #FAFAF5; /* Cream */
-    --color-text: #2C2C2C;
-    --color-primary: #6B7F6E; /* Muted Green */
-    --color-secondary: #8C7B70; /* Earthy Brown */
-    --color-accent: #D8D8D0; /* Light Beige */
-    --color-white: #FFFFFF;
-    
-    --font-serif: 'Playfair Display', serif;
-    --font-sans: 'Lato', sans-serif;
-    
-    --spacing-sm: 1rem;
-    --spacing-md: 2rem;
-    --spacing-lg: 4rem;
-    --spacing-xl: 8rem;
-}
+@import url('variables.css');
 
 * {
     margin: 0;
@@ -46,7 +29,12 @@ body::before {
     opacity: 0.4;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: var(--font-serif);
     font-weight: 400;
     line-height: 1.2;
@@ -115,7 +103,7 @@ header {
 
 header.scrolled {
     padding: var(--spacing-sm) 0;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 nav {
@@ -197,7 +185,8 @@ nav {
     aspect-ratio: 3/4;
     object-fit: cover;
     margin-bottom: var(--spacing-sm);
-    border-radius: 4px; /* Soft corner */
+    border-radius: 4px;
+    /* Soft corner */
     filter: grayscale(20%);
     transition: filter 0.3s ease;
 }
@@ -264,7 +253,7 @@ footer {
 
 footer a {
     color: var(--color-white);
-    border-bottom: 1px solid rgba(255,255,255,0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 footer a:hover {
@@ -276,8 +265,9 @@ footer a:hover {
     .hero-content h1 {
         font-size: 2.5rem;
     }
-    
+
     .nav-links {
-        display: none; /* Simple hide for now, could add hamburger */
+        display: none;
+        /* Simple hide for now, could add hamburger */
     }
 }

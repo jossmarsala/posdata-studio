@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Posdata | Diseño Web</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Posdata Studio | Diseño Web</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 
 <body>
@@ -13,7 +13,7 @@
     <header>
         <div class="container">
             <nav>
-                <a href="#" class="logo">Posdata</a>
+                <a href="#" class="logo">Posdata Studio</a>
                 <ul class="nav-links">
                     <li><a href="#about">Nosotras</a></li>
                     <li><a href="#services">Servicios</a></li>
@@ -38,17 +38,20 @@
                 <h2 class="section-title fade-in-up">Quiénes Somos</h2>
                 <div class="team-grid">
                     <div class="team-member fade-in-up">
-                        <img src="assets/member1.png" alt="Graciana" class="member-photo">
+                        <img src="{{ url_for('static', filename='assets/images/member1.png') }}" alt="Graciana"
+                            class="member-photo">
                         <h3 class="member-name">Graciana</h3>
                         <p class="member-role">Dirección de Arte</p>
                     </div>
                     <div class="team-member fade-in-up" style="transition-delay: 0.2s;">
-                        <img src="assets/member2.png" alt="Josefina" class="member-photo">
+                        <img src="{{ url_for('static', filename='assets/images/member2.png') }}" alt="Josefina"
+                            class="member-photo">
                         <h3 class="member-name">Josefina</h3>
                         <p class="member-role">Desarrollo Web</p>
                     </div>
                     <div class="team-member fade-in-up" style="transition-delay: 0.4s;">
-                        <img src="assets/member3.png" alt="Sofía" class="member-photo">
+                        <img src="{{ url_for('static', filename='assets/images/member3.png') }}" alt="Sofía"
+                            class="member-photo">
                         <h3 class="member-name">Sofía</h3>
                         <p class="member-role">Estrategia & Copy</p>
                     </div>
@@ -88,11 +91,15 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Posdata. Hecho con cariño.</p>
+            <p>&copy; 2025 Posdata Studio. Hecho con cariño.</p>
         </div>
     </footer>
 
-    <script src="main.js"></script>
+    <script src="{{ url_for('static', filename='js/vendors/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/vendors/gsap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/contact.js') }}"></script>
 </body>
 
 </html>

@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --color-bg: #FAFAF5;
+    /* Cream */
+    --color-text: #2C2C2C;
+    --color-primary: #6B7F6E;
+    /* Muted Green */
+    --color-secondary: #8C7B70;
+    /* Earthy Brown */
+    --color-accent: #D8D8D0;
+    /* Light Beige */
+    --color-white: #FFFFFF;
+
+    --font-serif: 'Instrument Serif', serif;
+    --font-sans: 'Raleway', sans-serif;
+
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+    --spacing-xl: 8rem;
+}
