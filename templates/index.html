@@ -24,14 +24,58 @@
     </header>
 
     <main>
-        <section class="hero">
-            <div class="container hero-content fade-in-up">
-                <h1>Diseño web con <br><span>alma y propósito</span></h1>
-                <p>Creamos espacios digitales que cuentan historias. Un estudio creativo formado por mujeres, para
-                    marcas que buscan conectar.</p>
-                <a href="#contact" class="btn">Empecemos</a>
+        <div class="zoom-wrapper">
+            <div class="zoom-content">
+                <section class="hero">
+                    <div class="hero-wrapper">
+                        <div class="hero-header">
+                            <h1 class="hero-title">Posdata Studio</h1>
+                        </div>
+
+                        <div class="hero-main-content">
+                            <div class="hero-visual">
+                                <div class="image-stack">
+                                    <img src="{{ url_for('static', filename='assets/images/mountains-polaroid.webp') }}"
+                                        class="stack-img img-1" alt="Landscape 1">
+                                    <img src="{{ url_for('static', filename='assets/images/flowers-polaroid.webp') }}"
+                                        class="stack-img img-2" alt="Landscape 2">
+                                    <img src="{{ url_for('static', filename='assets/images/bouquette-polaroid.webp') }}"
+                                        class="stack-img img-3" alt="Landscape 3">
+                                </div>
+                            </div>
+
+                            <div class="hero-content-right">
+                                <img src="{{ url_for('static', filename='assets/images/resources/pd_text.png') }}"
+                                    class="pd-text-img" alt="P.D:">
+                                <p class="hero-description">
+                                    POSDATA es un estudio de diseño y desarrollo web. Seguimos cada proyecto desde
+                                    la idea
+                                    inicial hasta su publicación, integrando diseño, código y puesta online — todo
+                                    en un mismo
+                                    proceso. Acompañamos a marcas y proyectos que valoran la claridad, construyendo
+                                    sitios
+                                    claros y bien pensados.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="hero-footer-strip">
+                            <img src="{{ url_for('static', filename='assets/images/resources/edition.png') }}"
+                                class="footer-edition" alt="Edition 01">
+                            <span class="copyright">© 2026 POSDATA</span>
+                            <img src="{{ url_for('static', filename='assets/images/resources/initials.png') }}"
+                                class="footer-initials" alt="- J., G., & S.">
+                        </div>
+                    </div>
+                </section>
             </div>
-        </section>
+            <div class="zoom-image-container">
+                <img src="{{ url_for('static', filename='assets/images/texture-zoomin.png') }}" class="zoom-texture"
+                    alt="Texture Background">
+                <img src="{{ url_for('static', filename='assets/images/postcards-zoomin.png') }}" class="zoom-postcards"
+                    alt="Postcards Frame">
+            </div>
+        </div>
 
         <section id="about" class="about">
             <div class="container">
@@ -87,19 +131,19 @@
                 <a href="mailto:hola@studiotres.com" class="btn">hola@studiotres.com</a>
             </div>
         </section>
-    </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Posdata Studio. Hecho con cariño.</p>
-        </div>
-    </footer>
+        <footer>
+            <div class="container">
+                <p>&copy; 2025 Posdata Studio. Hecho con cariño.</p>
+            </div>
+        </footer>
 
-    <script src="{{ url_for('static', filename='js/vendors/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/vendors/gsap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/contact.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/vendors/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/vendors/gsap.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/vendors/ScrollTrigger.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/contact.js') }}"></script>
 </body>
 
 </html>
