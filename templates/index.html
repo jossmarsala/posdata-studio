@@ -34,18 +34,35 @@
 
                         <div class="hero-main-content">
                             <div class="hero-visual">
-                                <div class="image-stack">
-                                    <img src="{{ url_for('static', filename='assets/images/mountains-polaroid.webp') }}"
-                                        class="stack-img img-1" alt="Landscape 1">
-                                    <img src="{{ url_for('static', filename='assets/images/flowers-polaroid.webp') }}"
-                                        class="stack-img img-2" alt="Landscape 2">
-                                    <img src="{{ url_for('static', filename='assets/images/bouquette-polaroid.webp') }}"
-                                        class="stack-img img-3" alt="Landscape 3">
+                                <div class="image-container" id="imageContainer">
+                                    <div class="background-stack">
+                                        <div class="bg-card"><img
+                                                src="{{ url_for('static', filename='assets/images/mountains-polaroid.webp') }}"
+                                                alt="Landscape 1"></div>
+                                        <div class="bg-card"><img
+                                                src="{{ url_for('static', filename='assets/images/flowers-polaroid.webp') }}"
+                                                alt="Landscape 2"></div>
+                                        <div class="bg-card"><img
+                                                src="{{ url_for('static', filename='assets/images/bouquette-polaroid.webp') }}"
+                                                alt="Landscape 3"></div>
+                                    </div>
+
+                                    <div class="foreground-stack">
+                                        <div class="fg-card active"><img
+                                                src="{{ url_for('static', filename='assets/images/mountains-polaroid.webp') }}"
+                                                alt="Landscape 1"></div>
+                                        <div class="fg-card"><img
+                                                src="{{ url_for('static', filename='assets/images/flowers-polaroid.webp') }}"
+                                                alt="Landscape 2"></div>
+                                        <div class="fg-card"><img
+                                                src="{{ url_for('static', filename='assets/images/bouquette-polaroid.webp') }}"
+                                                alt="Landscape 3"></div>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="hero-content-right">
-                                <img src="{{ url_for('static', filename='assets/images/resources/pd_text.png') }}"
+                                <img src="{{ url_for('static', filename='assets/images/resources/postcript.svg') }}"
                                     class="pd-text-img" alt="P.D:">
                                 <p class="hero-description">
                                     POSDATA es un estudio de diseño y desarrollo web. Seguimos cada proyecto desde
@@ -60,11 +77,11 @@
                         </div>
 
                         <div class="hero-footer-strip">
-                            <img src="{{ url_for('static', filename='assets/images/resources/edition.png') }}"
+                            <img src="{{ url_for('static', filename='assets/images/resources/edition-01.svg') }}"
                                 class="footer-edition" alt="Edition 01">
                             <span class="copyright">© 2026 POSDATA</span>
-                            <img src="{{ url_for('static', filename='assets/images/resources/initials.png') }}"
-                                class="footer-initials" alt="- J., G., & S.">
+                            <img src="{{ url_for('static', filename='assets/images/resources/signature.svg') }}"
+                                class="footer-signature" alt="Signature with initials J and G">
                         </div>
                     </div>
                 </section>
@@ -72,8 +89,8 @@
             <div class="zoom-image-container">
                 <img src="{{ url_for('static', filename='assets/images/texture-zoomin.png') }}" class="zoom-texture"
                     alt="Texture Background">
-                <img src="{{ url_for('static', filename='assets/images/postcards-zoomin.png') }}" class="zoom-postcards"
-                    alt="Postcards Frame">
+                <img src="{{ url_for('static', filename='assets/images/postcards-zoomin.webp') }}"
+                    class="zoom-postcards" alt="Postcards Frame">
             </div>
         </div>
 

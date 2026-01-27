@@ -35,34 +35,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Image Stack Cycling with Fade
-    const stackImages = document.querySelectorAll('.stack-img');
-    if (stackImages.length >= 3) {
-        setInterval(() => {
-            const top = document.querySelector('.stack-img.img-1');
-            const mid = document.querySelector('.stack-img.img-2');
-            const bot = document.querySelector('.stack-img.img-3');
+    // New Image Stack Animation (Rotation + Sequence)
+    const container = document.getElementById("imageContainer");
+    if (container) {
+        const bgCards = container.querySelectorAll(".bg-card");
+        const fgCards = container.querySelectorAll(".fg-card");
+        let index = 0;
+        let interval;
+        const timelines = [];
 
-            if (top && mid && bot) {
-                // 1. Fade out the top image
-                top.classList.add('fading-out');
+        // Background rotation - Random start rotation to look more natural
+        bgCards.forEach(card => {
+            // Set initial random rotation so they aren't all aligned
+            gsap.set(card, { rotation: Math.random() * 360 });
 
-                // 2. After fade is complete (500ms), rotate the stack
-                setTimeout(() => {
-                    // Move Top to Bottom (and reset fade)
-                    top.classList.remove('img-1');
-                    top.classList.add('img-3');
-                    top.classList.remove('fading-out'); // Visible again at bottom
+            const tl = gsap.timeline({ repeat: -1 });
+            tl.to(card, {
+                rotate: "+=360",
+                duration: 20 + Math.random() * 10, // Slower rotation for elegance
+                ease: "none"
+            });
+            timelines.push(tl);
+        });
 
-                    // Move Mid to Top
-                    mid.classList.remove('img-2');
-                    mid.classList.add('img-1');
-
-                    // Move Bot to Mid
-                    bot.classList.remove('img-3');
-                    bot.classList.add('img-2');
-                }, 500); // Sync with CSS opacity transition (0.5s)
+        // Foreground sequence
+        function nextImage() {
+            // Ensure elements exist before trying to access classList
+            if (fgCards.length > 0) {
+                fgCards[index].classList.remove("active");
+                index = (index + 1) % fgCards.length;
+                fgCards[index].classList.add("active");
             }
-        }, 3000); // 3 seconds per slide
+        }
+
+        function start() {
+            interval = setInterval(nextImage, 1500); // Slower interval (1.5s) for better viewing
+        }
+
+        function pause() {
+            timelines.forEach(tl => tl.pause());
+            clearInterval(interval);
+        }
+
+        function resume() {
+            timelines.forEach(tl => tl.play());
+            start();
+        }
+
+        container.addEventListener("mouseenter", pause);
+        container.addEventListener("mouseleave", resume);
+
+        start();
     }
 
 
@@ -103,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ScrollTrigger.create({
             trigger: ".zoom-wrapper",
             start: "top top",
-            end: "+=150%", // Must match the pinning distance
+            end: "+=100%", // Must match the pinning distance
             onLeave: () => header.classList.add('header-visible'), // Show when passed
             onEnterBack: () => header.classList.remove('header-visible'), // Hide when returning
             onUpdate: (self) => {
