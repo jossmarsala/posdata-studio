@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const tl = gsap.timeline({ repeat: -1 });
             tl.to(card, {
                 rotate: "+=360",
-                duration: 20 + Math.random() * 10, // Slower rotation for elegance
+                duration: 20 + Math.random() * 5, // Slower rotation for elegance
                 ease: "none"
             });
             timelines.push(tl);
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function start() {
-            interval = setInterval(nextImage, 1500); // Slower interval (1.5s) for better viewing
+            interval = setInterval(nextImage, 1800); // Slower interval (1.5s) for better viewing
         }
 
         function pause() {
@@ -86,6 +86,33 @@ document.addEventListener('DOMContentLoaded', () => {
         container.addEventListener("mouseleave", resume);
 
         start();
+
+        // 3D Tilt Effect for Foreground Cards
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left; // x position within the element
+            const y = e.clientY - rect.top;  // y position within the element
+
+            // Calculate center of the element
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            // Calculate rotation based on cursor position relative to element center
+            // Adjust divisor (20) to control sensitivity/intensity
+            const rotateX = (centerY - y) / 10;
+            const rotateY = (x - centerX) / 10;
+
+            fgCards.forEach(card => {
+                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+        });
+
+        // Reset on mouse leave
+        container.addEventListener('mouseleave', () => {
+            fgCards.forEach(card => {
+                card.style.transform = `rotateX(0deg) rotateY(0deg)`;
+            });
+        });
     }
 
 
@@ -110,7 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 scale: 50,      // Massive scale to "fly through" the hole
                 z: 350,         // Move along Z-axis
                 transformOrigin: "center center",
-                ease: "power1.inOut"
+                ease: "power1.inOut",
+                duration: 1
             })
             // Animate the background content from small (zoomed out) to normal (100%)
             .fromTo(".zoom-content .hero", {
@@ -118,17 +146,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 transformOrigin: "center center"
             }, {
                 scale: 1,       // End at natural 100% size
-                ease: "power1.inOut"
-            }, "<");
+                ease: "power1.inOut",
+                duration: 1
+            }, "<")
+            .call(animateHeroTitle, null, 0.08); // Trigger at 50% (scale ~0.95)
 
-        // Header Visibility Trigger
-        // Sync header appearance with the end of the zoom scroll
+        // Header Visibility & Title Animation Trigger
+        // Sync header and title appearance with the end of the zoom scroll
         ScrollTrigger.create({
             trigger: ".zoom-wrapper",
             start: "top top",
             end: "+=100%", // Must match the pinning distance
-            onLeave: () => header.classList.add('header-visible'), // Show when passed
-            onEnterBack: () => header.classList.remove('header-visible'), // Hide when returning
+            onLeave: () => {
+                header.classList.add('header-visible');
+                // animateHeroTitle(); // Removed to sync with zoom completion
+            },
+            onEnterBack: () => {
+                header.classList.remove('header-visible');
+                // resetHeroTitle(); 
+            },
             onUpdate: (self) => {
                 // Ensure state is correct if refreshed in middle
                 if (self.progress === 1) {
@@ -136,6 +172,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else if (self.progress < 1) {
                     header.classList.remove('header-visible');
                 }
+            }
+        });
+    }
+
+    // Hero Title Reveal Animation Logic (Run on Load)
+    const heroTitle = document.querySelector('.hero-title');
+    if (heroTitle) {
+        // Split text into spans
+        const text = heroTitle.textContent.trim();
+        heroTitle.textContent = "";
+        text.split("").forEach((char) => {
+            const span = document.createElement("span");
+            span.textContent = char === " " ? "\u00A0" : char;
+            heroTitle.appendChild(span);
+        });
+
+        // Set initial state hidden
+        gsap.set(".hero-title span", {
+            clipPath: "inset(100% 0 0 0)"
+        });
+
+        // Animate immediately
+        //animateHeroTitle();
+    }
+
+    function animateHeroTitle() {
+        if (!heroTitle) return;
+        gsap.to(".hero-title span", {
+            clipPath: "inset(-20% -20% -20% -20%)",
+            duration: 1.2,
+            ease: "power2.out",
+            delay: 0.5, // Small delay for effect
+            stagger: {
+                each: 0.05,
+                from: "start"
             }
         });
     }

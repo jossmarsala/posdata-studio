@@ -179,6 +179,16 @@ nav {
     white-space: nowrap;
     /* Prevent line break */
     letter-spacing: -0.04em;
+    /* Animation setup */
+    display: inline-block;
+    opacity: 1;
+    /* Ensure visibility container */
+}
+
+.hero-title span {
+    display: inline-block;
+    position: relative;
+    /* clip-path was causing visibility issues if JS didn't fire. Moved to JS. */
 }
 
 /* Main Content Grid */
@@ -207,13 +217,22 @@ nav {
 .image-container {
     position: relative;
     width: 310px;
-    height: 400px;
+    height: 394px;
+    perspective: 1000px;
+    /* Enable 3D space */
 }
 
 .background-stack,
 .foreground-stack {
     position: absolute;
     inset: 0;
+}
+
+.foreground-stack {
+    transform: rotate(6.5deg);
+    transform-origin: center center;
+    transform-style: preserve-3d;
+    /* Ensure children 3D transforms work */
 }
 
 .bg-card,
@@ -230,7 +249,7 @@ nav {
 .fg-card img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     /* Border optional, user didn't have it in code but old design did in comments */
@@ -238,7 +257,14 @@ nav {
 
 .fg-card {
     opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-out;
+    /* Smooth return */
+    transform-style: preserve-3d;
+}
+
+.image-container:hover .fg-card {
+    transition: opacity 0.5s ease-in-out, transform 0.1s ease-out;
+    /* Fast response on hover */
 }
 
 .fg-card.active {
