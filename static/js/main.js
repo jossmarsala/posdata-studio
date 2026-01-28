@@ -116,6 +116,54 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
+    // Hero Title Reveal Animation Logic (Run on Load)
+    const heroTitle = document.querySelector('.hero-title');
+    if (heroTitle) {
+        // Split text into spans
+        const text = heroTitle.textContent.trim();
+        heroTitle.textContent = "";
+        text.split("").forEach((char) => {
+            const span = document.createElement("span");
+            span.textContent = char === " " ? "\u00A0" : char;
+            heroTitle.appendChild(span);
+        });
+
+        // Set initial state hidden
+        gsap.set(".hero-title span", {
+            clipPath: "inset(100% 0 0 0)"
+        });
+
+        // Animate immediately
+        //animateHeroTitle();
+    }
+
+    // Loading Text Reveal (Matches Hero)
+    const loadingText = document.querySelector('.loading-text');
+    if (loadingText) {
+        const text = loadingText.textContent.trim();
+        loadingText.textContent = "";
+        text.split("").forEach((char) => {
+            const span = document.createElement("span");
+            span.textContent = char === " " ? "\u00A0" : char;
+            loadingText.appendChild(span);
+        });
+
+        gsap.set(".loading-text span", {
+            clipPath: "inset(100% 0 0 0)"
+        });
+
+        gsap.to(".loading-text span", {
+            clipPath: "inset(-20% -20% -20% -20%)",
+            duration: 1.2,
+            ease: "power2.out",
+            delay: 1, // Start after logo
+            stagger: {
+                each: 0.05,
+                from: "start"
+            }
+        });
+    }
+
     // Zoom Intro Effect (GSAP ScrollTrigger)
     gsap.registerPlugin(ScrollTrigger);
 
@@ -176,26 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Hero Title Reveal Animation Logic (Run on Load)
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-        // Split text into spans
-        const text = heroTitle.textContent.trim();
-        heroTitle.textContent = "";
-        text.split("").forEach((char) => {
-            const span = document.createElement("span");
-            span.textContent = char === " " ? "\u00A0" : char;
-            heroTitle.appendChild(span);
-        });
 
-        // Set initial state hidden
-        gsap.set(".hero-title span", {
-            clipPath: "inset(100% 0 0 0)"
-        });
-
-        // Animate immediately
-        //animateHeroTitle();
-    }
 
     function animateHeroTitle() {
         if (!heroTitle) return;
@@ -208,6 +237,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 each: 0.05,
                 from: "start"
             }
+        });
+    }
+
+    // Mobile Menu Toggle (SVG Logic)
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    const navLinksItems = document.querySelectorAll('.nav-links a');
+
+    // Check if we restored the wrapper class, otherwise fallback to body or ignore blur
+    // The previous HTML edit added .blur-target to <main>
+    const blurTarget = document.querySelector('.blur-target');
+
+    if (navToggle && navLinks) {
+        navToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            // Toggle active class on SVG (triggers nav-anim animations)
+            navToggle.classList.toggle('active');
+
+            // Toggle active class on Nav Links (triggers visibility)
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        navLinksItems.forEach(link => {
+            link.addEventListener('click', () => {
+                navToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
         });
     }
 

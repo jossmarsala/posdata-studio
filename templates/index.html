@@ -5,16 +5,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posdata Studio | Diseño Web</title>
+    <link rel="icon" type="image/svg+xml"
+        href="{{ url_for('static', filename='assets/images/cursor/lotus-cursor.svg') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 
 <body>
+    <!-- Custom Cursor (Top priority) -->
+    <div class="cursor">
+        <div class="cursorball cursorball--big">
+            <img src="{{ url_for('static', filename='assets/images/cursor/circle-cursor.svg') }}" alt="Cursor Big">
+        </div>
+
+        <div class="cursorball cursorball--small">
+            <img src="{{ url_for('static', filename='assets/images/cursor/lotus-cursor.svg') }}" alt="Cursor Small">
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo-group">
+                <!-- Circle SVG -->
+                <svg class="loading-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.08 244.28">
+                    <path class="logo-path circle-path"
+                        d="M86.56,7.36C101.35,2.25,117.07-.23,132.75.17c24.91.63,49.81,8.59,69.78,23.58,19.1,14.33,33.21,34.6,42.59,56.52,8.16,19.07,12.95,40.08,9.92,60.53-3,20.27-13.53,38.81-27.02,54.19-30.73,35.01-79.17,54.9-125.42,47.71C40.87,233.1-7.15,174.09,1.04,111.63,5.75,75.7,26.81,42.3,56.8,22.14c9.22-6.19,19.25-11.15,29.76-14.78ZM36.09,51.23c-7.97,8.98-14.83,18.96-20.28,29.64-8.05,15.76-13.33,33.46-11.61,51.12,2.18,22.48,15.04,40.05,29.86,56.18s28.33,30.93,46.76,41.62c19.91,11.54,38.49,8.11,59.77,4.2,27.02-4.96,50.99-14.37,70.35-34.6,18.75-19.6,30.14-46.06,31.5-73.21,1.17-23.33-4.97-46.95-16.97-67.09-11.25-18.87-27.8-34.83-47.76-44.04-19.98-9.22-42.84-11.43-64.46-7.77-29.85,5.05-57.06,21.32-77.15,43.95Z" />
+                </svg>
+                <!-- Lotus SVG -->
+                <svg class="loading-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176.07 165.53">
+                    <g>
+                        <path class="logo-path"
+                            d="M77.53,101.1c.23,3.63-.05,7.26-.45,10.86-1.71,15.44-7.14,30.55-21.17,38.95-10.3,6.16-23.48,6.06-32.39,14.62-.68-.21-.34-8.12-.26-9.22,1.46-19.35,10.47-32.22,28.06-40.79,6.02-2.93,12.48-4.85,18.24-8.39,2.84-1.75,5.25-4.13,7.98-6.02Z" />
+                        <path class="logo-path"
+                            d="M92.75,92.9c1.52-.95,3.35-1.07,5.02-1.66,12.76-4.5,21.61-14.6,35.08-18.42,15.74-4.48,30.38.75,43.22,9.97-.05.62-.25.39-.51.51-1.53.69-3.43,1.04-4.96,1.73-7.56,3.42-13.82,10.99-21.02,15.34-15.86,9.56-32.92,5.89-48.36-2.11-.9-.47-8.7-4.74-8.47-5.36Z" />
+                        <path class="logo-path"
+                            d="M40.39,16.16c.27-.24.6,0,.87.08,2.53.77,6.24,3.26,9.1,4.38,16.25,6.34,32.98,8.65,42.28,25.82,7.26,13.4,6.92,33.05-3.3,44.04-1.4,1.51-5.34,5.63-11.72,7.3-13.54,3.53-30.16-6.07-37.01-18.74-9.06-16.75-2.79-34.73-.93-52.07.16-1.48.31-10.45.71-10.81Z" />
+                        <path class="logo-path"
+                            d="M15.25,106.1c-3.72-2.92-6.45-7.17-10.26-9.94-1.52-1.1-3.31-1.79-4.99-2.57-.01-.48,3.51-2.18,4.1-2.45,4.53-2.06,9.62-3.22,14.54-2.72-1.67-3.56-2.74-7.49-4.86-10.75-1.02-1.57-2.45-2.86-3.74-4.19.16-.46,4.06-.78,4.71-.82,7.32-.44,15.05,1.38,20.22,6.88,3.1,3.3,4.67,7.59,7.19,11.28,1.78,2.61,3.07,3.93,4.82,5.46,7.62,6.66,17.46,6.65,17.33,7.93-.06.55-1.9.69-3.58.97-6.73,1.13-10.17,4.5-13.55,6.28-8.84,4.64-23.68,1.14-31.94-5.34Z" />
+                        <path class="logo-path"
+                            d="M130.59,42.72c-.4-4.72-2.46-9.33-2.68-14.03-.09-1.87.32-3.75.59-5.58-.39-.28-3.75,1.73-4.3,2.08-4.21,2.66-7.97,6.27-10.26,10.66-2.06-3.35-4.75-6.4-6.32-9.96-.75-1.72-1.05-3.61-1.45-5.42-.47-.12-2.88,2.96-3.27,3.48-4.38,5.88-7.11,13.34-5.35,20.68,1.06,4.4,3.78,8.07,5.48,12.2,1.2,2.92,1.6,4.72,1.92,7.03,1.38,10.02-4.02,18.25-2.89,18.84.49.25,1.62-1.22,2.77-2.46,4.64-5.01,9.34-6.03,12.69-7.88,8.73-4.84,13.95-19.16,13.06-29.63Z" />
+                        <path class="logo-path"
+                            d="M37.91.38c2.22.78,4.15,3.44,4.76,5.63,1.46,5.28-8.33,10.97-12,2.82-1.23-2.74-.99-4.52.96-6.84,1.61-1.91,3.93-2.44,6.28-1.61Z" />
+                        <path class="logo-path"
+                            d="M92.02,97.68c5.5,5.43,10.51,7.65,14.11,8.67.93.26,6.07,1.19,11.56,3.09,4.44,1.53,7.51,2.49,10.27,6.53,3.34,4.91-.51,12-6.44,11.79-1.51-.05-4.73-1.02-6.21-1.59-6.53-2.53-16.02-8.62-21.05-20.81-.74-1.78-1.65-4.38-2.24-7.68Z" />
+                        <path class="logo-path"
+                            d="M109.29,129.9c1.58.78,3.89,6.09,3.6,7.62-.05.24-2.08,3.45-2.5,3.73-3.86,2.55-10.2,0-10.33-4.54-.11-3.63,2.51-7.31,6.35-7.3.24,0,2.75.42,2.88.48Z" />
+                        <path class="logo-path"
+                            d="M81.89,103.15c1.52,7.58.63,12.99-.5,16.55-.29.92-2.34,5.73-3.77,11.36-1.16,4.55-2.04,7.65-.17,12.17,2.27,5.49,10.31,6.15,13.39,1.09.78-1.29,1.74-4.51,2.07-6.06,1.47-6.85,1.59-18.12-5.84-29.02-1.09-1.6-2.76-3.78-5.19-6.09Z" />
+                    </g>
+                </svg>
+            </div>
+            <div class="loading-text-wrapper">
+                <p class="loading-text">POSDATA STUDIO</p>
+            </div>
+        </div>
+    </div>
 
     <header>
         <div class="container">
             <nav>
                 <a href="#" class="logo">Posdata Studio</a>
-                <ul class="nav-links">
+
+                <!-- SVG Hamburger Menu -->
+                <svg class="nav-toggle nav-rotate nav-anim" viewBox="0 0 100 100" width="60" id="navToggle">
+                    <path class="line top"
+                        d="m 70,33 h -40 c 0,0 -8.5,-0.149796 -8.5,8.5 0,8.649796 8.5,8.5 8.5,8.5 h 20 v -20" />
+                    <path class="line middle" d="m 70,50 h -40" />
+                    <path class="line bottom"
+                        d="m 30,67 h 40 c 0,0 8.5,0.149796 8.5,-8.5 0,-8.649796 -8.5,-8.5 -8.5,-8.5 h -20 v 20" />
+                </svg>
+
+                <ul class="nav-links" id="navLinks">
                     <li><a href="#about">Nosotras</a></li>
                     <li><a href="#services">Servicios</a></li>
                     <li><a href="#contact">Contacto</a></li>
@@ -125,27 +186,56 @@
                 <h2 class="section-title fade-in-up">Lo que hacemos</h2>
                 <div class="service-list">
                     <div class="service-item fade-in-up">
-                        <span class="service-name">Diseño Web</span>
-                        <span class="service-desc">UI/UX, Prototipado</span>
+                        <span class="service-name">Diseño Web (UI/UX)</span>
+                        <span class="service-desc">Interfaces claras, lindas y fáciles de usar</span>
                     </div>
+
                     <div class="service-item fade-in-up">
-                        <span class="service-name">Desarrollo</span>
-                        <span class="service-desc">Webflow, Shopify, Código</span>
+                        <span class="service-name">Desarrollo Web</span>
+                        <span class="service-desc">Programación, rendimiento y mantenimiento del sitio</span>
                     </div>
+
                     <div class="service-item fade-in-up">
-                        <span class="service-name">Identidad Visual</span>
-                        <span class="service-desc">Branding, Dirección de Arte</span>
+                        <span class="service-name">Branding</span>
+                        <span class="service-desc">Diseño de marca, logo y estilo visual</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="contact" style="padding: 8rem 0; text-align: center;">
+        <section id="contact" class="contact" style="padding: 8rem 0;">
             <div class="container fade-in-up">
-                <h2 class="section-title">Hablemos</h2>
-                <p style="margin-bottom: 2rem; color: var(--color-secondary);">¿Lista para dar vida a tu proyecto?
+                <h2 class="section-title" style="text-align: center;">Hablemos</h2>
+                <p style="margin-bottom: 3rem; color: var(--color-secondary); text-align: center;">¿Lista para dar vida
+                    a tu proyecto?
                     Escríbenos.</p>
-                <a href="mailto:hola@studiotres.com" class="btn">hola@studiotres.com</a>
+
+                <div class="contact-form-wrapper">
+                    <form id="contactForm" class="contact-form" autocomplete="off">
+                        {{ form.csrf_token }}
+                        <!-- Honeypot field (hidden) -->
+                        <div style="display:none;">
+                            {{ form.website(tabindex="-1", autocomplete="off") }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.name(class="form-input", placeholder="Tu Nombre") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.email(class="form-input", placeholder="Tu Email") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.message(class="form-textarea", placeholder="Cuéntanos sobre tu proyecto...",
+                            rows="4") }}
+                        </div>
+
+                        <div class="form-submit-container">
+                            <button type="submit" class="btn submit-btn">Enviar Mensaje</button>
+                        </div>
+
+                        <div id="formFeedback" class="form-feedback"></div>
+                    </form>
+                </div>
             </div>
         </section>
 
@@ -155,12 +245,14 @@
             </div>
         </footer>
 
-        <script src="{{ url_for('static', filename='js/vendors/jquery.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/vendors/gsap.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/vendors/ScrollTrigger.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/contact.js') }}"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous" defer></script>
+        <script src="{{ url_for('static', filename='js/vendors/gsap.min.js') }}" defer></script>
+        <script src="{{ url_for('static', filename='js/vendors/ScrollTrigger.min.js') }}" defer></script>
+        <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+        <script src="{{ url_for('static', filename='js/animations.js') }}" defer></script>
+        <script src="{{ url_for('static', filename='js/contact.js') }}" defer></script>
+        <script src="{{ url_for('static', filename='js/cursor.js') }}" defer></script>
 </body>
 
 </html>
