@@ -76,7 +76,6 @@
                 </svg>
 
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="#about">Nosotras</a></li>
                     <li><a href="#services">Servicios</a></li>
                     <li><a href="#contact">Contacto</a></li>
                 </ul>
@@ -155,58 +154,63 @@
             </div>
         </div>
 
-        <section id="about" class="about">
-            <div class="container">
-                <h2 class="section-title fade-in-up">Quiénes Somos</h2>
-                <div class="team-grid">
-                    <div class="team-member fade-in-up">
-                        <img src="{{ url_for('static', filename='assets/images/member1.png') }}" alt="Graciana"
-                            class="member-photo">
-                        <h3 class="member-name">Graciana</h3>
-                        <p class="member-role">Dirección de Arte</p>
+        <section id="services" class="services-folder-section">
+            <div class="container folder-container">
+                <!-- Folder 1: Web Dev (Pink) -->
+                <div class="folder-card folder-1 fade-in-up">
+                    <div class="folder-tab-label">Desarrollo web</div>
+                    <div class="folder-content">
+                        <p class="folder-text">
+                            Programamos la parte visible y la parte interna de la web. Esto incluye frontend, backend,
+                            integración y diseño de bases de datos, APIs y sistemas ajenos para que el sitio funcione,
+                            se administre y escale.
+                        </p>
+                        <!-- Image: Sunset/Landscape -->
+                        <img src="{{ url_for('static', filename='assets/images/polaroid-webdev.webp') }}"
+                            class="polaroid-img img-webdev" alt="Web Development Landscape">
                     </div>
-                    <div class="team-member fade-in-up" style="transition-delay: 0.2s;">
-                        <img src="{{ url_for('static', filename='assets/images/member2.png') }}" alt="Josefina"
-                            class="member-photo">
-                        <h3 class="member-name">Josefina</h3>
-                        <p class="member-role">Desarrollo Web</p>
+                </div>
+
+                <!-- Folder 2: UX/UI (Blue) -->
+                <div class="folder-card folder-2 fade-in-up">
+                    <div class="folder-tab-label">UX/UI & Branding</div>
+                    <div class="folder-content">
+                        <p class="folder-text">
+                            Diseñamos la experiencia, las pantallas y la identidad visual del sitio y de tu marca,
+                            cuidando cada decisión para que todo funcione en conjunto y sea estético.
+                        </p>
                     </div>
-                    <div class="team-member fade-in-up" style="transition-delay: 0.4s;">
-                        <img src="{{ url_for('static', filename='assets/images/member3.png') }}" alt="Sofía"
-                            class="member-photo">
-                        <h3 class="member-name">Sofía</h3>
-                        <p class="member-role">Estrategia & Copy</p>
+                </div>
+
+                <!-- Folder 3: Deploy (Cream) -->
+                <div class="folder-card folder-3 fade-in-up">
+                    <div class="folder-tab-label">Deploy</div>
+                    <div class="folder-content">
+                        <p class="folder-text">
+                            Nos encargamos de dejar tu sitio online y funcionando. Configuramos el dominio, el hosting y
+                            los detalles técnicos necesarios para que la web esté publicada y lista para usarse.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Folder 4: Title (Green) -->
+                <div class="folder-card folder-4 fade-in-up">
+                    <!-- <div class="folder-tab-label"></div> -->
+                    <div class="folder-content">
+                        <!-- Image: Flower with clip -->
+                        <img src="{{ url_for('static', filename='assets/images/polaroid-services.webp') }}"
+                            class="polaroid-img img-title-decor" alt="Services Decoration">
+
+                        <h2 class="services-main-title">Nuestros Servicios</h2>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="services" class="services">
-            <div class="container">
-                <h2 class="section-title fade-in-up">Lo que hacemos</h2>
-                <div class="service-list">
-                    <div class="service-item fade-in-up">
-                        <span class="service-name">Diseño Web (UI/UX)</span>
-                        <span class="service-desc">Interfaces claras, lindas y fáciles de usar</span>
-                    </div>
-
-                    <div class="service-item fade-in-up">
-                        <span class="service-name">Desarrollo Web</span>
-                        <span class="service-desc">Programación, rendimiento y mantenimiento del sitio</span>
-                    </div>
-
-                    <div class="service-item fade-in-up">
-                        <span class="service-name">Branding</span>
-                        <span class="service-desc">Diseño de marca, logo y estilo visual</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="contact" style="padding: 8rem 0;">
+        <section id="contact" class="contact">
             <div class="container fade-in-up">
-                <h2 class="section-title" style="text-align: center;">Hablemos</h2>
-                <p style="margin-bottom: 3rem; color: var(--color-secondary); text-align: center;">¿Lista para dar vida
+                <h2 class="section-title">Hablemos</h2>
+                <p class="contact-description">¿Lista para dar vida
                     a tu proyecto?
                     Escríbenos.</p>
 
@@ -214,7 +218,7 @@
                     <form id="contactForm" class="contact-form" autocomplete="off">
                         {{ form.csrf_token }}
                         <!-- Honeypot field (hidden) -->
-                        <div style="display:none;">
+                        <div class="visually-hidden">
                             {{ form.website(tabindex="-1", autocomplete="off") }}
                         </div>
 

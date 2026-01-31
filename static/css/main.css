@@ -419,54 +419,30 @@ nav {
 /* Responsive */
 
 
-/* About Section */
-.about {
-    padding: var(--spacing-xl) 0;
-    background-color: var(--color-white);
-}
 
+/* General Components */
 .section-title {
     font-size: 2.5rem;
     text-align: center;
     margin-bottom: var(--spacing-lg);
-}
-
-.team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--spacing-md);
-}
-
-.team-member {
-    text-align: center;
-}
-
-.member-photo {
-    width: 100%;
-    aspect-ratio: 3/4;
-    object-fit: cover;
-    margin-bottom: var(--spacing-sm);
-    border-radius: 4px;
-    /* Soft corner */
-    filter: grayscale(20%);
-    transition: filter 0.3s ease;
-}
-
-.team-member:hover .member-photo {
-    filter: grayscale(0%);
-}
-
-.member-name {
     font-family: var(--font-serif);
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
 }
 
-.member-role {
-    font-size: 0.9rem;
+.visually-hidden {
+    display: none;
+}
+
+/* About Section Styles Removed */
+
+/* Contact Section */
+.contact {
+    padding: 8rem 0;
+}
+
+.contact-description {
+    margin-bottom: 3rem;
     color: var(--color-secondary);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    text-align: center;
 }
 
 /* Services */
@@ -1053,5 +1029,280 @@ select,
         fill: #2c2c2c;
         stroke: transparent;
         /* Optional: hide stroke when filled */
+    }
+}
+
+/* Services Folder Layout */
+.services-folder-section {
+    position: relative;
+    /* Height will be handled by pinning or min-height */
+    height: 100vh;
+    /* Fixed height for initial view, ScrollTrigger will pin this */
+    overflow: hidden;
+    background-color: var(--color-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.folder-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    /* Align to bottom for stacking effect */
+}
+
+.folder-card {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    max-width: none;
+    height: 80vh;
+    padding: 2.5rem 10% 4rem 10%;
+    border-radius: 30px 30px 0 0;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.08);
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    isolation: isolate;
+    padding-top: 6rem;
+}
+
+.folder-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/images/resources/texture.webp');
+    background-size: cover;
+    opacity: 0.4;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    z-index: -1;
+    /* Behind content, above background */
+    border-radius: 30px 30px 0 0;
+    /* Match card radius */
+}
+
+/* Tab Label */
+.folder-tab-label {
+    position: absolute;
+    top: -45px;
+    height: 45px;
+    padding: 1.5rem 4rem;
+    border-radius: 30px 30px 0 0;
+    /* More rounded top */
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 350px;
+    /* Slightly wider */
+    color: #5d5d5d;
+    /* Fallback */
+    isolation: isolate;
+    /* Tapered shape */
+    clip-path: polygon(25px 0, calc(100% - 25px) 0, 100% 100%, 0 100%);
+}
+
+.folder-tab-label::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/images/resources/texture.webp');
+    background-size: cover;
+    opacity: 0.4;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    z-index: -1;
+    border-radius: 30px 30px 0 0;
+}
+
+/* Folder 1: Web Dev (Pink) */
+.folder-1 {
+    background-color: #EBDAD2;
+    z-index: 1;
+}
+
+.folder-1 .folder-tab-label {
+    left: 10%;
+    background-color: #EBDAD2;
+    color: #915B43;
+    /* Specific color */
+}
+
+/* Folder 2: UX/UI (Blue) */
+.folder-2 {
+    background-color: #BAC9D1;
+    z-index: 2;
+    align-items: flex-end;
+    text-align: right;
+}
+
+.folder-2 .folder-tab-label {
+    right: 15%;
+    background-color: #BAC9D1;
+    color: #4A5D72;
+    /* Specific color */
+}
+
+/* Folder 3: Deploy (Cream) */
+.folder-3 {
+    background-color: #F8F5E6;
+    /* Cream color */
+    z-index: 3;
+}
+
+.folder-3 .folder-tab-label {
+    left: 15%;
+    background-color: #F8F5E6;
+    color: #7A7A62;
+    /* Specific color */
+}
+
+/* Folder 4: Title (Green) */
+.folder-4 {
+    background-color: #CAD2A5;
+    /* Green */
+    z-index: 4;
+    min-height: 400px;
+    padding-bottom: 12rem;
+    /* Significantly increased/added to show more green below title */
+    /* Big bottom section */
+    align-items: center;
+    text-align: center;
+    margin-top: -100px;
+    /* Big overlap */
+}
+
+.folder-4 .folder-tab-label {
+    right: 20%;
+    background-color: #CAD2A5;
+}
+
+/* Content Text */
+.folder-text {
+    font-family: var(--font-sans);
+    font-size: 1.2rem;
+    line-height: 1.6;
+    max-width: 600px;
+    color: #4a4a4a;
+    font-weight: 300;
+    position: relative;
+    z-index: 5;
+}
+
+/* Main Title Overlay */
+/* Main Title Overlay */
+.services-main-title {
+    font-family: var(--font-serif);
+    font-size: 15vw;
+    /* Responsive full width */
+    color: #F9F9F4;
+    line-height: normal;
+    z-index: 10;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-top: 0;
+    margin-bottom: 25vh;
+    /* Push everything else down or ensure space below */
+    pointer-events: none;
+    white-space: nowrap;
+    /* Prevent line break */
+    width: 100%;
+    text-align: center;
+    transform: translateY(-20%);
+    /* Pull up visually */
+}
+
+/* Images */
+.polaroid-img {
+    position: absolute;
+    z-index: 6;
+    transition: transform 0.3s ease;
+    transform-origin: center;
+    max-width: 400px;
+    /* Increased from 250px */
+}
+
+.polaroid-img:hover {
+    transform: scale(1.05) rotate(0deg) !important;
+    z-index: 20;
+}
+
+/* Specific Image Positioning */
+/* In Folder 1 (Pink) */
+.img-webdev {
+    top: -60px;
+    /* Adjusted up for larger size */
+    right: 15%;
+    transform: rotate(6deg);
+    width: 320px;
+    /* Increased from 220px */
+}
+
+/* In Folder 4 (Green) */
+.img-title-decor {
+    top: -90px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-4deg);
+    width: 280px;
+    /* Increased from 180px */
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .folder-card {
+        padding: 3rem 1.5rem;
+        min-height: auto;
+        border-radius: 8px;
+    }
+
+    .folder-text {
+        max-width: 100%;
+        font-size: 1rem;
+    }
+
+    .folder-tab-label {
+        top: -35px;
+        height: 35px;
+        font-size: 1.3rem;
+        padding: 0 1.5rem;
+        min-width: auto;
+    }
+
+    .services-main-title {
+        position: relative;
+        margin-top: 4rem;
+        bottom: auto;
+        left: auto;
+        transform: none;
+    }
+
+    .polaroid-img {
+        width: 140px;
+    }
+
+    .img-webdev {
+        top: -20px;
+        right: 5%;
+    }
+
+    .img-title-decor {
+        top: -40px;
     }
 }
