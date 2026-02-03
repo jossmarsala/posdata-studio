@@ -1062,6 +1062,13 @@ select,
     /* Center the image */
     margin-top: -250px;
     /* This creates the overlap */
+    transition: transform 0.5s ease-in-out;
+    /* Smooth animation */
+}
+
+.filetab.shifted {
+    transform: translateY(100px);
+    /* Push down slightly to reveal content behind */
 }
 
 .filetab:first-child {
@@ -1104,6 +1111,8 @@ select,
 
 .filetab-white {
     z-index: 3;
+    transform: translateY(-20px);
+    /* Lifts higher than others */
 }
 
 .filetab-green {
@@ -1248,14 +1257,14 @@ select,
     line-height: 1.5;
     color: #4a4a4a;
     /* Dark gray/brown */
-    max-width: 45%;
     /* Keep reasonable width */
-    margin-top: 50px;
+    margin-top: 40px;
     /* Push down from top */
 }
 
 .desc-pink {
     align-self: flex-start;
+    max-width: 47%;
     margin-left: 10%;
     color: #5d4a46;
     /* Brownish for pink tab */
@@ -1265,14 +1274,16 @@ select,
     align-self: flex-end;
     margin-right: 15%;
     text-align: right;
+    max-width: 40%;
     color: #4a5d66;
     /* Slate for blue tab */
 }
 
 .desc-white {
     align-self: flex-start;
-    margin-left: 15%;
+    margin-left: 7%;
     color: #4d5750;
+    max-width: 50%;
     /* Greenish gray for white tab */
 }
 
