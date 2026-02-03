@@ -129,9 +129,9 @@
                                     la idea
                                     inicial hasta su publicación, integrando diseño, código y puesta online — todo
                                     en un mismo
-                                    proceso. Acompañamos a marcas y proyectos que valoran la claridad, construyendo
+                                    proceso. Acompañamos a marcas y proyectos que valoran la calidad, construyendo
                                     sitios
-                                    claros y bien pensados.
+                                    estéticos, claros y bien pensados.
                                 </p>
                             </div>
                         </div>
@@ -142,7 +142,7 @@
                             <span class="copyright">© 2026 POSDATA</span>
                             <img src="{{ url_for('static', filename='assets/images/resources/signature.svg') }}"
                                 class="footer-signature" alt="Signature with initials J and G">
-                        </div>
+                        </div>s
                     </div>
                 </section>
             </div>
@@ -154,58 +154,66 @@
             </div>
         </div>
 
-        <section id="services" class="services-folder-section">
-            <div class="container folder-container">
-                <!-- Folder 1: Web Dev (Pink) -->
-                <div class="folder-card folder-1 fade-in-up">
-                    <div class="folder-tab-label">Desarrollo web</div>
-                    <div class="folder-content">
-                        <p class="folder-text">
+        <section class="filetabs-section">
+            <div class="filetabs-container">
+                <!-- Tab 1: Pink (Back) -->
+                <div class="filetab filetab-pink">
+                    <img src="{{ url_for('static', filename='assets/images/pink-filetab.webp') }}" class="filetab-bg"
+                        alt="Pink File Tab">
+                    <span class="filetab-label label-pink">Desarrollo web</span>
+                    <div class="filetab-content">
+                        <p class="filetab-desc desc-pink">
                             Programamos la parte visible y la parte interna de la web. Esto incluye frontend, backend,
                             integración y diseño de bases de datos, APIs y sistemas ajenos para que el sitio funcione,
                             se administre y escale.
                         </p>
-                        <!-- Image: Sunset/Landscape -->
-                        <img src="{{ url_for('static', filename='assets/images/polaroid-webdev.webp') }}"
-                            class="polaroid-img img-webdev" alt="Web Development Landscape">
                     </div>
                 </div>
 
-                <!-- Folder 2: UX/UI (Blue) -->
-                <div class="folder-card folder-2 fade-in-up">
-                    <div class="folder-tab-label">UX/UI & Branding</div>
-                    <div class="folder-content">
-                        <p class="folder-text">
+                <!-- Tab 2: Blue -->
+                <div class="filetab filetab-blue">
+                    <img src="{{ url_for('static', filename='assets/images/blue-filetab.webp') }}" class="filetab-bg"
+                        alt="Blue File Tab">
+                    <span class="filetab-label label-blue">UX/UI & Branding</span>
+                    <div class="filetab-content">
+                        <p class="filetab-desc desc-blue">
                             Diseñamos la experiencia, las pantallas y la identidad visual del sitio y de tu marca,
                             cuidando cada decisión para que todo funcione en conjunto y sea estético.
                         </p>
                     </div>
                 </div>
 
-                <!-- Folder 3: Deploy (Cream) -->
-                <div class="folder-card folder-3 fade-in-up">
-                    <div class="folder-tab-label">Deploy</div>
-                    <div class="folder-content">
-                        <p class="folder-text">
+                <!-- Tab 3: White -->
+                <div class="filetab filetab-white">
+                    <img src="{{ url_for('static', filename='assets/images/white-filetab.webp') }}" class="filetab-bg"
+                        alt="White File Tab">
+                    <span class="filetab-label label-white">Deploy</span>
+                    <div class="filetab-content">
+                        <p class="filetab-desc desc-white">
                             Nos encargamos de dejar tu sitio online y funcionando. Configuramos el dominio, el hosting y
                             los detalles técnicos necesarios para que la web esté publicada y lista para usarse.
                         </p>
                     </div>
                 </div>
 
-                <!-- Folder 4: Title (Green) -->
-                <div class="folder-card folder-4 fade-in-up">
-                    <!-- <div class="folder-tab-label"></div> -->
-                    <div class="folder-content">
-                        <!-- Image: Flower with clip -->
-                        <img src="{{ url_for('static', filename='assets/images/polaroid-services.webp') }}"
-                            class="polaroid-img img-title-decor" alt="Services Decoration">
-
-                        <h2 class="services-main-title">Nuestros Servicios</h2>
+                <!-- Tab 4: Green (Front) -->
+                <div class="filetab filetab-green">
+                    <img src="{{ url_for('static', filename='assets/images/green-filetab.webp') }}" class="filetab-bg"
+                        alt="Green File Tab">
+                    <img src="{{ url_for('static', filename='assets/images/polaroid-services.webp') }}"
+                        class="polaroid-deco polaroid-services" alt="Services Polaroid">
+                    <div class="filetab-content">
+                        <h2 class="filetab-title">
+                            Nuestros <span class="service-word"><img
+                                    src="{{ url_for('static', filename='assets/images/S-services.webp') }}"
+                                    class="s-services-icon" alt="Nuestros servicios">ervicios</span>
+                        </h2>
                     </div>
                 </div>
             </div>
         </section>
+
+
 
         <section id="contact" class="contact">
             <div class="container fade-in-up">

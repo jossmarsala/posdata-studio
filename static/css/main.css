@@ -1032,277 +1032,265 @@ select,
     }
 }
 
-/* Services Folder Layout */
-.services-folder-section {
+/* Services Section */
+.filetabs-section {
+    padding: var(--spacing-xl) 0;
+    margin-top: -100px;
+    /* Slight overlap with previous section or just spacing adjustment */
     position: relative;
-    /* Height will be handled by pinning or min-height */
-    height: 100vh;
-    /* Fixed height for initial view, ScrollTrigger will pin this */
+    z-index: 10;
     overflow: hidden;
-    background-color: var(--color-bg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
 }
 
-.folder-container {
+.filetabs-container {
+    width: 100vw;
+    /* Full width */
+    margin: 0;
     position: relative;
+    display: flex;
+    /* Stack them vertically essentially, but we use absolute for overlap control or negative margins */
+    flex-direction: column;
+    align-items: center;
+}
+
+.filetab {
+    position: relative;
+    width: 100%;
+    /* Ensure it takes full width of container */
+    display: flex;
+    justify-content: center;
+    /* Center the image */
+    margin-top: -250px;
+    /* This creates the overlap */
+}
+
+.filetab:first-child {
+    margin-top: 0;
+}
+
+.filetab-bg {
+    width: 100%;
+    /* Occupy full width */
+    height: auto;
+    display: block;
+    object-fit: cover;
+    /* Ensure it covers if aspect ratio changes, though 'contain' might be safer if text depends on specific parts. Given requested full width, cover or just width 100% is needed. */
+    filter: drop-shadow(0 -5px 15px rgba(0, 0, 0, 0.05));
+    /* Subtle shadow for depth */
+}
+
+.filetab-content {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    max-width: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    /* Align to bottom for stacking effect */
-}
-
-.folder-card {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    max-width: none;
-    height: 80vh;
-    padding: 2.5rem 10% 4rem 10%;
-    border-radius: 30px 30px 0 0;
-    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.08);
-    margin-top: 0;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    isolation: isolate;
-    padding-top: 6rem;
-}
-
-.folder-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('../assets/images/resources/texture.webp');
-    background-size: cover;
-    opacity: 0.4;
-    mix-blend-mode: multiply;
-    pointer-events: none;
-    z-index: -1;
-    /* Behind content, above background */
-    border-radius: 30px 30px 0 0;
-    /* Match card radius */
-}
-
-/* Tab Label */
-.folder-tab-label {
-    position: absolute;
-    top: -45px;
-    height: 45px;
-    padding: 1.5rem 4rem;
-    border-radius: 30px 30px 0 0;
-    /* More rounded top */
-    font-family: var(--font-serif);
-    font-size: 1.8rem;
-    font-style: italic;
-    display: flex;
     align-items: center;
-    justify-content: center;
-    min-width: 350px;
-    /* Slightly wider */
-    color: #5d5d5d;
-    /* Fallback */
-    isolation: isolate;
-    /* Tapered shape */
-    clip-path: polygon(25px 0, calc(100% - 25px) 0, 100% 100%, 0 100%);
+    /* Center text content too */
+    padding: 3rem;
+    z-index: 2;
 }
 
-.folder-tab-label::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('../assets/images/resources/texture.webp');
-    background-size: cover;
-    opacity: 0.4;
-    mix-blend-mode: multiply;
-    pointer-events: none;
-    z-index: -1;
-    border-radius: 30px 30px 0 0;
-}
-
-/* Folder 1: Web Dev (Pink) */
-.folder-1 {
-    background-color: #EBDAD2;
+/* Specific Stacking & Tuning */
+.filetab-pink {
     z-index: 1;
 }
 
-.folder-1 .folder-tab-label {
-    left: 10%;
-    background-color: #EBDAD2;
-    color: #915B43;
-    /* Specific color */
-}
-
-/* Folder 2: UX/UI (Blue) */
-.folder-2 {
-    background-color: #BAC9D1;
+.filetab-blue {
     z-index: 2;
-    align-items: flex-end;
-    text-align: right;
 }
 
-.folder-2 .folder-tab-label {
-    right: 15%;
-    background-color: #BAC9D1;
-    color: #4A5D72;
-    /* Specific color */
-}
-
-/* Folder 3: Deploy (Cream) */
-.folder-3 {
-    background-color: #F8F5E6;
-    /* Cream color */
+.filetab-white {
     z-index: 3;
 }
 
-.folder-3 .folder-tab-label {
-    left: 15%;
-    background-color: #F8F5E6;
-    color: #7A7A62;
-    /* Specific color */
-}
-
-/* Folder 4: Title (Green) */
-.folder-4 {
-    background-color: #CAD2A5;
-    /* Green */
+.filetab-green {
     z-index: 4;
-    min-height: 400px;
-    padding-bottom: 12rem;
-    /* Significantly increased/added to show more green below title */
-    /* Big bottom section */
-    align-items: center;
-    text-align: center;
-    margin-top: -100px;
-    /* Big overlap */
+    margin-top: -290px;
+    /* Extra overlap to compensate for visual difference */
 }
 
-.folder-4 .folder-tab-label {
-    right: 20%;
-    background-color: #CAD2A5;
+.filetab-green .filetab-content {
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding-bottom: 1rem;
+    padding-left: 3vw;
 }
 
-/* Content Text */
-.folder-text {
-    font-family: var(--font-sans);
-    font-size: 1.2rem;
-    line-height: 1.6;
-    max-width: 600px;
-    color: #4a4a4a;
-    font-weight: 300;
-    position: relative;
-    z-index: 5;
-}
-
-/* Main Title Overlay */
-/* Main Title Overlay */
-.services-main-title {
+.filetab-title {
     font-family: var(--font-serif);
-    font-size: 15vw;
-    /* Responsive full width */
-    color: #F9F9F4;
-    line-height: normal;
-    z-index: 10;
-    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    margin-top: 0;
-    margin-bottom: 25vh;
-    /* Push everything else down or ensure space below */
-    pointer-events: none;
-    white-space: nowrap;
-    /* Prevent line break */
-    width: 100%;
-    text-align: center;
-    transform: translateY(-20%);
-    /* Pull up visually */
+    font-size: 11rem;
+    color: var(--color-white);
+    margin: 0;
+    line-height: 1;
+    display: flex;
+    align-items: baseline;
+    gap: .5rem;
+    font-weight: 400;
 }
 
-/* Images */
-.polaroid-img {
+.s-services-icon {
+    height: 0.85em;
+    width: auto;
+    display: inline-block;
+    transform: translate(15px, 30px);
+    /* Move right and down */
+}
+
+/* Filetab Labels */
+/* Filetab Labels */
+.filetab-label {
+    position: absolute;
+    top: 10px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 2rem;
+    z-index: 5;
+    pointer-events: none;
+    transform: translateX(-50%);
+    /* Centers text relative to left positioning */
+    white-space: nowrap;
+}
+
+.label-pink {
+    left: 23%;
+    /* Centered on left tab */
+    color: var(--color-bordeaux);
+}
+
+.label-blue {
+    left: auto;
+    right: 20%;
+    transform: translateX(50%);
+    /* Centers text relative to right positioning */
+    color: #4a6a74;
+}
+
+.label-white {
+    left: 14%;
+    /* White tab seems further left */
+    color: #5d665e;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .filetabs-section {
+        margin-top: 0;
+        padding: var(--spacing-lg) 0;
+    }
+
+    .filetab {
+        margin-top: -60px;
+        /* Less overlap on mobile */
+    }
+
+    .filetab-label {
+        font-size: 1.2rem;
+        /* Smaller font */
+        top: 25px;
+    }
+
+    .label-pink {
+        left: 25%;
+    }
+
+    .label-blue {
+        right: 25%;
+    }
+
+    .label-white {
+        left: 10%;
+    }
+
+
+    .filetab-content {
+        padding: 1.5rem;
+    }
+}
+
+/* Polaroids */
+.polaroid-deco {
     position: absolute;
     z-index: 6;
-    transition: transform 0.3s ease;
-    transform-origin: center;
-    max-width: 400px;
-    /* Increased from 250px */
+    pointer-events: none;
 }
 
-.polaroid-img:hover {
-    transform: scale(1.05) rotate(0deg) !important;
-    z-index: 20;
+.polaroid-services {
+    width: 250px;
+    top: 91px;
+    left: 45%;
+    transform: translateX(-50%) rotate(3deg);
+    z-index: 7;
+    /* On top of everything */
 }
 
-/* Specific Image Positioning */
-/* In Folder 1 (Pink) */
-.img-webdev {
-    top: -60px;
-    /* Adjusted up for larger size */
-    right: 15%;
-    transform: rotate(6deg);
-    width: 320px;
-    /* Increased from 220px */
-}
-
-/* In Folder 4 (Green) */
-.img-title-decor {
-    top: -90px;
-    left: 50%;
-    transform: translateX(-50%) rotate(-4deg);
-    width: 280px;
-    /* Increased from 180px */
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-    .folder-card {
-        padding: 3rem 1.5rem;
-        min-height: auto;
-        border-radius: 8px;
-    }
-
-    .folder-text {
-        max-width: 100%;
-        font-size: 1rem;
-    }
-
-    .folder-tab-label {
-        top: -35px;
-        height: 35px;
-        font-size: 1.3rem;
-        padding: 0 1.5rem;
-        min-width: auto;
-    }
-
-    .services-main-title {
-        position: relative;
-        margin-top: 4rem;
-        bottom: auto;
-        left: auto;
-        transform: none;
-    }
-
-    .polaroid-img {
-        width: 140px;
-    }
-
-    .img-webdev {
-        top: -20px;
-        right: 5%;
-    }
-
-    .img-title-decor {
+/* Responsive Polaroids */
+@media (max-width: 1024px) {
+    .polaroid-services {
+        width: 120px;
         top: -40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .polaroid-services {
+        width: 90px;
+        top: -30px;
+    }
+}
+
+/* Filetab Descriptions */
+.filetab-desc {
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: #4a4a4a;
+    /* Dark gray/brown */
+    max-width: 45%;
+    /* Keep reasonable width */
+    margin-top: 50px;
+    /* Push down from top */
+}
+
+.desc-pink {
+    align-self: flex-start;
+    margin-left: 10%;
+    color: #5d4a46;
+    /* Brownish for pink tab */
+}
+
+.desc-blue {
+    align-self: flex-end;
+    margin-right: 15%;
+    text-align: right;
+    color: #4a5d66;
+    /* Slate for blue tab */
+}
+
+.desc-white {
+    align-self: flex-start;
+    margin-left: 15%;
+    color: #4d5750;
+    /* Greenish gray for white tab */
+}
+
+@media (max-width: 768px) {
+    .filetab-desc {
+        font-size: 0.9rem;
+        max-width: 80%;
+        margin-top: 40px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        align-self: center;
+    }
+
+    .desc-pink,
+    .desc-blue,
+    .desc-white {
+        margin-left: 0;
+        margin-right: 0;
     }
 }
