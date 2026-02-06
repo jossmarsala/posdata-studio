@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Register GSAP ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+
     // Header Scroll Visibility Effect (Synced with GSAP)
     const header = document.querySelector('header');
 
@@ -164,8 +167,40 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Filetab Label Animation (Reveal on Scroll)
+    const filetabLabels = document.querySelectorAll('.filetab-label');
+    filetabLabels.forEach(label => {
+        const text = label.textContent.trim();
+        label.textContent = "";
+        text.split("").forEach((char) => {
+            const span = document.createElement("span");
+            span.textContent = char === " " ? "\u00A0" : char;
+            label.appendChild(span);
+        });
+
+        // Set initial state hidden
+        gsap.set(label.querySelectorAll("span"), {
+            clipPath: "inset(100% 0 0 0)"
+        });
+
+        // ScrollTrigger Animation
+        gsap.to(label.querySelectorAll("span"), {
+            scrollTrigger: {
+                trigger: label,
+                start: "top 85%",
+                toggleActions: "play none none reverse"
+            },
+            clipPath: "inset(-20% -20% -20% -20%)",
+            duration: 1.2,
+            ease: "power2.out",
+            stagger: {
+                each: 0.05,
+                from: "start"
+            }
+        });
+    });
+
     // Zoom Intro Effect (GSAP ScrollTrigger)
-    gsap.registerPlugin(ScrollTrigger);
 
     const zoomImageContainer = document.querySelector('.zoom-image-container');
 
