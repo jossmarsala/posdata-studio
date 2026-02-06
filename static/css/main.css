@@ -1383,9 +1383,90 @@ select,
     /* Hidden initially */
     color: var(--color-white);
     will-change: transform;
+    overflow: hidden;
+    /* Contain shader */
+}
+
+/* Background Noise Effect for Overlay */
+.overlay-section::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: transparent url("http://assets.iceable.com/img/noise-transparent.png") repeat 0 0;
+    background-size: 300px 300px;
+    animation: noise-animation 0.3s steps(5) infinite;
+    opacity: 1;
+    will-change: transform;
+    z-index: 10;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    /* Blend noise */
+}
+
+@keyframes noise-animation {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    10% {
+        transform: translate(-2%, -3%);
+    }
+
+    20% {
+        transform: translate(-4%, 2%);
+    }
+
+    30% {
+        transform: translate(2%, -4%);
+    }
+
+    40% {
+        transform: translate(-2%, 5%);
+    }
+
+    50% {
+        transform: translate(-4%, 2%);
+    }
+
+    60% {
+        transform: translate(3%, 0);
+    }
+
+    70% {
+        transform: translate(0, 3%);
+    }
+
+    80% {
+        transform: translate(-3%, 0);
+    }
+
+    90% {
+        transform: translate(2%, 2%);
+    }
+
+    100% {
+        transform: translate(1%, 0);
+    }
+}
+
+.shader-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    /* Below content */
+    pointer-events: none;
 }
 
 .overlay-content {
+    position: relative;
+    z-index: 20;
+    /* Above shader and noise */
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 5rem;

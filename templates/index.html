@@ -167,6 +167,7 @@
 
                 <!-- Overlay Section (Black Layer) -->
                 <section class="overlay-section">
+                    <div id="shader-container" class="shader-bg"></div>
                     <!-- Title matches Hero Title position visually if needed, but here we just need columns -->
                     <!-- Actually, the reference image shows "Posdata Studio" at the top. 
                           The user says "El hero-title NO debe ser tapado... debe quedar siempre por encima...".
@@ -233,6 +234,7 @@
         <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
         <script src="{{ url_for('static', filename='js/animations.js') }}" defer></script>
 
+        <script type="module" src="{{ url_for('static', filename='js/shader.js') }}" defer></script>
         <script src="{{ url_for('static', filename='js/cursor.js') }}" defer></script>
 </body>
 
