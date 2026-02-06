@@ -25,13 +25,13 @@ let mouseDown = false;
 
 // Default values
 const primaryColor = [255, 255, 255];
-const secondaryColor = [255, 255, 255];
+const secondaryColor = [255, 248, 235]; // Warm white (Creamy)
 const accentColor = [0, 0, 0];
 const fractalScale = 0.3;
 const fractalX = 0;
 const fractalY = 0;
 const lightCount = 1;
-const lightIntensity = 1.0;
+const lightIntensity = 0.5; // More subtle light
 const lightSpeed = 1.0;
 const grainStrength = 0.15;
 const grainSize = 3.5;
