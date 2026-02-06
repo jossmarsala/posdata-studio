@@ -61,65 +61,84 @@
         </div>
     </div>
 
-    <header>
-        <div class="container">
-            <nav>
-                <a href="#" class="logo">Posdata Studio</a>
-
-                <!-- SVG Hamburger Menu -->
-                <svg class="nav-toggle nav-rotate nav-anim" viewBox="0 0 100 100" width="60" id="navToggle">
-                    <path class="line top"
-                        d="m 70,33 h -40 c 0,0 -8.5,-0.149796 -8.5,8.5 0,8.649796 8.5,8.5 8.5,8.5 h 20 v -20" />
-                    <path class="line middle" d="m 70,50 h -40" />
-                    <path class="line bottom"
-                        d="m 30,67 h 40 c 0,0 8.5,0.149796 8.5,-8.5 0,-8.649796 -8.5,-8.5 -8.5,-8.5 h -20 v 20" />
-                </svg>
-
-                <ul class="nav-links" id="navLinks">
-                    <li><a href="#services">Servicios</a></li>
-                    <li><a href="#contact">Contacto</a></li>
-                </ul>
-            </nav>
+    <nav class="navigation" id="navigation">
+        <div class="navigation__container">
+            <div class="navigation__logo">P.S.</div>
+            <div class="navigation__menu-btn" id="menu-btn">MENU</div>
         </div>
-    </header>
+    </nav>
 
-    <main>
+    <div class="dropdown" id="dropdown">
+        <div class="dropdown__section dropdown__section--one">
+            <h1 class="dropdown__word">Posdata</h1>
+            <p class="dropdown__quote">Lo que vale la pena contar.</p>
+        </div>
+        <div class="dropdown__section dropdown__section--three">
+            <div class="divider"></div>
+            <div class="dropdown__nav">
+                <a class="dropdown__button" href="#">Principal</a>
+                <a class="dropdown__button" href="#overlay-section">Nuestros servicios</a>
+                <a class="dropdown__button" href="#">Proyectos</a>
+                <a class="dropdown__button" href="#contact">Contacto</a>
+            </div>
+        </div>
+    </div>
+
+    <main id="content">
+        <h1 class="hero-title">Posdata Studio</h1>
+        <div class="zoom-image-container">
+            <img src="{{ url_for('static', filename='assets/images/texture-zoomin.png') }}" class="zoom-texture"
+                alt="Texture Background">
+            <img src="{{ url_for('static', filename='assets/images/postcards-zoomin.webp') }}" class="zoom-postcards"
+                alt="Postcards Frame">
+        </div>
+
+        <!-- Global Hero Visual (Rotating Images) -->
+        <!-- Moved out to separate z-index context from Hero Text -->
+        <div class="hero-visual">
+            <div class="image-container" id="imageContainer">
+                <div class="background-stack">
+                    <div class="bg-card"><img
+                            src="{{ url_for('static', filename='assets/images/mountains-polaroid.webp') }}"
+                            alt="Landscape 1"></div>
+                    <div class="bg-card"><img
+                            src="{{ url_for('static', filename='assets/images/flowers-polaroid.webp') }}"
+                            alt="Landscape 2"></div>
+                    <div class="bg-card"><img
+                            src="{{ url_for('static', filename='assets/images/bouquette-polaroid.webp') }}"
+                            alt="Landscape 3"></div>
+                </div>
+
+                <div class="foreground-stack">
+                    <div class="fg-card active"><img
+                            src="{{ url_for('static', filename='assets/images/mountains-polaroid.webp') }}"
+                            alt="Landscape 1"></div>
+                    <div class="fg-card"><img
+                            src="{{ url_for('static', filename='assets/images/flowers-polaroid.webp') }}"
+                            alt="Landscape 2"></div>
+                    <div class="fg-card"><img
+                            src="{{ url_for('static', filename='assets/images/bouquette-polaroid.webp') }}"
+                            alt="Landscape 3"></div>
+                </div>
+
+                <!-- Interaction Hitbox for stable 3D tilt -->
+                <div class="tilt-hitbox"></div>
+            </div>
+        </div>
         <div class="zoom-wrapper">
             <div class="zoom-content">
                 <section class="hero">
                     <div class="hero-wrapper">
                         <div class="hero-header">
-                            <h1 class="hero-title">Posdata Studio</h1>
+                            <!-- Title moved to global scope for z-index layering -->
                         </div>
 
-                        <div class="hero-main-content">
-                            <div class="hero-visual">
-                                <div class="image-container" id="imageContainer">
-                                    <div class="background-stack">
-                                        <div class="bg-card"><img
-                                                src="{{ url_for('static', filename='assets/images/mountains-polaroid.webp') }}"
-                                                alt="Landscape 1"></div>
-                                        <div class="bg-card"><img
-                                                src="{{ url_for('static', filename='assets/images/flowers-polaroid.webp') }}"
-                                                alt="Landscape 2"></div>
-                                        <div class="bg-card"><img
-                                                src="{{ url_for('static', filename='assets/images/bouquette-polaroid.webp') }}"
-                                                alt="Landscape 3"></div>
-                                    </div>
+                        <!-- Spacer to push content down below fixed title -->
+                        <div class="hero-spacer"></div>
 
-                                    <div class="foreground-stack">
-                                        <div class="fg-card active"><img
-                                                src="{{ url_for('static', filename='assets/images/mountains-polaroid.webp') }}"
-                                                alt="Landscape 1"></div>
-                                        <div class="fg-card"><img
-                                                src="{{ url_for('static', filename='assets/images/flowers-polaroid.webp') }}"
-                                                alt="Landscape 2"></div>
-                                        <div class="fg-card"><img
-                                                src="{{ url_for('static', filename='assets/images/bouquette-polaroid.webp') }}"
-                                                alt="Landscape 3"></div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="hero-main-content">
+                            <!-- Placeholder to keep grid layout -->
+                            <div class="hero-visual-placeholder"></div>
 
                             <div class="hero-content-right">
                                 <img src="{{ url_for('static', filename='assets/images/resources/postcript.svg') }}"
@@ -145,120 +164,67 @@
                         </div>
                     </div>
                 </section>
-            </div>
-            <div class="zoom-image-container">
-                <img src="{{ url_for('static', filename='assets/images/texture-zoomin.png') }}" class="zoom-texture"
-                    alt="Texture Background">
-                <img src="{{ url_for('static', filename='assets/images/postcards-zoomin.webp') }}"
-                    class="zoom-postcards" alt="Postcards Frame">
-            </div>
-            <section class="filetabs-section">
-                <div class="filetabs-container">
-                    <!-- Tab 1: Pink (Back) -->
-                    <div class="filetab filetab-pink">
-                        <img src="{{ url_for('static', filename='assets/images/cream-filetab.webp') }}"
-                            class="filetab-bg" alt="Pink File Tab">
-                        <span class="filetab-label label-pink">Desarrollo web</span>
-                        <div class="filetab-content">
-                            <p class="filetab-desc desc-pink">
-                                Programamos la parte visible y la parte interna de la web. Esto incluye frontend,
-                                backend,
-                                integración y diseño de bases de datos, APIs y sistemas ajenos para lograr un sistema
-                                funcional y escalable.
+
+                <!-- Overlay Section (Black Layer) -->
+                <section class="overlay-section">
+                    <!-- Title matches Hero Title position visually if needed, but here we just need columns -->
+                    <!-- Actually, the reference image shows "Posdata Studio" at the top. 
+                          The user says "El hero-title NO debe ser tapado... debe quedar siempre por encima...".
+                          This implies the "Posdata Studio" text in the overlay is NOT a second text, but the ORIGINAL hero title staying visible.
+                          The reference image SHOWS "Posdata Studio" at the top. This confirms the visual result.
+                          So the overlay section contains the 3 columns. The title "Posdata Studio" is the Hero Title floating on top.
+                     -->
+
+                    <div class="overlay-content">
+                        <!-- Column 1 -->
+                        <div class="overlay-col">
+                            <div class="overlay-col-header">
+                                <span class="col-num">1.</span>
+                                <h3 class="col-title">UX/UI & BRANDING</h3>
+                            </div>
+                            <p class="overlay-desc">
+                                Programamos la parte visible y la parte interna de la web.
+                                Esto incluye frontend, backend, integración y diseño de bases de datos,
+                                APIs y sistemas ajenos para que el sitio funcione, se administre y escale.
                             </p>
                         </div>
-                    </div>
 
-                    <!-- Tab 2: Blue -->
-                    <div class="filetab filetab-blue">
-                        <img src="{{ url_for('static', filename='assets/images/grey-filetab.webp') }}"
-                            class="filetab-bg" alt="Blue File Tab">
-                        <span class="filetab-label label-blue">UX/UI & Branding</span>
-                        <div class="filetab-content">
-                            <p class="filetab-desc desc-blue">
+                        <!-- Column 2 -->
+                        <div class="overlay-col">
+                            <div class="overlay-col-header">
+                                <span class="col-num">2.</span>
+                                <h3 class="col-title">DESARROLLO WEB</h3>
+                            </div>
+                            <p class="overlay-desc">
                                 Diseñamos la experiencia, las pantallas y la identidad visual del sitio y de tu marca,
                                 cuidando cada decisión para que todo funcione en conjunto y sea estético.
                             </p>
                         </div>
-                    </div>
 
-                    <!-- Tab 3: White -->
-                    <div class="filetab filetab-white">
-                        <img src="{{ url_for('static', filename='assets/images/greeny-filetab.webp') }}"
-                            class="filetab-bg" alt="White File Tab">
-                        <span class="filetab-label label-white">Deploy & SEO</span>
-                        <div class="filetab-content">
-                            <p class="filetab-desc desc-white">
-                                Configuramos dominio, hosting y los detalles técnicos necesarios para dejar tu sitio
-                                online
-                                y funcionando. Además, aplicamos optimización SEO para mejorar la visibilidad de tu web
-                                en
-                                buscadores.
+                        <!-- Column 3 -->
+                        <div class="overlay-col">
+                            <div class="overlay-col-header">
+                                <span class="col-num">3.</span>
+                                <h3 class="col-title">DEPLOY & SEO</h3>
+                            </div>
+                            <p class="overlay-desc">
+                                Nos encargamos de dejar tu sitio online y funcionando.
+                                Configuramos el dominio, el hosting y los detalles técnicos necesarios para que
+                                la web esté publicada y lista para usarse.
                             </p>
                         </div>
                     </div>
+                </section>
+            </div>
 
-                    <!-- Tab 4: Green (Front) -->
-                    <div class="filetab filetab-green">
-                        <img src="{{ url_for('static', filename='assets/images/green-filetab.webp') }}"
-                            class="filetab-bg" alt="Green File Tab">
-                        <img src="{{ url_for('static', filename='assets/images/polaroid-services.webp') }}"
-                            class="polaroid-deco polaroid-services" alt="Services Polaroid">
-                        <div class="filetab-content">
-                            <h2 class="filetab-title">
-                                Nuestros <span class="service-word"><img
-                                        src="{{ url_for('static', filename='assets/images/S-services.webp') }}"
-                                        class="s-services-icon" alt="Nuestros servicios">ervicios</span>
-                            </h2>
-                        </div>
-                    </div>
-                </div>
-            </section>
+
         </div>
 
 
 
-        <section id="contact" class="contact">
-            <div class="container fade-in-up">
-                <h2 class="section-title">Hablemos</h2>
-                <p class="contact-description">¿Lista para dar vida
-                    a tu proyecto?
-                    Escríbenos.</p>
 
-                <div class="contact-form-wrapper">
-                    <form id="contactForm" class="contact-form" autocomplete="off">
-                        {{ form.csrf_token }}
-                        <!-- Honeypot field (hidden) -->
-                        <div class="visually-hidden">
-                            {{ form.website(tabindex="-1", autocomplete="off") }}
-                        </div>
 
-                        <div class="form-group">
-                            {{ form.name(class="form-input", placeholder="Tu Nombre") }}
-                        </div>
-                        <div class="form-group">
-                            {{ form.email(class="form-input", placeholder="Tu Email") }}
-                        </div>
-                        <div class="form-group">
-                            {{ form.message(class="form-textarea", placeholder="Cuéntanos sobre tu proyecto...",
-                            rows="4") }}
-                        </div>
 
-                        <div class="form-submit-container">
-                            <button type="submit" class="btn submit-btn">Enviar Mensaje</button>
-                        </div>
-
-                        <div id="formFeedback" class="form-feedback"></div>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-        <footer>
-            <div class="container">
-                <p>&copy; 2025 Posdata Studio. Hecho con cariño.</p>
-            </div>
-        </footer>
 
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous" defer></script>
@@ -266,7 +232,7 @@
         <script src="{{ url_for('static', filename='js/vendors/ScrollTrigger.min.js') }}" defer></script>
         <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
         <script src="{{ url_for('static', filename='js/animations.js') }}" defer></script>
-        <script src="{{ url_for('static', filename='js/contact.js') }}" defer></script>
+
         <script src="{{ url_for('static', filename='js/cursor.js') }}" defer></script>
 </body>
 

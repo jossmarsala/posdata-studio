@@ -6,15 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Header Scroll Visibility Effect (Synced with GSAP)
     const header = document.querySelector('header');
 
-    // We'll use ScrollTrigger to show the header after the Zoom effect wraps up
-    // The previous manual scroll listener is replaced to avoid conflicts with pinning
+    // Header Scroll Visibility Effect Removed
 
-    // Wait for GSAP to be registered (it is registered below, but safe to run logic inside DOMContentLoaded)
-    // We will move the GSAP registration to the top of the file to be safe or ensure this runs after.
-    // Actually, let's keep it simple: simpler manual check considering the pinning duration?
-    // No, ScrollTrigger is cleaner.
-
-    // We'll move this logic down to where we register ScrollTrigger
 
 
     // Intersection Observer for Fade-in Animations
@@ -85,37 +78,80 @@ document.addEventListener('DOMContentLoaded', () => {
             start();
         }
 
-        container.addEventListener("mouseenter", pause);
-        container.addEventListener("mouseleave", resume);
+        // 3D Tilt Effect for Foreground Cards (Ported logic)
+        // Constants
+        const rotateAmplitude = 14;
+        const springEase = "back.out(1.7)"; // Simulating spring stiffness/damping
 
-        start();
-
-        // 3D Tilt Effect for Foreground Cards
-        container.addEventListener('mousemove', (e) => {
+        function handleMouse(e) {
             const rect = container.getBoundingClientRect();
-            const x = e.clientX - rect.left; // x position within the element
-            const y = e.clientY - rect.top;  // y position within the element
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
 
-            // Calculate center of the element
+            // Calculate offsets from center
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
 
-            // Calculate rotation based on cursor position relative to element center
-            // Adjust divisor (20) to control sensitivity/intensity
-            const rotateX = (centerY - y) / 10;
-            const rotateY = (x - centerX) / 10;
+            const offsetX = x - centerX;
+            const offsetY = y - centerY;
 
-            fgCards.forEach(card => {
-                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            });
-        });
+            // Calculate rotation values
+            // RotateX is inverted (movement up -> looks up -> rotate negative X?) 
+            // Standard CSS rotateX: positive tips top away. 
+            // If mouse is at top (negative offsetY), we want top to tip towards us? Or away?
+            // React code: (offsetY / halfHeight) * -rotationAmplitude.
+            // If mouse at bottom (+offsetY), result is negative rotateX.
+            // Let's stick to the provided math.
+            const rotationX = (offsetY / centerY) * -rotateAmplitude;
+            const rotationY = (offsetX / centerX) * rotateAmplitude;
 
-        // Reset on mouse leave
-        container.addEventListener('mouseleave', () => {
+            // Apply to ONLY the active foreground card to prevent clipping with hidden ones
+            const activeCard = container.querySelector('.fg-card.active');
+            if (activeCard) {
+                gsap.to(activeCard, {
+                    rotateX: rotationX,
+                    rotateY: rotationY,
+                    duration: 0.4, // Smooth springy lag
+                    ease: "power2.out", // Smooth easing
+                    overwrite: "auto"
+                });
+            }
+        }
+
+        function handleMouseEnter() {
+            const activeCard = container.querySelector('.fg-card.active');
+            if (activeCard) {
+                gsap.to(activeCard, {
+                    scale: 1.02, // Subtle scale
+                    duration: 0.4,
+                    ease: springEase
+                });
+            }
+            // Pause rotation on hover (existing logic)
+            pause();
+        }
+
+        function handleMouseLeave() {
+            // Reset ALL cards to ensure clean state
             fgCards.forEach(card => {
-                card.style.transform = `rotateX(0deg) rotateY(0deg)`;
+                gsap.to(card, {
+                    rotateX: 0,
+                    rotateY: 0,
+                    scale: 1,
+                    duration: 0.5,
+                    ease: "power3.out"
+                });
             });
-        });
+            // Resume rotation (existing logic)
+            resume();
+        }
+
+        container.addEventListener('mousemove', handleMouse);
+        container.addEventListener('mouseenter', handleMouseEnter);
+        container.addEventListener('mouseleave', handleMouseLeave);
+
+        // Start the rotation loop initially
+        start();
     }
 
 
@@ -167,38 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Filetab Label Animation (Reveal on Scroll)
-    const filetabLabels = document.querySelectorAll('.filetab-label');
-    filetabLabels.forEach(label => {
-        const text = label.textContent.trim();
-        label.textContent = "";
-        text.split("").forEach((char) => {
-            const span = document.createElement("span");
-            span.textContent = char === " " ? "\u00A0" : char;
-            label.appendChild(span);
-        });
 
-        // Set initial state hidden
-        gsap.set(label.querySelectorAll("span"), {
-            clipPath: "inset(100% 0 0 0)"
-        });
-
-        // ScrollTrigger Animation
-        gsap.to(label.querySelectorAll("span"), {
-            scrollTrigger: {
-                trigger: label,
-                start: "top 85%",
-                toggleActions: "play none none reverse"
-            },
-            clipPath: "inset(-20% -20% -20% -20%)",
-            duration: 1.2,
-            ease: "power2.out",
-            stagger: {
-                each: 0.05,
-                from: "start"
-            }
-        });
-    });
 
     // Zoom Intro Effect (GSAP ScrollTrigger)
 
@@ -210,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
             scrollTrigger: {
                 trigger: ".zoom-wrapper",
                 start: "top top",
-                end: "+=150%", // Scroll distance to complete zoom
+                end: "+=400%", // Extended scroll distance for sequential phases
                 pin: true,      // Pin the wrapper
                 scrub: true,    // Smooth scrubbing
                 // markers: true // Debugging
@@ -232,32 +237,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 ease: "power1.inOut",
                 duration: 1
             }, "<")
-            .call(animateHeroTitle, null, 0.08); // Trigger at 50% (scale ~0.95)
+            .call(animateHeroTitle, null, 0.08) // Trigger at 50% (scale ~0.95)
+            // FASE 2: Stacking Overlay
+            // Starts strictly after Phase 1 + Buffer
 
-        // Header Visibility & Title Animation Trigger
-        // Sync header and title appearance with the end of the zoom scroll
-        ScrollTrigger.create({
-            trigger: ".zoom-wrapper",
-            start: "top top",
-            end: "+=100%", // Must match the pinning distance
-            onLeave: () => {
-                header.classList.add('header-visible');
-                // animateHeroTitle(); // Removed to sync with zoom completion
-            },
-            onEnterBack: () => {
-                header.classList.remove('header-visible');
-                // resetHeroTitle(); 
-            },
-            onUpdate: (self) => {
-                // Ensure state is correct if refreshed in middle
-                if (self.progress === 1) {
-                    header.classList.add('header-visible');
-                } else if (self.progress < 1) {
-                    header.classList.remove('header-visible');
-                }
-            }
-        });
+            // 1. Overlay rises
+            .to(".overlay-section", {
+                y: "0%",         // Slide up to cover
+                ease: "none",    // Linear easing for direct scroll control (scrub)
+                duration: 1      // Relative duration in timeline
+            }, ">+1") // STRICT BUFFER: Wait 1s relative time
+
+            // 2. Dissolve Rotating Images
+            // Fade out subtly as overlay rises, BEFORE contact
+            // Images are at z-index 60 (above overlay), so we dissolve them to avoid overlap
+            .to(".hero-visual", {
+                opacity: 0,
+                scale: 0.9,     // Subtle shrinking
+                duration: 0.3,  // Fast fade (user requested "even faster")
+                ease: "power1.in"
+            }, "<-0"); // Start just before overlay rises (almost sync)
+
+        // Header Visibility Logic Removed
+
     }
+
+
+
+    // Actually, let's look at lines 198-203. I can just edit that place.
+    // But here I'm replacing line 208?
+    // Wait, I need to edit the previous replace file call area.
+    // The user wants me to implement this. I will look at the previous content again to be sure.
+    // Lines 198-203 are where the overlay animation is.
+    // I will use `replace_file_content` on that block.
+
 
 
 
@@ -275,32 +288,129 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Mobile Menu Toggle (SVG Logic)
-    const navToggle = document.getElementById('navToggle');
-    const navLinks = document.getElementById('navLinks');
-    const navLinksItems = document.querySelectorAll('.nav-links a');
+    // Mobile Menu Toggle (SVG Logic) - REMOVED
 
-    // Check if we restored the wrapper class, otherwise fallback to body or ignore blur
-    // The previous HTML edit added .blur-target to <main>
-    const blurTarget = document.querySelector('.blur-target');
+    // New Navbar Logic "The Artisan" style
+    const menuBtn = document.getElementById("menu-btn");
+    const dropdown = document.getElementById("dropdown");
+    const content = document.getElementById("content");
+    const navigation = document.getElementById("navigation");
+    let isOpen = false;
 
-    if (navToggle && navLinks) {
-        navToggle.addEventListener('click', (e) => {
-            e.preventDefault();
+    if (menuBtn && dropdown && content && navigation) {
+        menuBtn.addEventListener("click", () => {
+            if (!isOpen) {
+                // Opening the menu: Immediate and synchronized animations
+                const openTimeline = gsap.timeline();
 
-            // Toggle active class on SVG (triggers nav-anim animations)
-            navToggle.classList.toggle('active');
+                // Reset the visibility and position of the h1, p, and links before animating
+                gsap.set(
+                    ".dropdown__section--one h1, .dropdown__section--one p, .dropdown__button", {
+                    opacity: 1,
+                    y: 0
+                }
+                );
 
-            // Toggle active class on Nav Links (triggers visibility)
-            navLinks.classList.toggle('active');
-        });
+                openTimeline
+                    .to(dropdown, {
+                        y: "50vh",
+                        duration: 0.4,
+                        ease: "power2.out"
+                    })
+                    .from(
+                        ".dropdown__section--one h1", {
+                        opacity: 0,
+                        y: 20,
+                        duration: 0.4,
+                        ease: "power2.out",
+                        delay: 0.2 // Start soon after dropdown starts
+                    },
+                        "-=0.3"
+                    ) // Start 0.3 seconds BEFORE the dropdown finishes
+                    .from(
+                        ".dropdown__section--one p", {
+                        opacity: 0,
+                        y: 20,
+                        duration: 0.4,
+                        delay: 0.1, // Start immediately after h1
+                        ease: "power2.out"
+                    },
+                        "-=0.2"
+                    ) // Start 0.2 seconds before dropdown finishes
+                    // Stagger buttons slightly
+                    .from(
+                        ".dropdown__button", {
+                        opacity: 0,
+                        y: 20,
+                        duration: 0.3,
+                        stagger: 0.1, // Stagger the buttons slightly
+                        ease: "power2.out"
+                    },
+                        "-=0.2"
+                    )
+                    .to(
+                        ".divider", {
+                        width: "100%",
+                        duration: 0.2,
+                        ease: "power2.out"
+                    },
+                        "-=0.4"
+                    ); // Sync with other elements
 
-        // Close menu when clicking a link
-        navLinksItems.forEach(link => {
-            link.addEventListener('click', () => {
-                navToggle.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
+                dropdown.classList.add("open"); // Add "open" class for CSS
+                menuBtn.textContent = "CLOSE";
+            } else {
+                // Closing the menu (reverse animations smoothly)
+                const closeTimeline = gsap.timeline();
+
+                closeTimeline
+                    // Reverse animations
+                    .to(".dropdown__button", {
+                        opacity: 0,
+                        y: 20,
+                        duration: 0.3,
+                        stagger: 0.05,
+                        ease: "power2.in"
+                    })
+                    .to(
+                        ".dropdown__section--one p", {
+                        opacity: 0,
+                        y: 20,
+                        duration: 0.3,
+                        ease: "power2.in"
+                    },
+                        "-=0.1"
+                    )
+                    .to(
+                        ".dropdown__section--one h1", {
+                        opacity: 0,
+                        y: 20,
+                        duration: 0.3,
+                        ease: "power2.in"
+                    },
+                        "-=0.1"
+                    )
+                    .to(".divider", {
+                        width: "0%",
+                        duration: 0.4,
+                        ease: "power2.in"
+                    })
+                    // Slide dropdown back up smoothly
+                    .add(() => {
+                        gsap.to(dropdown, {
+                            y: "0",
+                            duration: 0.4,
+                            ease: "power2.in"
+                        });
+                    })
+                    // Update menu button text after animations finish
+                    .add(() => {
+                        dropdown.classList.remove("open");
+                        menuBtn.textContent = "MENU";
+                    });
+            }
+
+            isOpen = !isOpen;
         });
     }
 
