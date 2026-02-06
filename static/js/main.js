@@ -237,6 +237,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 ease: "power1.inOut",
                 duration: 1
             }, "<")
+            // Sync rotating images zoom (zoom in from smaller scale to natural CSS scale)
+            .from(".hero-visual", {
+                scale: 0.9,      // Subtle zoom to match hero title/content
+                transformOrigin: "50% 50%",
+                ease: "power1.inOut",
+                duration: 1
+            }, "<")
             .call(animateHeroTitle, null, 0.08) // Trigger at 50% (scale ~0.95)
             // FASE 2: Stacking Overlay
             // Starts strictly after Phase 1 + Buffer
