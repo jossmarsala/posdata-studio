@@ -244,6 +244,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 ease: "power1.inOut",
                 duration: 1
             }, "<")
+            // Sync hero title zoom
+            .from(".hero-title", {
+                scale: 0.9,
+                transformOrigin: "center center",
+                ease: "power1.inOut",
+                duration: 1
+            }, "<")
             .call(animateHeroTitle, null, 0.08) // Trigger at 50% (scale ~0.95)
             // FASE 2: Stacking Overlay
             // Starts strictly after Phase 1 + Buffer
