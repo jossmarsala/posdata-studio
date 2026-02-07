@@ -284,7 +284,7 @@ ul {
 
 /* Main Content Grid */
 .hero-main-content {
-    margin-top: -135px;
+    margin-top: -120px;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     /* 3 columns to center middle */
@@ -301,13 +301,12 @@ ul {
 }
 
 /* Visual - Image Stack */
-/* Visual - Image Stack */
 .hero-visual {
     /* Moved to global scope */
     position: fixed;
-    top: 48%;
+    top: 50%;
     left: 50%;
-    transform: translate(-48%, -50%);
+    transform: translate(-50%, -50%);
     /* Adjust top to account for spacer offset if needed.
        The spacer pushed content down 250px.
        Grid center was approx below title.
@@ -330,7 +329,6 @@ ul {
     height: 394px;
     /* Match image container height */
 }
-
 
 .image-container {
     position: relative;
@@ -896,8 +894,8 @@ select,
 .loading-text {
     font-family: var(--font-serif);
     font-weight: 300;
-    font-size: 1.2em;
-    letter-spacing: .3em;
+    font-size: 1.2rem;
+    letter-spacing: .2em;
     color: #2c2c2c;
     white-space: nowrap;
     /* width: 0; Removed for GSAP */
@@ -1066,11 +1064,6 @@ select,
     /* Lifts higher than others */
 }
 
-
-
-
-
-/* Filetab Labels */
 /* Filetab Labels */
 .filetab-label {
     position: absolute;
@@ -1341,6 +1334,55 @@ select,
     letter-spacing: 1px;
 }
 
+/* Mobile Dropdown Adaptation */
+@media (max-width: 768px) {
+    .dropdown {
+        width: 100%;
+        height: 100vh;
+        /* Full screen */
+        top: -100vh;
+        padding: 2rem 1.5rem;
+        justify-content: space-evenly;
+        /* Distribute vertical space */
+    }
+
+    .dropdown__section--one {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        height: auto;
+        gap: 1rem;
+    }
+
+    .dropdown__word {
+        font-size: 15vw;
+        /* Larger for mobile */
+    }
+
+    .dropdown__quote {
+        font-size: 1.2rem;
+        max-width: 100%;
+    }
+
+    .dropdown__section--three {
+        height: auto;
+        width: 100%;
+    }
+
+    .dropdown__nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .dropdown__button {
+        font-size: 1.2rem;
+        margin-right: 0;
+        /* Reset margin */
+        padding: 0.5rem;
+    }
+}
+
 /* Content Shift Animation Classes */
 .content {
     /* Base content styles if needed */
@@ -1484,24 +1526,21 @@ select,
     /* Use most of width but bias it */
     max-width: 1300px;
     margin-top: 15vh;
-    margin-left: 6vw;
-    /* "Amucharse hacia la derecha" -> Shift grid left by adding left margin? wait. 
-                         "Amucharse más hacia la izquierda" = Group towards left. 
-                         So yes, add margin-right or constrain left.
-                         I will set margin-left to small, margin-right to auto/large. */
-    margin-right: 15vw;
-    /* Force space on right */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .overlay-col {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    align-items: center;
 }
 
 .overlay-col-header {
     display: flex;
     align-items: baseline;
+    justify-content: center;
     gap: 1.5rem;
     /* More space between number and title */
     border-bottom: 1px solid rgba(255, 255, 255, 0.0);
@@ -1529,7 +1568,7 @@ select,
     line-height: 1.5;
     color: rgba(255, 255, 255, 0.9);
     font-weight: 300;
-    text-align: justify;
+    text-align: center;
     /* Justify text */
 }
 
@@ -1574,7 +1613,8 @@ select,
     .overlay-content {
         grid-template-columns: 1fr;
         gap: 3rem;
-        margin-top: 20vh;
+        gap: 3rem;
+        margin-top: 25vh;
         width: 80%;
         margin-left: auto;
         margin-right: auto;
@@ -1582,17 +1622,17 @@ select,
     }
 
     .overlay-col {
-        align-items: flex-start;
+        align-items: center;
     }
 
     .overlay-desc {
-        text-align: left;
+        text-align: center;
         /* Easier reading on mobile */
     }
 
     /* Hero Visual Scaling for Tablet */
     .hero-visual {
-        transform: translate(-48%, -50%) scale(0.8);
+        transform: translate(-50%, -50%) scale(0.8);
     }
 }
 
@@ -1604,8 +1644,8 @@ select,
         /* Fit single line on screen */
         line-height: 1.1;
         word-spacing: normal;
-        top: 20%;
-        /* Top third */
+        top: 12%;
+        /* Moved up further to 12% */
         transform: translate(-50%, -50%);
         white-space: nowrap;
         /* Keep on one line */
@@ -1614,9 +1654,9 @@ select,
 
     /* Hero Visual: Centered below title */
     .hero-visual {
-        top: 50%;
-        /* Center screen */
-        transform: translate(-48%, -50%) scale(0.6);
+        top: 38%;
+        /* Moved up further (was 45%) */
+        transform: translate(-50%, -50%) scale(0.55);
         z-index: 60;
     }
 
@@ -1628,17 +1668,20 @@ select,
 
     .hero-content-right {
         position: fixed;
-        bottom: 15vh;
+        bottom: 15%;
+        /* Moved up more to 15% */
         left: 50%;
         transform: translateX(-50%);
-        width: 80%;
+        width: 100%;
+        padding: 0 1.5rem;
+        /* More space at sides */
         display: flex;
         flex-direction: row;
         align-items: flex-start;
         gap: 1rem;
-        z-index: 55;
-        mix-blend-mode: difference;
-        color: white;
+        z-index: 50;
+        /* Removed blend mode as requested, handling color directly */
+        color: var(--color-text);
     }
 
     .postscript-svg {
@@ -1647,17 +1690,25 @@ select,
     }
 
     .hero-description {
-        font-size: 0.85rem;
-        line-height: 1.4;
+        font-size: 0.9rem;
+        /* Slightly smaller to fit better */
+        line-height: 1.35;
         text-align: left;
-        color: white;
-        /* Difference mode handles contrast */
+        color: #2c2c2c;
+        /* Dark text as requested */
     }
 
     /* Footer adjustments */
     .hero-footer-strip {
-        padding: 1rem;
+        position: fixed;
+        bottom: 0.5rem;
+        /* Lowered slightly */
+        left: 0;
+        width: 100%;
+        padding: 0 1.5rem;
         justify-content: space-between;
+        z-index: 50;
+        /* Ensure visible */
     }
 
     .footer-edition,
