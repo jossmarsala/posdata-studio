@@ -1,12 +1,12 @@
-// Initialize cursor immediately if possible
+// initialize cursor immediately if possible
 function initCursor() {
     const bigBall = document.querySelector('.cursorball--big');
     const smallBall = document.querySelector('.cursorball--small');
     const hoverables = document.querySelectorAll('a, button, .hover-trigger');
 
-    // Only run if elements exist
+    // only run if elements exist
     if (bigBall && smallBall) {
-        // Move cursor balls
+        // move cursor balls
         document.addEventListener('mousemove', (e) => {
             gsap.to(bigBall, {
                 x: e.clientX - 15,
@@ -23,7 +23,7 @@ function initCursor() {
             });
         });
 
-        // Hover effects (optional bit of polish based on common cursor behaviors)
+        // hover effects
         hoverables.forEach(el => {
             el.addEventListener('mouseenter', () => {
                 gsap.to(bigBall, { scale: 1.5, duration: 0.3 });
@@ -35,7 +35,7 @@ function initCursor() {
     }
 }
 
-// Try initializing immediately
+// try initializing immediately
 if (document.body) {
     initCursor();
 } else {

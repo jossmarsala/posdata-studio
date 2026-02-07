@@ -1,16 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-
-    // Register GSAP ScrollTrigger
+    // register gsap scrolltrigger
     gsap.registerPlugin(ScrollTrigger);
 
-    // Header Scroll Visibility Effect (Synced with GSAP)
     const header = document.querySelector('header');
 
-    // Header Scroll Visibility Effect Removed
-
-
-
-    // Intersection Observer for Fade-in Animations
+    // intersection observer for fade-in animations
     const observerOptions = {
         root: null,
         rootMargin: '0px',
@@ -30,8 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fadeElements.forEach(el => observer.observe(el));
 
 
-    // Image Stack Cycling with Fade
-    // New Image Stack Animation (Rotation + Sequence)
+    // image stack animation
     const container = document.getElementById("imageContainer");
     if (container) {
         const bgCards = container.querySelectorAll(".bg-card");
@@ -40,23 +33,23 @@ document.addEventListener('DOMContentLoaded', () => {
         let interval;
         const timelines = [];
 
-        // Background rotation - Random start rotation to look more natural
+        // background rotation
         bgCards.forEach(card => {
-            // Set initial random rotation so they aren't all aligned
+            // initial random rotation
             gsap.set(card, { rotation: Math.random() * 360 });
 
             const tl = gsap.timeline({ repeat: -1 });
             tl.to(card, {
                 rotate: "+=360",
-                duration: 20 + Math.random() * 5, // Slower rotation for elegance
+                rotate: "+=360",
+                duration: 20 + Math.random() * 5, // slower rotation
                 ease: "none"
             });
             timelines.push(tl);
         });
 
-        // Foreground sequence
+        // foreground sequence
         function nextImage() {
-            // Ensure elements exist before trying to access classList
             if (fgCards.length > 0) {
                 fgCards[index].classList.remove("active");
                 index = (index + 1) % fgCards.length;
@@ -65,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function start() {
-            interval = setInterval(nextImage, 1800); // Slower interval (1.5s) for better viewing
+            interval = setInterval(nextImage, 1800); // slower interval
         }
 
         function pause() {
@@ -78,41 +71,31 @@ document.addEventListener('DOMContentLoaded', () => {
             start();
         }
 
-        // 3D Tilt Effect for Foreground Cards (Ported logic)
-        // Constants
+        // 3d tilt effect
         const rotateAmplitude = 14;
-        const springEase = "back.out(1.7)"; // Simulating spring stiffness/damping
 
         function handleMouse(e) {
             const rect = container.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
 
-            // Calculate offsets from center
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
 
             const offsetX = x - centerX;
             const offsetY = y - centerY;
 
-            // Calculate rotation values
-            // RotateX is inverted (movement up -> looks up -> rotate negative X?) 
-            // Standard CSS rotateX: positive tips top away. 
-            // If mouse is at top (negative offsetY), we want top to tip towards us? Or away?
-            // React code: (offsetY / halfHeight) * -rotationAmplitude.
-            // If mouse at bottom (+offsetY), result is negative rotateX.
-            // Let's stick to the provided math.
             const rotationX = (offsetY / centerY) * -rotateAmplitude;
             const rotationY = (offsetX / centerX) * rotateAmplitude;
 
-            // Apply to ONLY the active foreground card to prevent clipping with hidden ones
+            // apply to active card
             const activeCard = container.querySelector('.fg-card.active');
             if (activeCard) {
                 gsap.to(activeCard, {
                     rotateX: rotationX,
                     rotateY: rotationY,
-                    duration: 0.4, // Smooth springy lag
-                    ease: "power2.out", // Smooth easing
+                    duration: 0.4,
+                    ease: "power2.out",
                     overwrite: "auto"
                 });
             }
@@ -122,17 +105,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const activeCard = container.querySelector('.fg-card.active');
             if (activeCard) {
                 gsap.to(activeCard, {
-                    scale: 1.02, // Subtle scale
+                    scale: 1.02,
                     duration: 0.4,
-                    ease: springEase
+                    ease: "back.out(1.7)"
                 });
             }
-            // Pause rotation on hover (existing logic)
+            // pause rotation on hover
             pause();
         }
 
         function handleMouseLeave() {
-            // Reset ALL cards to ensure clean state
+            // reset all cards
             fgCards.forEach(card => {
                 gsap.to(card, {
                     rotateX: 0,
@@ -142,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ease: "power3.out"
                 });
             });
-            // Resume rotation (existing logic)
+            // resume rotation
             resume();
         }
 
@@ -150,15 +133,14 @@ document.addEventListener('DOMContentLoaded', () => {
         container.addEventListener('mouseenter', handleMouseEnter);
         container.addEventListener('mouseleave', handleMouseLeave);
 
-        // Start the rotation loop initially
+        // start rotation loop
         start();
     }
 
-
-    // Hero Title Reveal Animation Logic (Run on Load)
+    // hero title reveal animation
     const heroTitle = document.querySelector('.hero-title');
     if (heroTitle) {
-        // Split text into spans
+        // split text
         const text = heroTitle.textContent.trim();
         heroTitle.textContent = "";
         text.split("").forEach((char) => {
@@ -167,16 +149,13 @@ document.addEventListener('DOMContentLoaded', () => {
             heroTitle.appendChild(span);
         });
 
-        // Set initial state hidden
+        // set initial state hidden
         gsap.set(".hero-title span", {
             clipPath: "inset(100% 0 0 0)"
         });
-
-        // Animate immediately
-        //animateHeroTitle();
     }
 
-    // Loading Text Reveal (Matches Hero)
+    // loading text reveal
     const loadingText = document.querySelector('.loading-text');
     if (loadingText) {
         const text = loadingText.textContent.trim();
@@ -203,90 +182,82 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
-
-    // Zoom Intro Effect (GSAP ScrollTrigger)
-
+    // zoom intro effect
     const zoomImageContainer = document.querySelector('.zoom-image-container');
 
-    // Only run if elements exist
     if (document.querySelector('.zoom-wrapper') && zoomImageContainer) {
+        // explicitly set transforms to avoid css conflicts
+        gsap.set(".hero-visual", {
+            xPercent: -50,
+            yPercent: -50
+        });
+
         gsap.timeline({
             scrollTrigger: {
                 trigger: ".zoom-wrapper",
                 start: "top top",
-                end: "+=400%", // Extended scroll distance for sequential phases
-                pin: true,      // Pin the wrapper
-                scrub: true,    // Smooth scrubbing
-                // markers: true // Debugging
+                end: "+=250%", // scroll distance for effect
+                pin: true,      // pin wrapper
+                scrub: true,    // smooth scrubbing
             }
         })
             .to(zoomImageContainer, {
-                scale: 50,      // Massive scale to "fly through" the hole
-                z: 350,         // Move along Z-axis
+                scale: 50,      // massive scale
+                z: 350,
                 transformOrigin: "center center",
                 ease: "power1.inOut",
                 duration: 1
             })
-            // Animate the background content from small (zoomed out) to normal (100%)
+            // animate background content
             .fromTo(".zoom-content .hero", {
-                scale: 0.9,     // Start zoomed out (smaller)
+                scale: 0.9,
                 transformOrigin: "center center"
             }, {
-                scale: 1,       // End at natural 100% size
+                scale: 1,
                 ease: "power1.inOut",
                 duration: 1
             }, "<")
-            // Sync rotating images zoom (zoom in from smaller scale to natural CSS scale)
-            .from(".hero-visual", {
-                scale: 0.9,      // Subtle zoom to match hero title/content
+            // sync rotating images zoom
+            .fromTo(".hero-visual", {
+                scale: 0.9,
                 transformOrigin: "50% 50%",
+                xPercent: -48, // ensure stability
+                yPercent: -50
+            }, {
+                scale: 1,
+                transformOrigin: "50% 50%",
+                xPercent: -48, // ensure stability
+                yPercent: -50,
                 ease: "power1.inOut",
                 duration: 1
             }, "<")
-            // Sync hero title zoom
+            // sync hero title zoom
             .from(".hero-title", {
                 scale: 0.9,
                 transformOrigin: "center center",
                 ease: "power1.inOut",
                 duration: 1
             }, "<")
-            .call(animateHeroTitle, null, 0.08) // Trigger at 50% (scale ~0.95)
-            // FASE 2: Stacking Overlay
-            // Starts strictly after Phase 1 + Buffer
+            .call(animateHeroTitle, null, 0.08)
+            // phase 2: stacking overlay
 
-            // 1. Overlay rises
+            // overlay rises
             .to(".overlay-section", {
-                y: "0%",         // Slide up to cover
-                ease: "none",    // Linear easing for direct scroll control (scrub)
-                duration: 1      // Relative duration in timeline
-            }, ">+1") // STRICT BUFFER: Wait 1s relative time
+                y: "0%",
+                ease: "none",
+                duration: 1
+            }, ">+1")
 
-            // 2. Dissolve Rotating Images
-            // Fade out subtly as overlay rises, BEFORE contact
-            // Images are at z-index 60 (above overlay), so we dissolve them to avoid overlap
-            .to(".hero-visual", {
+            // dissolve rotating images and hero content
+            .to([".hero-visual", ".hero-content-right", ".hero-footer-strip"], {
                 opacity: 0,
-                scale: 0.9,     // Subtle shrinking
-                duration: 0.3,  // Fast fade (user requested "even faster")
+                duration: 0.3,
                 ease: "power1.in"
-            }, "<-0"); // Start just before overlay rises (almost sync)
+            }, "<-0")
 
-        // Header Visibility Logic Removed
+
 
     }
-
-
-
-    // Actually, let's look at lines 198-203. I can just edit that place.
-    // But here I'm replacing line 208?
-    // Wait, I need to edit the previous replace file call area.
-    // The user wants me to implement this. I will look at the previous content again to be sure.
-    // Lines 198-203 are where the overlay animation is.
-    // I will use `replace_file_content` on that block.
-
-
-
 
     function animateHeroTitle() {
         if (!heroTitle) return;
@@ -294,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
             clipPath: "inset(-20% -20% -20% -20%)",
             duration: 1.2,
             ease: "power2.out",
-            delay: 0.5, // Small delay for effect
+            delay: 0.5,
             stagger: {
                 each: 0.05,
                 from: "start"
@@ -302,9 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Mobile Menu Toggle (SVG Logic) - REMOVED
-
-    // New Navbar Logic "The Artisan" style
+    // navbar logic
     const menuBtn = document.getElementById("menu-btn");
     const dropdown = document.getElementById("dropdown");
     const content = document.getElementById("content");
@@ -314,10 +283,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (menuBtn && dropdown && content && navigation) {
         menuBtn.addEventListener("click", () => {
             if (!isOpen) {
-                // Opening the menu: Immediate and synchronized animations
+                // opening menu
                 const openTimeline = gsap.timeline();
 
-                // Reset the visibility and position of the h1, p, and links before animating
+                // reset visibility and position
                 gsap.set(
                     ".dropdown__section--one h1, .dropdown__section--one p, .dropdown__button", {
                     opacity: 1,
@@ -340,7 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         delay: 0.2 // Start soon after dropdown starts
                     },
                         "-=0.3"
-                    ) // Start 0.3 seconds BEFORE the dropdown finishes
+                    )
                     .from(
                         ".dropdown__section--one p", {
                         opacity: 0,
@@ -350,14 +319,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         ease: "power2.out"
                     },
                         "-=0.2"
-                    ) // Start 0.2 seconds before dropdown finishes
-                    // Stagger buttons slightly
+                    )
+                    // stagger buttons
                     .from(
                         ".dropdown__button", {
                         opacity: 0,
                         y: 20,
                         duration: 0.3,
-                        stagger: 0.1, // Stagger the buttons slightly
+                        stagger: 0.1,
                         ease: "power2.out"
                     },
                         "-=0.2"
@@ -369,16 +338,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         ease: "power2.out"
                     },
                         "-=0.4"
-                    ); // Sync with other elements
+                    );
 
-                dropdown.classList.add("open"); // Add "open" class for CSS
+                dropdown.classList.add("open");
                 menuBtn.textContent = "CLOSE";
             } else {
-                // Closing the menu (reverse animations smoothly)
+                // closing menu
                 const closeTimeline = gsap.timeline();
 
                 closeTimeline
-                    // Reverse animations
+                    // reverse animations
                     .to(".dropdown__button", {
                         opacity: 0,
                         y: 20,
@@ -409,7 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         duration: 0.4,
                         ease: "power2.in"
                     })
-                    // Slide dropdown back up smoothly
+                    // slide dropdown back up
                     .add(() => {
                         gsap.to(dropdown, {
                             y: "0",
@@ -417,7 +386,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             ease: "power2.in"
                         });
                     })
-                    // Update menu button text after animations finish
+                    // update menu button text
                     .add(() => {
                         dropdown.classList.remove("open");
                         menuBtn.textContent = "MENU";
