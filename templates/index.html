@@ -88,10 +88,22 @@
     <main id="content">
         <h1 class="hero-title">Posdata Studio</h1>
         <div class="zoom-image-container">
-            <img src="{{ url_for('static', filename='assets/images/texture-zoomin.png') }}" class="zoom-texture"
-                alt="Texture Background">
-            <img src="{{ url_for('static', filename='assets/images/postcards-zoomin.webp') }}" class="zoom-postcards"
-                alt="Postcards Frame">
+            <picture>
+                <source media="(max-width: 768px)"
+                    srcset="{{ url_for('static', filename='assets/images/texture-zoomin-mobile.webp') }}">
+                <source media="(max-width: 1024px)"
+                    srcset="{{ url_for('static', filename='assets/images/texture-zoomin-medium.webp') }}">
+                <img src="{{ url_for('static', filename='assets/images/texture-zoomin.png') }}" class="zoom-texture"
+                    alt="Texture Background">
+            </picture>
+            <picture>
+                <source media="(max-width: 768px)"
+                    srcset="{{ url_for('static', filename='assets/images/postcards-zoomin-mobile.webp') }}">
+                <source media="(max-width: 1024px)"
+                    srcset="{{ url_for('static', filename='assets/images/postcards-zoomin-medium.webp') }}">
+                <img src="{{ url_for('static', filename='assets/images/postcards-zoomin.webp') }}"
+                    class="zoom-postcards" alt="Postcards Frame">
+            </picture>
         </div>
 
         <!-- Global Hero Visual (Rotating Images) -->

@@ -840,6 +840,23 @@ ul {
     }
 }
 
+/* Specific adjustment for larger mobiles/small tablets */
+@media (min-width: 650px) and (max-width: 768px) {
+    .image-container {
+        width: 340px;
+        height: 430px;
+    }
+
+    .hero-title {
+        font-size: 22cqi !important;
+    }
+
+    .hero-description {
+        font-size: 1rem !important;
+        max-width: 100% !important;
+    }
+}
+
 
 
 /* Custom Cursor */

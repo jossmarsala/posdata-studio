@@ -192,71 +192,78 @@ document.addEventListener('DOMContentLoaded', () => {
             yPercent: -50
         });
 
-        gsap.timeline({
-            scrollTrigger: {
-                trigger: ".zoom-wrapper",
-                start: "top top",
-                end: "+=250%", // scroll distance for effect
-                pin: true,      // pin wrapper
-                scrub: true,    // smooth scrubbing
-            }
-        })
-            .to(zoomImageContainer, {
-                scale: 50,      // massive scale
-                z: 350,
-                transformOrigin: "center center",
-                ease: "power1.inOut",
-                duration: 1
+        const mm = gsap.matchMedia();
+
+        mm.add("(min-width: 650px) and (max-width: 768px)", () => {
+            createZoomTimeline(0.92); // Reduced zoom for specific range
+        });
+
+        mm.add("(max-width: 649px), (min-width: 769px)", () => {
+            createZoomTimeline(1); // Normal full zoom
+        });
+
+        function createZoomTimeline(targetScale) {
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".zoom-wrapper",
+                    start: "top top",
+                    end: "+=250%", // scroll distance for effect
+                    pin: true,      // pin wrapper
+                    scrub: true,    // smooth scrubbing
+                }
             })
-            // animate background content
-            .fromTo(".zoom-content .hero", {
-                scale: 0.9,
-                transformOrigin: "center center"
-            }, {
-                scale: 1,
-                ease: "power1.inOut",
-                duration: 1
-            }, "<")
-            // sync rotating images zoom
-            .fromTo(".hero-visual", {
-                scale: 0.9,
-                transformOrigin: "50% 50%",
-                xPercent: -48, // ensure stability
-                yPercent: -50
-            }, {
-                scale: 1,
-                transformOrigin: "50% 50%",
-                xPercent: -48, // ensure stability
-                yPercent: -50,
-                ease: "power1.inOut",
-                duration: 1
-            }, "<")
-            // sync hero title zoom
-            .from(".hero-title", {
-                scale: 0.9,
-                transformOrigin: "center center",
-                ease: "power1.inOut",
-                duration: 1
-            }, "<")
-            .call(animateHeroTitle, null, 0.08)
-            // phase 2: stacking overlay
-
-            // overlay rises
-            .to(".overlay-section", {
-                y: "0%",
-                ease: "none",
-                duration: 1
-            }, ">+1")
-
-            // dissolve rotating images and hero content
-            .to([".hero-visual", ".hero-content-right", ".hero-footer-strip"], {
-                opacity: 0,
-                duration: 0.3,
-                ease: "power1.in"
-            }, "<-0")
-
-
-
+                .to(zoomImageContainer, {
+                    scale: 50,      // massive scale
+                    z: 350,
+                    transformOrigin: "center center",
+                    ease: "power1.inOut",
+                    duration: 1
+                })
+                // animate background content
+                .fromTo(".zoom-content .hero", {
+                    scale: 0.9,
+                    transformOrigin: "center center"
+                }, {
+                    scale: 1,
+                    ease: "power1.inOut",
+                    duration: 1
+                }, "<")
+                // sync rotating images zoom
+                .fromTo(".hero-visual", {
+                    scale: 0.9,
+                    transformOrigin: "50% 50%",
+                    xPercent: -48, // ensure stability
+                    yPercent: -50
+                }, {
+                    scale: targetScale,
+                    transformOrigin: "50% 50%",
+                    xPercent: -48, // ensure stability
+                    yPercent: -50,
+                    ease: "power1.inOut",
+                    duration: 1
+                }, "<")
+                // sync hero title zoom
+                .from(".hero-title", {
+                    scale: 0.9,
+                    transformOrigin: "center center",
+                    ease: "power1.inOut",
+                    duration: 1
+                }, "<")
+                .call(animateHeroTitle, null, 0.08)
+                // phase 2: stacking overlay
+                // overlay rises
+                .to(".overlay-section", {
+                    y: "0%",
+                    ease: "none",
+                    duration: 1
+                }, ">+1")
+                // dissolve rotating images and hero content
+                .to([".hero-visual", ".hero-content-right", ".hero-footer-strip"], {
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: "power1.in"
+                }, "<-0");
+        }
     }
 
     function animateHeroTitle() {
