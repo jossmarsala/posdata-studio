@@ -1,5 +1,5 @@
 
-import * as THREE from "https://esm.sh/three@0.160.0";
+import * as THREE from "./vendors/three.module.js";
 
 // scene, camera, renderer
 const scene = new THREE.Scene();
@@ -225,13 +225,14 @@ window.addEventListener("resize", () => {
 window.addEventListener(
     "touchmove",
     (event) => {
-        event.preventDefault();
+        // Only prevent default if we actually need to block scroll (which we don't for background)
+        // event.preventDefault(); 
         const touch = event.touches[0];
         const mouseX = touch.clientX / window.innerWidth;
         const mouseY = 1.0 - touch.clientY / window.innerHeight;
         mouse.set(mouseX, mouseY);
     },
-    { passive: false }
+    { passive: true }
 );
 
 window.addEventListener("touchstart", () => {

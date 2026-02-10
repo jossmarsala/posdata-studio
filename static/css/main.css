@@ -1,4 +1,4 @@
-@import url('variables.css');
+/* @import url('variables.css'); - Moved to HTML for performance */
 
 * {
     margin: 0;
@@ -253,23 +253,28 @@ ul {
 
 /* Title */
 .hero-header {
+    container-type: inline-size;
+    /* Enable Container Queries */
     text-align: center;
     margin-bottom: var(--spacing-lg);
     width: 100%;
     overflow: hidden;
     /* Prevent overflow */
+    padding: 0;
+    /* Remove default padding to maximize width */
 }
 
 .hero-title {
     font-family: var(--font-serif);
-    font-size: 17.5vw;
-    /* Responsive huge size */
+    font-size: 19cqi;
+    /* Maximized size (~19% of container) */
     font-weight: 400;
     line-height: 0.9;
     color: var(--color-text);
     white-space: nowrap;
     /* Prevent line break */
-    letter-spacing: -0.04em;
+    letter-spacing: -0.05em;
+    /* Tighter spacing allows larger font */
     /* Animation setup */
     display: inline-block;
     opacity: 1;
@@ -622,65 +627,39 @@ ul {
 /* Tablet */
 @media (max-width: 1024px) {
     .hero-title {
-        font-size: 16vw;
-        /* Maximized for tablet */
-    }
-
-    .hero-main-content {
-        margin-top: -20px;
-        /* Reduced negative margin, slightly overlapping but cleaner */
-        grid-template-columns: 1fr auto 1fr;
-        gap: 2rem;
-        /* Increased gap to prevent overlap */
-        align-items: center;
-    }
-
-    .image-container {
-        width: 220px;
-        /* Reduced further to prevent overlap */
-        /* Scaled down from 300px for tablet */
-        height: 300px;
-    }
-
-    .hero-content-right {
-        flex-direction: column;
-        justify-content: center;
-        margin-top: 0;
-        padding-left: 2rem;
-    }
-
-    .pd-text-img {
-        margin-right: 0;
-        margin-bottom: var(--spacing-sm);
-    }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-
-    /* SVG Hamburger Menu Removed */
-
-    .hero-title {
-        font-size: 18vw;
-        /* Maximized for mobile */
+        font-size: 21cqi;
+        /* Aggressively large for tablet */
     }
 
     .hero-main-content {
         margin-top: 0;
         grid-template-columns: 1fr;
-        gap: var(--spacing-lg);
+        /* Stack vertically */
+        gap: 0.5rem;
+        /* Minimal gap */
     }
 
     .image-container {
-        width: 200px;
-        height: 260px;
+        width: 280px;
+        height: 360px;
+        /* Slightly smaller as requested */
         margin: 0 auto;
-        /* Ensure centering */
+        /* Center images */
     }
 
-    .hero-visual,
-    .hero-content-right {
-        grid-column: auto;
+    .hero-visual {
+        top: 43%;
+        /* Move up slightly (default is 50%) */
+    }
+
+    .hero-visual-placeholder {
+        display: none;
+        /* Hide duplicate space */
+    }
+
+    .hero-spacer {
+        height: 60vh;
+        /* Increased significantly to push text down further */
     }
 
     .hero-content-right {
@@ -688,12 +667,127 @@ ul {
         align-items: center;
         text-align: center;
         padding-left: 0;
+        margin-top: 0;
+        /* Reset manual margin, spacer handles it */
+        width: 100%;
+        max-width: 600px;
+        /* Match text max-width */
+        margin-left: auto;
+        margin-right: auto;
+        /* Center the block */
+        position: relative;
+        /* Anchor for absolute SVG */
+    }
+
+    .hero-footer-strip {
+        margin-top: 1rem;
+        /* Reduce space above footer */
+        padding-top: 0.5rem;
     }
 
     .pd-text-img {
-        width: 60px;
-        margin-right: 0;
-        margin-bottom: 1rem;
+        position: absolute;
+        top: 10px;
+        /* Float above text block */
+        left: -67px;
+        /* Align to left edge of text block */
+        margin: 0;
+        display: block;
+        width: 50px;
+        /* Slightly smaller to fit gap */
+    }
+
+    .hero-description {
+        text-align: center;
+        width: 100%;
+        /* Fill container */
+        margin: 0;
+        /* Container handles centering */
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+    .hero-wrapper {
+        padding: 0 !important;
+        /* FULL WIDTH: Force removal of wrapper padding */
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    .hero-title {
+        font-size: 20vw !important;
+        /* Fallback for older browsers */
+        font-size: 20cqi !important;
+        /* MASSIVE: 30% of full screen width, forced */
+        margin-top: -2vh;
+        /* Pull up slightly to reduce unwanted top space */
+        width: 100%;
+    }
+
+    .hero-main-content,
+    .hero-footer-strip {
+        padding-left: var(--spacing-md);
+        padding-right: var(--spacing-md);
+        /* Restore padding for inner content */
+    }
+
+    .hero-header {
+        margin-bottom: 0;
+        /* Remove spacer push */
+    }
+
+    .hero-main-content {
+        margin-top: 0;
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        /* Minimal gap */
+    }
+
+    .image-container {
+        width: 280px;
+        height: 360px;
+    }
+
+    .hero-visual {
+        top: 43% !important;
+    }
+
+    .hero-visual,
+    .hero-content-right {
+        grid-column: auto;
+    }
+
+    .hero-spacer {
+        height: 20vh;
+        /* Kept small */
+    }
+
+    .hero-content-right {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding-left: 0;
+        /* Negative margin to pull text up aggressively */
+        width: 100%;
+        max-width: 80%;
+        /* Narrower text on mobile */
+        margin-left: auto;
+        margin-right: auto;
+        /* Ensure centering */
+        position: relative;
+        /* Anchor */
+    }
+
+    .pd-text-img {
+        position: absolute;
+        top: -35px;
+        /* Slightly closer */
+        left: 0;
+        margin: 0;
+        width: 45px;
+        /* Smaller on mobile */
     }
 
     .hero-description {
@@ -703,24 +797,39 @@ ul {
     }
 
     .hero-footer-strip {
-        flex-direction: column;
-        gap: 1rem;
-        align-items: center;
-        padding-bottom: var(--spacing-md);
+        margin-top: 2rem;
     }
 
-    .hero-footer-strip .footer-edition {
-        order: 1;
+    .footer-edition,
+    .footer-signature {
+        height: 10px;
+        /* Smaller on mobile */
+        width: auto;
     }
 
-    .hero-footer-strip .footer-signature {
-        order: 2;
+    .hero-footer-strip {
+        padding-bottom: 1.5rem !important;
+        /* Increase padding to raise SVGs from bottom */
+        /* Keep spacing */
+        flex-direction: row;
+        /* Force row */
+        justify-content: space-between;
+        /* Left, Center, Right */
+        align-items: flex-end;
+        /* Align bottom */
+        gap: 0;
+    }
+
+    .hero-footer-strip .footer-edition,
+    .hero-footer-strip .footer-signature,
+    .hero-footer-strip .copyright {
+        order: unset;
+        margin: 0;
     }
 
     .hero-footer-strip .copyright {
-        order: 3;
-        margin-top: 0.5rem;
-        font-size: 1rem;
+        font-size: 0.9rem;
+        /* Slightly smaller on mobile if needed */
     }
 
     /* Services Mobile */
@@ -734,15 +843,17 @@ ul {
 
 
 /* Custom Cursor */
-body,
-a,
-button,
-input,
-textarea,
-select,
-.btn,
-.service-item,
-.nav-toggle {
+
+
+.custom-cursor-active body,
+.custom-cursor-active a,
+.custom-cursor-active button,
+.custom-cursor-active input,
+.custom-cursor-active textarea,
+.custom-cursor-active select,
+.custom-cursor-active .btn,
+.custom-cursor-active .service-item,
+.custom-cursor-active .nav-toggle {
     cursor: none !important;
 }
 
@@ -1347,11 +1458,8 @@ select,
     }
 
     .dropdown__section--one {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        height: auto;
-        gap: 1rem;
+        display: none;
+        /* Hidden on mobile as requested */
     }
 
     .dropdown__word {
@@ -1365,14 +1473,22 @@ select,
     }
 
     .dropdown__section--three {
-        height: auto;
+        height: 100%;
+        /* Full height to center content if needed, or auto */
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /* Center vertically */
     }
 
     .dropdown__nav {
         flex-direction: column;
         align-items: center;
-        gap: 1.5rem;
+        gap: 2rem;
+        /* Increased gap */
+        margin-top: 20vh;
+        /* Significant white space at the top */
     }
 
     .dropdown__button {

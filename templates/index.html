@@ -7,6 +7,7 @@
     <title>Posdata Studio | Diseño Web</title>
     <link rel="icon" type="image/svg+xml"
         href="{{ url_for('static', filename='assets/images/cursor/lotus-cursor.svg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 
@@ -227,8 +228,7 @@
 
 
 
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous" defer></script>
+        <script src="{{ url_for('static', filename='js/vendors/jquery.min.js') }}" defer></script>
         <script src="{{ url_for('static', filename='js/vendors/gsap.min.js') }}" defer></script>
         <script src="{{ url_for('static', filename='js/vendors/ScrollTrigger.min.js') }}" defer></script>
         <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>

@@ -6,6 +6,7 @@ function initCursor() {
 
     // only run if elements exist
     if (bigBall && smallBall) {
+        document.documentElement.classList.add('custom-cursor-active');
         // move cursor balls
         document.addEventListener('mousemove', (e) => {
             gsap.to(bigBall, {
