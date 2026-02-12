@@ -143,13 +143,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // split text
         const text = heroTitle.textContent.trim();
         heroTitle.textContent = "";
-        text.split("").forEach((char) => {
+        text.split("").forEach((char, index) => {
             const span = document.createElement("span");
             span.textContent = char === " " ? "\u00A0" : char;
+            // Apply retro font to P (0) and S (8)
+            if (index === 0 || index === 8) {
+                span.classList.add("retro-initial");
+            }
             heroTitle.appendChild(span);
         });
 
-        // set initial state hidden
+        // set initial state hidden for all spans
         gsap.set(".hero-title span", {
             clipPath: "inset(100% 0 0 0)"
         });
@@ -268,8 +272,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function animateHeroTitle() {
         if (!heroTitle) return;
-        gsap.to(".hero-title span", {
+        // Animate regular letters
+        gsap.to(".hero-title span:not(.retro-initial)", {
             clipPath: "inset(-20% -20% -20% -20%)",
+            duration: 1.2,
+            ease: "power2.out",
+            delay: 0.5,
+            stagger: {
+                each: 0.05,
+                from: "start"
+            }
+        });
+        // Animate retro initials separately with larger clip-path
+        gsap.to(".hero-title span.retro-initial", {
+            clipPath: "inset(-75% -75% -75% -75%)",
             duration: 1.2,
             ease: "power2.out",
             delay: 0.5,

@@ -12,6 +12,8 @@
 </head>
 
 <body>
+
+
     <!-- Custom Cursor (Top priority) -->
     <div class="cursor">
         <div class="cursorball cursorball--big">
@@ -23,16 +25,15 @@
         </div>
     </div>
 
-    <!-- Loading Screen -->
     <div class="loading-screen">
         <div class="loading-content">
             <div class="loading-logo-group">
-                <!-- Circle SVG -->
+
                 <svg class="loading-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.08 244.28">
                     <path class="logo-path circle-path"
                         d="M86.56,7.36C101.35,2.25,117.07-.23,132.75.17c24.91.63,49.81,8.59,69.78,23.58,19.1,14.33,33.21,34.6,42.59,56.52,8.16,19.07,12.95,40.08,9.92,60.53-3,20.27-13.53,38.81-27.02,54.19-30.73,35.01-79.17,54.9-125.42,47.71C40.87,233.1-7.15,174.09,1.04,111.63,5.75,75.7,26.81,42.3,56.8,22.14c9.22-6.19,19.25-11.15,29.76-14.78ZM36.09,51.23c-7.97,8.98-14.83,18.96-20.28,29.64-8.05,15.76-13.33,33.46-11.61,51.12,2.18,22.48,15.04,40.05,29.86,56.18s28.33,30.93,46.76,41.62c19.91,11.54,38.49,8.11,59.77,4.2,27.02-4.96,50.99-14.37,70.35-34.6,18.75-19.6,30.14-46.06,31.5-73.21,1.17-23.33-4.97-46.95-16.97-67.09-11.25-18.87-27.8-34.83-47.76-44.04-19.98-9.22-42.84-11.43-64.46-7.77-29.85,5.05-57.06,21.32-77.15,43.95Z" />
                 </svg>
-                <!-- Lotus SVG -->
+
                 <svg class="loading-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176.07 165.53">
                     <g>
                         <path class="logo-path"
@@ -86,7 +87,8 @@
     </div>
 
     <main id="content">
-        <h1 class="hero-title">Posdata Studio</h1>
+        <h1 class="hero-title"><span class="retro-initial">P</span>osdata <span class="retro-initial">S</span>tudio
+        </h1>
         <div class="zoom-image-container">
             <picture>
                 <source media="(max-width: 768px)"
@@ -178,23 +180,100 @@
                     </div>
                 </section>
 
-                <!-- Overlay Section (Black Layer) -->
-                <section class="overlay-section">
+                <!-- Services Section (Black Layer) -->
+                \u003c!-- Gallery Section --\u003e
+                \u003csection class=\"gallery-section\"\u003e
+                \u003cdiv class=\"portfolio-grid\" id=\"portfolioGrid\"\u003e
+                \u003cdiv class=\"grid-item grid-item-01\"\u003e
+                \u003cdiv class=\"image-box\"\u003e
+                \u003cimg src=\"{{ url_for('static', filename='assets/images/mountains-polaroid.webp') }}\"
+                alt=\"Project 01\"
+                crossorigin=\"anonymous\"\u003e
+                \u003ccanvas class=\"threejs-canvas\"\u003e\u003c/canvas\u003e
+                \u003c/div\u003e
+                \u003c/div\u003e
+
+                \u003cdiv class=\"grid-item grid-item-03\"\u003e
+                \u003cdiv class=\"image-box\"\u003e
+                \u003cimg src=\"{{ url_for('static', filename='assets/images/flowers-polaroid.webp') }}\" alt=\"Project
+                03\"
+                crossorigin=\"anonymous\"\u003e
+                \u003ccanvas class=\"threejs-canvas\"\u003e\u003c/canvas\u003e
+                \u003c/div\u003e
+                \u003c/div\u003e
+
+                \u003cdiv class=\"grid-item grid-item-05\"\u003e
+                \u003cdiv class=\"image-box\"\u003e
+                \u003cimg src=\"{{ url_for('static', filename='assets/images/bouquette-polaroid.webp') }}\"
+                alt=\"Project 05\"
+                crossorigin=\"anonymous\"\u003e
+                \u003ccanvas class=\"threejs-canvas\"\u003e\u003c/canvas\u003e
+                \u003c/div\u003e
+                \u003c/div\u003e
+
+                \u003cdiv class=\"grid-item grid-item-06\"\u003e
+                \u003cdiv class=\"image-box\"\u003e
+                \u003cimg src=\"{{ url_for('static', filename='assets/images/mountains-polaroid.webp') }}\"
+                alt=\"Project 06\"
+                crossorigin=\"anonymous\"\u003e
+                \u003ccanvas class=\"threejs-canvas\"\u003e\u003c/canvas\u003e
+                \u003c/div\u003e
+                \u003c/div\u003e
+
+                \u003cdiv class=\"grid-item grid-item-09\"\u003e
+                \u003cdiv class=\"image-box\"\u003e
+                \u003cimg src=\"{{ url_for('static', filename='assets/images/flowers-polaroid.webp') }}\" alt=\"Project
+                09\"
+                crossorigin=\"anonymous\"\u003e
+                \u003ccanvas class=\"threejs-canvas\"\u003e\u003c/canvas\u003e
+                \u003c/div\u003e
+                \u003c/div\u003e
+
+                \u003cdiv class=\"grid-item grid-item-11\"\u003e
+                \u003cdiv class=\"image-box\"\u003e
+                \u003cimg src=\"{{ url_for('static', filename='assets/images/bouquette-polaroid.webp') }}\"
+                alt=\"Project 11\"
+                crossorigin=\"anonymous\"\u003e
+                \u003ccanvas class=\"threejs-canvas\"\u003e\u003c/canvas\u003e
+                \u003c/div\u003e
+                \u003c/div\u003e
+
+                \u003cdiv class=\"grid-item grid-item-13\"\u003e
+                \u003cdiv class=\"image-box\"\u003e
+                \u003cimg src=\"{{ url_for('static', filename='assets/images/mountains-polaroid.webp') }}\"
+                alt=\"Project 13\"
+                crossorigin=\"anonymous\"\u003e
+                \u003ccanvas class=\"threejs-canvas\"\u003e\u003c/canvas\u003e
+                \u003c/div\u003e
+                \u003c/div\u003e
+
+                \u003cdiv class=\"grid-item grid-item-17\"\u003e
+                \u003cdiv class=\"image-box\"\u003e
+                \u003cimg src=\"{{ url_for('static', filename='assets/images/flowers-polaroid.webp') }}\" alt=\"Project
+                17\"
+                crossorigin=\"anonymous\"\u003e
+                \u003ccanvas class=\"threejs-canvas\"\u003e\u003c/canvas\u003e
+                \u003c/div\u003e
+                \u003c/div\u003e
+
+                \u003cdiv class=\"grid-item grid-item-20\"\u003e
+                \u003cdiv class=\"image-box\"\u003e
+                \u003cimg src=\"{{ url_for('static', filename='assets/images/bouquette-polaroid.webp') }}\"
+                alt=\"Project 20\"
+                crossorigin=\"anonymous\"\u003e
+                \u003ccanvas class=\"threejs-canvas\"\u003e\u003c/canvas\u003e
+                \u003c/div\u003e
+                \u003c/div\u003e
+                \u003c/div\u003e
+                \u003c/section\u003e <section class="overlay-section">
                     <div id="shader-container" class="shader-bg"></div>
-                    <!-- Title matches Hero Title position visually if needed, but here we just need columns -->
-                    <!-- Actually, the reference image shows "Posdata Studio" at the top. 
-                          The user says "El hero-title NO debe ser tapado... debe quedar siempre por encima...".
-                          This implies the "Posdata Studio" text in the overlay is NOT a second text, but the ORIGINAL hero title staying visible.
-                          The reference image SHOWS "Posdata Studio" at the top. This confirms the visual result.
-                          So the overlay section contains the 3 columns. The title "Posdata Studio" is the Hero Title floating on top.
-                     -->
 
                     <div class="overlay-content">
                         <!-- Column 1 -->
                         <div class="overlay-col">
                             <div class="overlay-col-header">
                                 <span class="col-num">1.</span>
-                                <h3 class="col-title">UX/UI & BRANDING</h3>
+                                <h3 class="col-title">DESARROLLO WEB</h3>
                             </div>
                             <p class="overlay-desc">
                                 Programamos la parte visible y la parte interna de la web.
@@ -207,11 +286,12 @@
                         <div class="overlay-col">
                             <div class="overlay-col-header">
                                 <span class="col-num">2.</span>
-                                <h3 class="col-title">DESARROLLO WEB</h3>
+                                <h3 class="col-title">UX/UI & BRANDING</h3>
                             </div>
                             <p class="overlay-desc">
-                                Diseñamos la experiencia, las pantallas y la identidad visual del sitio y de tu marca,
-                                cuidando cada decisión para que todo funcione en conjunto y sea estético.
+                                Diseñamos la experiencia de usuario, las pantallas y la identidad visual del sitio y de
+                                tu marca,
+                                cuidando cada decisión para que todo funcione en flujos claros y sea estético.
                             </p>
                         </div>
 
@@ -248,6 +328,14 @@
 
         <script type="module" src="{{ url_for('static', filename='js/shader.js') }}" defer></script>
         <script src="{{ url_for('static', filename='js/cursor.js') }}" defer></script>
+        u003cscript type="importmap"u003e
+        {
+        "imports": {
+        "three": "https://esm.sh/three@0.160.0"
+        }
+        }
+        u003c/scriptu003e
+        u003cscript type="module" src="{{ url_for('static', filename='js/gallery.js') }}" deferu003eu003c/scriptu003e
 </body>
 
 </html>

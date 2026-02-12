@@ -1,4 +1,23 @@
-/* @import url('variables.css'); - Moved to HTML for performance */
+@font-face {
+    font-family: 'PF Pixelscript';
+    src: url('../fonts/PF Pixelscript Pro Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.retro-initial {
+    font-family: 'PF Pixelscript', var(--font-serif) !important;
+    font-weight: normal;
+    font-size: 6.5cqi;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .retro-initial {
+        font-size: 6cqi;
+    }
+}
+
 
 * {
     margin: 0;
@@ -266,7 +285,7 @@ ul {
 
 .hero-title {
     font-family: var(--font-serif);
-    font-size: 19cqi;
+    font-size: 18cqi;
     /* Maximized size (~19% of container) */
     font-weight: 400;
     line-height: 0.9;
@@ -281,11 +300,23 @@ ul {
     /* Ensure visibility container */
 }
 
+.blank-letter {
+    display: inline-block;
+    width: 1em;
+    margin: 0 0.1em;
+    line-height: 0;
+    vertical-align: middle;
+    background-color: var(--color-text);
+    color: var(--color-text);
+}
+
 .hero-title span {
     display: inline-block;
     position: relative;
     /* clip-path was causing visibility issues if JS didn't fire. Moved to JS. */
 }
+
+
 
 /* Main Content Grid */
 .hero-main-content {
@@ -627,8 +658,7 @@ ul {
 /* Tablet */
 @media (max-width: 1024px) {
     .hero-title {
-        font-size: 21cqi;
-        /* Aggressively large for tablet */
+        font-size: 14cqi !important;
     }
 
     .hero-main-content {
@@ -717,12 +747,9 @@ ul {
     }
 
     .hero-title {
-        font-size: 20vw !important;
-        /* Fallback for older browsers */
-        font-size: 20cqi !important;
-        /* MASSIVE: 30% of full screen width, forced */
+        font-size: 13.5vw !important;
+        font-size: 13.5cqi !important;
         margin-top: -2vh;
-        /* Pull up slightly to reduce unwanted top space */
         width: 100%;
     }
 
@@ -848,7 +875,7 @@ ul {
     }
 
     .hero-title {
-        font-size: 22cqi !important;
+        font-size: 14cqi !important;
     }
 
     .hero-description {
@@ -1342,7 +1369,7 @@ ul {
 
 /* Navigation */
 .navigation {
-    color: var(--color-foreground);
+    color: #FFFFFF;
     padding: var(--gutter) 0;
     position: fixed;
     width: calc(100% - (3.5 * var(--margin)));
@@ -1643,23 +1670,18 @@ ul {
     width: 100%;
     height: 100%;
     z-index: 1;
-    /* Below content */
     pointer-events: none;
 }
 
 .overlay-content {
     position: relative;
     z-index: 20;
-    /* Above shader and noise */
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 5rem;
-    /* Slightly wider gap */
-    width: 90%;
-    /* Use most of width but bias it */
+    gap: 3rem;
+    width: 80%;
     max-width: 1300px;
-    margin-top: 15vh;
-    margin-left: auto;
+    margin-left: 5vw;
     margin-right: auto;
 }
 
@@ -1701,7 +1723,7 @@ ul {
     line-height: 1.5;
     color: rgba(255, 255, 255, 0.9);
     font-weight: 300;
-    text-align: center;
+    text-align: justify;
     /* Justify text */
 }
 
@@ -1745,7 +1767,6 @@ ul {
     /* Overlay becomes 1 column on Tablet/Mobile */
     .overlay-content {
         grid-template-columns: 1fr;
-        gap: 3rem;
         gap: 3rem;
         margin-top: 25vh;
         width: 80%;
@@ -1851,5 +1872,145 @@ ul {
 
     .copyright {
         font-size: 0.7rem;
+    }
+}/* -------------------------------------------------------------
+   Gallery Section (Polaroid Grid)
+   ------------------------------------------------------------- */
+.gallery-section {
+    padding: var(--spacing-xl) 0;
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    margin-top: 10vh;
+    /* Give some breathing room after hero */
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--spacing-md);
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+    width: 100%;
+}
+
+.grid-item {
+    grid-column: span 4;
+    /* Default: 3 items per row */
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Polaroids Container */
+.image-box {
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+    /* Polaroid typical width */
+    aspect-ratio: 0.8;
+    /* Portrait format like polaroids */
+    background-color: #fff;
+    padding: 1rem 1rem 3rem 1rem;
+    /* Polaroid padding: bottom is larger */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        z-index 0s linear 0.4s;
+    /* Delay z-index reset on mouseout */
+    will-change: transform;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(100%);
+    /* B&W initially */
+    transition: filter 0.5s ease;
+}
+
+/* Three.js Canvas positioning */
+.threejs-canvas {
+    position: absolute !important;
+    top: 1rem !important;
+    left: 1rem !important;
+    width: calc(100% - 2rem) !important;
+    height: calc(100% - 4rem) !important;
+    /* Account for bottom padding */
+    pointer-events: none;
+    opacity: 0;
+    z-index: 5;
+    mix-blend-mode: normal;
+}
+
+/* Hover Effects */
+.image-box:hover {
+    transform: scale(1.05) rotate(0deg) !important;
+    /* Straighten */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    z-index: 20;
+    /* Bring to front */
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        z-index 0s linear 0s;
+    /* Instant z-index on hover */
+}
+
+/* 
+   Scattered Layout via Nth-Child & Transforms 
+   (Assuming specific classes grid-item-XX are not strictly needed 
+   if we use nth-child, or we can target them if present)
+*/
+
+.grid-item:nth-child(odd) .image-box {
+    transform: rotate(2deg);
+}
+
+.grid-item:nth-child(even) .image-box {
+    transform: rotate(-1.5deg);
+}
+
+.grid-item:nth-child(3n) .image-box {
+    transform: rotate(1deg) translateY(20px);
+}
+
+.grid-item:nth-child(3n+1) .image-box {
+    transform: rotate(-2deg) translateY(-20px);
+}
+
+
+/* Tablet (< 1024px) */
+@media (max-width: 1024px) {
+    .grid-item {
+        grid-column: span 6;
+        /* 2 items per row */
+    }
+
+    .gallery-section {
+        padding: var(--spacing-lg) 0;
+    }
+}
+
+/* Mobile (< 768px) */
+@media (max-width: 768px) {
+    .grid-item {
+        grid-column: span 12;
+        /* 1 item per row */
+        margin-bottom: var(--spacing-md);
+    }
+
+    .image-box {
+        max-width: 280px;
+        padding: 0.8rem 0.8rem 2.5rem 0.8rem;
+    }
+
+    .gallery-section {
+        margin-top: 0;
     }
 }
