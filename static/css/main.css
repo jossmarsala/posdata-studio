@@ -249,15 +249,15 @@ ul {
 /* Hero Section - Magazine Layout */
 .hero {
     min-height: 100vh;
-    /*padding-top: var(--spacing-md);*/
     padding-bottom: var(--spacing-md);
-    /* Background handling moved to .zoom-wrapper */
+
+    /* Background texture restricted to here */
+    background-color: var(--color-cream);
+    background-image: url('../assets/images/resources/texture.webp');
+    background-size: cover;
+    background-blend-mode: multiply;
 
     position: relative;
-    /* z-index removed to let it behave naturally (below overlay) */
-    /* Start ABOVE Title (50) for Phase 1 */
-    position: relative;
-    /* z-index removed to let it behave naturally (below overlay) */
 }
 
 .hero-wrapper {
@@ -477,11 +477,7 @@ ul {
     position: relative;
     width: 100%;
     z-index: 1;
-    /* Background moves here to stay full-screen during zoom */
-    background-color: var(--color-cream);
-    background-image: url('../assets/images/resources/texture.webp');
-    background-size: cover;
-    background-blend-mode: multiply;
+    /* Background moved to .hero to limit scope */
     overflow: hidden;
 }
 
@@ -1575,11 +1571,12 @@ ul {
 
 /* Overlay Section */
 /* Overlay Section */
+/* Overlay Section */
 .overlay-section {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     background-color: #232120;
     /* Warm dark/black tone from reference */
@@ -1873,7 +1870,12 @@ ul {
     .copyright {
         font-size: 0.7rem;
     }
-}/* -------------------------------------------------------------
+}
+
+/* -------------------------------------------------------------
+   Gallery Section (Polaroid Grid)
+   ------------------------------------------------------------- */
+/* -------------------------------------------------------------
    Gallery Section (Polaroid Grid)
    ------------------------------------------------------------- */
 .gallery-section {
@@ -1888,7 +1890,7 @@ ul {
 .portfolio-grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    gap: var(--spacing-md);
+    gap: 1rem;
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 var(--spacing-md);
@@ -1896,121 +1898,221 @@ ul {
 }
 
 .grid-item {
-    grid-column: span 4;
-    /* Default: 3 items per row */
-    margin-bottom: var(--spacing-lg);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: relative;
+    margin-bottom: 20vh;
 }
+
+/* Grid Placement */
+.grid-item-01 {
+    grid-column: 1 / 3;
+    transform: rotate(-2deg);
+}
+
+.grid-item-03 {
+    grid-column: 5 / 7;
+    transform: rotate(0deg);
+}
+
+.grid-item-05 {
+    grid-column: 11 / 13;
+    transform: rotate(-4deg);
+}
+
+.grid-item-06 {
+    grid-column: 1 / 3;
+    transform: rotate(2deg);
+}
+
+.grid-item-09 {
+    grid-column: 7 / 12;
+    transform: rotate(-3deg);
+}
+
+.grid-item-11 {
+    grid-column: 1 / 3;
+    transform: rotate(0deg);
+}
+
+.grid-item-13 {
+    grid-column: 5 / 7;
+    transform: rotate(-2deg);
+}
+
+.grid-item-17 {
+    grid-column: 1 / 3;
+    transform: rotate(3deg);
+}
+
+.grid-item-20 {
+    grid-column: 9 / 12;
+    transform: rotate(0deg);
+}
+
 
 /* Polaroids Container */
 .image-box {
+    aspect-ratio: 4 / 5;
+    background: #000;
     position: relative;
-    width: 100%;
-    max-width: 320px;
-    /* Polaroid typical width */
-    aspect-ratio: 0.8;
-    /* Portrait format like polaroids */
-    background-color: #fff;
-    padding: 1rem 1rem 3rem 1rem;
-    /* Polaroid padding: bottom is larger */
+    overflow: hidden;
+    cursor: pointer;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-        box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-        z-index 0s linear 0.4s;
-    /* Delay z-index reset on mouseout */
-    will-change: transform;
-    cursor: pointer;
-    z-index: 1;
+        box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .image-box img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: fill;
+    filter: grayscale(100%) contrast(1.2);
+    transition: filter 0.1s ease-out, opacity 0.6s ease;
     display: block;
-    filter: grayscale(100%);
-    /* B&W initially */
-    transition: filter 0.5s ease;
 }
 
 /* Three.js Canvas positioning */
 .threejs-canvas {
     position: absolute !important;
-    top: 1rem !important;
-    left: 1rem !important;
-    width: calc(100% - 2rem) !important;
-    height: calc(100% - 4rem) !important;
-    /* Account for bottom padding */
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
     pointer-events: none;
     opacity: 0;
     z-index: 5;
     mix-blend-mode: normal;
 }
 
-/* Hover Effects */
-.image-box:hover {
-    transform: scale(1.05) rotate(0deg) !important;
-    /* Straighten */
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-    z-index: 20;
-    /* Bring to front */
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-        box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-        z-index 0s linear 0s;
-    /* Instant z-index on hover */
+.image-number {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 10px;
+    color: #fff;
+    z-index: 5;
+    font-family: monospace;
 }
 
-/* 
-   Scattered Layout via Nth-Child & Transforms 
-   (Assuming specific classes grid-item-XX are not strictly needed 
-   if we use nth-child, or we can target them if present)
-*/
-
-.grid-item:nth-child(odd) .image-box {
-    transform: rotate(2deg);
+.image-title {
+    margin-top: 8px;
+    font-size: 10px;
+    color: #1a1a1a;
+    position: relative;
+    display: inline-block;
+    transition: color 0.2s ease, transform 0.2s ease;
+    font-family: monospace;
+    text-transform: uppercase;
+    --before-opacity: 0;
+    --before-x: -8px;
 }
 
-.grid-item:nth-child(even) .image-box {
-    transform: rotate(-1.5deg);
+.image-title::before {
+    content: "•";
+    position: absolute;
+    left: -12px;
+    opacity: var(--before-opacity);
+    transform: translateX(var(--before-x));
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
-
-.grid-item:nth-child(3n) .image-box {
-    transform: rotate(1deg) translateY(20px);
-}
-
-.grid-item:nth-child(3n+1) .image-box {
-    transform: rotate(-2deg) translateY(-20px);
-}
-
 
 /* Tablet (< 1024px) */
 @media (max-width: 1024px) {
     .grid-item {
-        grid-column: span 6;
-        /* 2 items per row */
+        margin-bottom: 10vh;
     }
 
-    .gallery-section {
-        padding: var(--spacing-lg) 0;
+    /* Reset specific columns for tablet/mobile to be more uniform or 2-col */
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-item-01,
+    .grid-item-03,
+    .grid-item-05,
+    .grid-item-06,
+    .grid-item-09,
+    .grid-item-11,
+    .grid-item-13,
+    .grid-item-17,
+    .grid-item-20 {
+        grid-column: span 1;
     }
 }
 
 /* Mobile (< 768px) */
 @media (max-width: 768px) {
-    .grid-item {
-        grid-column: span 12;
-        /* 1 item per row */
-        margin-bottom: var(--spacing-md);
+    .portfolio-grid {
+        grid-template-columns: 1fr;
     }
 
-    .image-box {
-        max-width: 280px;
-        padding: 0.8rem 0.8rem 2.5rem 0.8rem;
+    .grid-item {
+        grid-column: span 1;
+        margin-bottom: var(--spacing-md);
     }
 
     .gallery-section {
         margin-top: 0;
     }
+}
+
+.hero-title.scrolled-out {
+    position: absolute;
+    transform: translateX(-50%);
+    /* mix-blend-mode persists */
+    /* top is set inline by JS */
+}
+
+/* Infinite Text Loop */
+.travel-wrapper {
+    width: 100vw;
+    /* height not fixed to 100vh to avoid layout issues in flex overlay */
+    overflow: hidden;
+    font-family: var(--font-sans);
+    position: absolute;
+    bottom: 5vh;
+    /* Position at bottom of overlay */
+    left: 0;
+    z-index: 25;
+    /* Above overlay background */
+}
+
+.travel-txt {
+    width: 300vw;
+    /* As requested */
+    font-size: 4.9vw;
+    white-space: nowrap;
+    display: flex;
+    justify-content: space-between;
+    will-change: transform;
+}
+
+.travel-txt__each {
+    cursor: pointer;
+    transition: 0.8s color ease-out;
+    color: rgba(255, 255, 255, 0.4);
+    /* Default style match overlay */
+    padding: 0 2rem;
+}
+
+.travel-txt__each:hover {
+    color: red;
+}
+
+.gallery-section {
+    position: relative;
+    z-index: 5;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+}
+
+.gallery-title {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: clamp(3rem, 13vw, 11rem);
+    text-transform: uppercase;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 4rem;
+    color: var(--color-black);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
 }

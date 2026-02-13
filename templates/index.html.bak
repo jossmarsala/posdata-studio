@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <div class="loading-screen">
+    <!-- <div class="loading-screen">
         <div class="loading-content">
             <div class="loading-logo-group">
 
@@ -61,7 +61,7 @@
                 <p class="loading-text">POSDATA STUDIO</p>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <nav class="navigation" id="navigation">
         <div class="navigation__container">
@@ -181,101 +181,6 @@
                 </section>
 
                 <!-- Services Section (Black Layer) -->
-                <!-- Gallery Section -->
-                <section class="gallery-section">
-                    <h1 class="gallery-title">Galería de proyectos</h1>
-                    <div class="portfolio-grid" id="portfolioGrid">
-                        <div class="grid-item grid-item-01">
-                            <div class="image-box">
-                                <div class="image-number">01</div>
-                                <img src="{{ url_for('static', filename='assets/images/mountains-polaroid.webp') }}"
-                                    alt="Studio Session 01" crossorigin="anonymous">
-                                <canvas class="threejs-canvas"></canvas>
-                            </div>
-                            <div class="image-title">Creative Flow</div>
-                        </div>
-
-                        <div class="grid-item grid-item-03">
-                            <div class="image-box">
-                                <div class="image-number">03</div>
-                                <img src="{{ url_for('static', filename='assets/images/flowers-polaroid.webp') }}"
-                                    alt="Recording Session 03" crossorigin="anonymous">
-                                <canvas class="threejs-canvas"></canvas>
-                            </div>
-                            <div class="image-title">In The Moment</div>
-                        </div>
-
-                        <div class="grid-item grid-item-05">
-                            <div class="image-box">
-                                <div class="image-number">05</div>
-                                <img src="{{ url_for('static', filename='assets/images/bouquette-polaroid.webp') }}"
-                                    alt="Producer Notes 05" crossorigin="anonymous">
-                                <canvas class="threejs-canvas"></canvas>
-                            </div>
-                            <div class="image-title">Deep Focus</div>
-                        </div>
-
-                        <div class="grid-item grid-item-06">
-                            <div class="image-box">
-                                <div class="image-number">06</div>
-                                <img src="{{ url_for('static', filename='assets/images/mountains-polaroid.webp') }}"
-                                    alt="Studio Portrait 06" crossorigin="anonymous">
-                                <canvas class="threejs-canvas"></canvas>
-                            </div>
-                            <div class="image-title">Behind Lens</div>
-                        </div>
-
-                        <div class="grid-item grid-item-09">
-                            <div class="image-box">
-                                <div class="image-number">09</div>
-                                <img src="{{ url_for('static', filename='assets/images/flowers-polaroid.webp') }}"
-                                    alt="Band Session 09" crossorigin="anonymous">
-                                <canvas class="threejs-canvas"></canvas>
-                            </div>
-                            <div class="image-title">Movement Study</div>
-                        </div>
-
-                        <div class="grid-item grid-item-11">
-                            <div class="image-box">
-                                <div class="image-number">11</div>
-                                <img src="{{ url_for('static', filename='assets/images/bouquette-polaroid.webp') }}"
-                                    alt="Console Work 11" crossorigin="anonymous">
-                                <canvas class="threejs-canvas"></canvas>
-                            </div>
-                            <div class="image-title">Process Work</div>
-                        </div>
-
-                        <div class="grid-item grid-item-13">
-                            <div class="image-box">
-                                <div class="image-number">13</div>
-                                <img src="{{ url_for('static', filename='assets/images/mountains-polaroid.webp') }}"
-                                    alt="Live Room 13" crossorigin="anonymous">
-                                <canvas class="threejs-canvas"></canvas>
-                            </div>
-                            <div class="image-title">Raw Energy</div>
-                        </div>
-
-                        <div class="grid-item grid-item-17">
-                            <div class="image-box">
-                                <div class="image-number">17</div>
-                                <img src="{{ url_for('static', filename='assets/images/flowers-polaroid.webp') }}"
-                                    alt="Final Mix 17" crossorigin="anonymous">
-                                <canvas class="threejs-canvas"></canvas>
-                            </div>
-                            <div class="image-title">Final Take</div>
-                        </div>
-
-                        <div class="grid-item grid-item-20">
-                            <div class="image-box">
-                                <div class="image-number">20</div>
-                                <img src="{{ url_for('static', filename='assets/images/bouquette-polaroid.webp') }}"
-                                    alt="Album Complete 20" crossorigin="anonymous">
-                                <canvas class="threejs-canvas"></canvas>
-                            </div>
-                            <div class="image-title">Complete Vision</div>
-                        </div>
-                    </div>
-                </section>
                 <section class="overlay-section">
                     <div id="shader-container" class="shader-bg"></div>
 
@@ -339,14 +244,6 @@
 
         <script type="module" src="{{ url_for('static', filename='js/shader.js') }}" defer></script>
         <script src="{{ url_for('static', filename='js/cursor.js') }}" defer></script>
-        <script type="importmap">
-            {
-                "imports": {
-                    "three": "https://esm.sh/three@0.160.0"
-                }
-            }
-        </script>
-        <script type="module" src="{{ url_for('static', filename='js/gallery.js') }}"></script>
 </body>
 
-</html>q
+</html>

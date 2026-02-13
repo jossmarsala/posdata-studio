@@ -214,6 +214,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     end: "+=250%", // scroll distance for effect
                     pin: true,      // pin wrapper
                     scrub: true,    // smooth scrubbing
+                    onLeave: () => {
+                        const title = document.querySelector('.hero-title');
+                        if (title) {
+                            const rect = title.getBoundingClientRect();
+                            // Set absolute top to current scroll position + current visual top 
+                            // (rect.top should be top offset from viewport, window.scrollY is scroll)
+                            // But since it was fixed, rect.top is the visual position.
+                            // We need it to stay there relative to document.
+                            title.style.top = (window.scrollY + rect.top) + "px";
+                            title.classList.add('scrolled-out');
+                        }
+                    },
+                    onEnterBack: () => {
+                        const title = document.querySelector('.hero-title');
+                        if (title) {
+                            title.classList.remove('scrolled-out');
+                            title.style.top = ""; // Reset to CSS default
+                        }
+                    }
                 }
             })
                 .to(zoomImageContainer, {
@@ -223,8 +242,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     ease: "power1.inOut",
                     duration: 1
                 })
-                // animate background content
-                .fromTo(".zoom-content .hero", {
+                // animate background content (wrapper only, so bg stays static)
+                .fromTo(".zoom-content .hero .hero-wrapper", {
                     scale: 0.9,
                     transformOrigin: "center center"
                 }, {
@@ -421,3 +440,74 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+// Infinite Text Loop Logic
+const travelTxt = document.querySelector('.travel-txt');
+if (travelTxt) {
+    // Initial setup
+    const w = window.innerWidth;
+
+    // Use GSAP (modern syntax)
+    const tweenLoop = gsap.to('.travel-txt', {
+        xPercent: -100,
+        duration: 15,
+        ease: "none",
+        repeat: -1,
+        // Logic to reset is handled by repeat -1 if we have duplicate content seamlessly
+        // But user requested specific logic: check rect left < 0
+        // Since xPercent -100 moves it completely left, standard repeat works if content is duplicated enough.
+        // However, to strictly follow user logic of manual reset:
+        onUpdate: function () {
+            // Determine if we need to reset manually? 
+            // GSAP repeat -1 is cleaner, but let's see user request:
+            // "if( < 0) TweenLoop.play(0)"
+            // This implies non-infinite GSAP tween that gets restarted.
+            // Let's implement seamless loop with GSAP native duplicate/modifier if we can,
+            // OR just use the restart logic.
+        }
+    });
+
+    // Actually, for seamless marquee, xPercent -100 of a 300vw element means it moves 300vw left.
+    // If viewport is 100vw, we need to reset when valid. 
+    // Let's stick to the simplest GSAP infinite loop pattern:
+    // Move -50% (if duplicated) or -33% etc.
+    // User's logic: Move -100, reset when LAST item passes 0.
+    // Let's use the provided logic:
+
+    // Kill previous simple tween and use precise logic
+    tweenLoop.kill();
+
+    const loopAnim = gsap.to('.travel-txt', {
+        xPercent: -33.333, // Move 1/3 since width is 300vw? 
+        // User code: xPercent: -100.
+        // Let's implement exact user request logic with GSAP ticker
+        duration: 15,
+        ease: "none",
+        paused: true // Controlled by ticker
+    });
+
+    const eachTxt = document.querySelectorAll('.travel-txt__each');
+    // User logic: last = length - 4. 
+    // 12 items. last is index 8.
+    const lastItem = eachTxt[eachTxt.length - 4];
+
+    gsap.ticker.add(() => {
+        // Move via tween time? Or use the tween?
+        // User code: TweenLoop.play(0) if distance < 0.
+        // This implies the tween runs, and we blindly reset it.
+
+        // Let's just run the tween:
+        if (!loopAnim.isActive()) loopAnim.play();
+
+        if (lastItem) {
+            const rect = lastItem.getBoundingClientRect();
+            if (rect.left < 0) {
+                loopAnim.play(0);
+            }
+        }
+    });
+
+    // Hover
+    travelTxt.addEventListener('mouseenter', () => loopAnim.pause());
+    travelTxt.addEventListener('mouseleave', () => loopAnim.play());
+}
