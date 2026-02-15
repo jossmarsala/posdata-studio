@@ -4,6 +4,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const header = document.querySelector('header');
 
+    // --- Loader Logic ---
+    const startTime = Date.now();
+    const minLoadTime = 1100; // Animation (0.9s) + Static (0.2s)
+    const loader = document.querySelector('.loading-screen');
+
+    window.addEventListener('load', () => {
+        const elapsedTime = Date.now() - startTime;
+        const remainingTime = Math.max(0, minLoadTime - elapsedTime);
+
+        setTimeout(() => {
+            if (loader) {
+                loader.classList.add('loaded'); // Trigger CSS transition
+            }
+        }, remainingTime);
+    });
+    // --------------------
+
     // intersection observer for fade-in animations
     const observerOptions = {
         root: null,
@@ -176,9 +193,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         gsap.to(".loading-text span", {
             clipPath: "inset(-20% -20% -20% -20%)",
-            duration: 1.2,
+            duration: 0.6, // Even faster (was 0.8)
             ease: "power2.out",
-            delay: 1, // Start after logo
+            delay: 0.1, // Start almost immediately (was 0.2)
             stagger: {
                 each: 0.05,
                 from: "start"
@@ -211,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrollTrigger: {
                     trigger: ".zoom-wrapper",
                     start: "top top",
-                    end: "+=250%", // scroll distance for effect
+                    end: "+=100%", // Increased scroll distance for hold + exit effect (was 100%)
                     pin: true,      // pin wrapper
                     scrub: true,    // smooth scrubbing
                     onLeave: () => {
@@ -285,7 +302,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     opacity: 0,
                     duration: 0.3,
                     ease: "power1.in"
-                }, "<-0");
+                }, "<-0")
+                // HOLD PHASE: Keep it static for a while
+                .to({}, { duration: 1.5 })
+                // EXIT PHASE: Zoom out (scale down)
+                .to(".overlay-section", {
+                    scale: 0.9,
+                    borderRadius: "20px", // Optional: adds to the "card" feel if they want
+                    transformOrigin: "center center",
+                    ease: "power1.inOut",
+                    duration: 1
+                })
+                .to(".hero-title", {
+                    scale: 0.9,
+                    transformOrigin: "center center",
+                    ease: "power1.inOut",
+                    duration: 1
+                }, "<");
         }
     }
 
