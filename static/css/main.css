@@ -33,12 +33,18 @@ img {
 
 body {
     font-family: var(--font-sans);
-    background-color: var(--color-bg);
+    background-color: var(--color-cream);
     color: var(--color-text);
     line-height: 1.6;
     overflow-x: hidden;
     position: relative;
     scroll-behavior: smooth;
+
+    /* Global Repeating Texture */
+    background-image: url('../assets/images/resources/texture.webp');
+    background-repeat: repeat-y;
+    background-size: 100% auto;
+    background-blend-mode: multiply;
 }
 
 /* Paper Texture Overlay */
@@ -251,11 +257,8 @@ ul {
     min-height: 100vh;
     padding-bottom: var(--spacing-md);
 
-    /* Background texture restricted to here */
-    background-color: var(--color-cream);
-    background-image: url('../assets/images/resources/texture.webp');
-    background-size: cover;
-    background-blend-mode: multiply;
+    /* Background texture moved to body for global repeat */
+    /* background-color: var(--color-cream); handled in body */
 
     position: relative;
 }
@@ -2121,6 +2124,35 @@ ul {
     display: flex;
     justify-content: space-between;
     will-change: transform;
+}
+
+/* Gallery Section */
+.gallery-section {
+    padding: var(--spacing-md);
+    padding-top: var(--spacing-lg);
+    position: relative;
+    z-index: 5;
+}
+
+.gallery-title {
+    font-family: var(--font-sans);
+    font-size: clamp(2rem, 5vw, 4rem);
+    /* Fluid sizing */
+    text-transform: uppercase;
+    margin-bottom: var(--spacing-md);
+    text-align: left;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    /* Prevent overflow */
+    line-height: 1.1;
+}
+
+/* Ensure retro-initials scale nicely within the title */
+.gallery-title .retro-initial {
+    font-size: 0.8em;
+    /* Reduced from 1.3em as requested */
+    vertical-align: middle;
+    line-height: 0.8;
 }
 
 .travel-txt__each {
