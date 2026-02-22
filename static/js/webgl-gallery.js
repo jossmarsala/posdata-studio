@@ -66,14 +66,8 @@ const updateCameraFov = () => {
 camera.position.z = 3.5;
 updateCameraFov();
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
-scene.add(ambientLight);
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-directionalLight.position.set(0, 1, 1);
-scene.add(directionalLight);
-
 const settings = {
-    wheelSensitivity: 0.05,
+    wheelSensitivity: 0.1,
     touchSensitivity: 0.05,
     momentumMultiplier: 2.5,
     smoothing: 0.1,
@@ -93,7 +87,8 @@ const settings = {
     directionInfluence: 0.4,
     waveAmplitudeBoost: 0.2,
     directionChangeThreshold: 0.02,
-    directionSmoothing: 0.03
+    directionSmoothing: 0.03,
+    autoScrollSpeed: 0.005
 };
 
 const pane = new Pane();
@@ -147,25 +142,18 @@ let movementDirection = new THREE.Vector2(0, 0);
 let lastMovementInput = 0;
 let accumulatedMovement = 0;
 
-const pointLight = new THREE.PointLight(0xffffff, 2, 10);
-pointLight.position.set(0, 0, 2);
-scene.add(pointLight);
-
 const galleryInteractive = document.querySelector('.gallery-interactive');
 
 if (galleryInteractive) {
 
     galleryInteractive.addEventListener("mousemove", (e) => {
         const rect = galleryInteractive.getBoundingClientRect();
-        const mouseX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-        const mouseY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-        pointLight.position.x = mouseX * 3;
-        pointLight.position.y = mouseY * 2;
+        // Mouse interaction for light removed as it's no longer used
     });
 
     const imageUrls = [
         "https://cdn.cosmos.so/2f49a117-05e7-4ae9-9e95-b9917f970adb?format=jpeg",
-        "/static/assets/images/poster-gypsy.webp",
+        "/static/assets/images/gypsy-poster.webp",
         "https://cdn.cosmos.so/f733585a-081e-48e7-a30e-e636446f2168?format=jpeg",
         "https://cdn.cosmos.so/47caf8a0-f456-41c5-98ea-6d0476315731?format=jpeg",
         "https://cdn.cosmos.so/f99f8445-6a19-4a9a-9de3-ac382acc1a3f?format=jpeg"
@@ -210,17 +198,44 @@ if (galleryInteractive) {
         return texture;
     };
 
+    const createShadowTexture = () => {
+        const size = 512;
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+
+        const gradient = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+        gradient.addColorStop(0, 'rgba(0,0,0,0.6)');
+        gradient.addColorStop(0.5, 'rgba(0,0,0,0.2)');
+        gradient.addColorStop(1, 'rgba(0,0,0,0)');
+
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, size, size);
+
+        return new THREE.CanvasTexture(canvas);
+    };
+
+    const shadowTexture = createShadowTexture();
+
     const createSlide = (index) => {
         const geometry = new THREE.PlaneGeometry(slideWidth, slideHeight, 64, 32);
-        const material = new THREE.MeshPhysicalMaterial({
-            color: 0xffffff,
+        const material = new THREE.MeshBasicMaterial({
             side: THREE.DoubleSide,
-            metalness: 0.2,
-            roughness: 0.8,
-            clearcoat: 0.4,
-            clearcoatRoughness: 0.3
+            transparent: true
         });
         const mesh = new THREE.Mesh(geometry, material);
+
+        const shadowMaterial = new THREE.MeshBasicMaterial({
+            map: shadowTexture,
+            transparent: true,
+            opacity: 0.8,
+            side: THREE.DoubleSide
+        });
+        const shadowMesh = new THREE.Mesh(geometry, shadowMaterial);
+        shadowMesh.position.z = -0.05;
+        shadowMesh.scale.set(1.2, 1.2, 1.0);
+        mesh.add(shadowMesh);
         mesh.position.x = index * (slideWidth + gap);
         mesh.userData = {
             originalVertices: [...geometry.attributes.position.array],
@@ -530,8 +545,11 @@ if (galleryInteractive) {
         lastTime = time;
         globalTime += deltaTime;
 
-        pointLight.color.set(0xffffff);
         const prevPos = currentPosition;
+
+        if (!isDragging) {
+            targetPosition += settings.autoScrollSpeed;
+        }
 
         if (isScrolling) {
             targetPosition += autoScrollSpeed;
