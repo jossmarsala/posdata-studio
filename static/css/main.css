@@ -18,7 +18,6 @@
     }
 }
 
-
 * {
     margin: 0;
     padding: 0;
@@ -107,6 +106,25 @@ ul {
     background: var(--color-primary);
     border-color: var(--color-primary);
     color: var(--color-white);
+}
+
+/* SoC State Classes */
+.u-hidden {
+    display: none !important;
+}
+
+.u-visible {
+    display: block !important;
+}
+
+.is-initialized {
+    opacity: 1 !important;
+}
+
+.u-flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Animations */
@@ -236,8 +254,6 @@ ul {
     color: var(--color-text);
 }
 
-
-
 .dropdown__section--one h1,
 .dropdown__section--one p,
 .dropdown__button {
@@ -258,7 +274,6 @@ ul {
     padding-bottom: var(--spacing-md);
 
     /* Background texture moved to body for global repeat */
-    /* background-color: var(--color-cream); handled in body */
 
     position: relative;
 }
@@ -303,30 +318,18 @@ ul {
     /* Ensure visibility container */
 }
 
-.blank-letter {
-    display: inline-block;
-    width: 1em;
-    margin: 0 0.1em;
-    line-height: 0;
-    vertical-align: middle;
-    background-color: var(--color-text);
-    color: var(--color-text);
-}
-
 .hero-title span {
     display: inline-block;
     position: relative;
-    /* clip-path was causing visibility issues if JS didn't fire. Moved to JS. */
+
 }
-
-
 
 /* Main Content Grid */
 .hero-main-content {
     margin-top: -120px;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
-    /* 3 columns to center middle */
+
     gap: var(--spacing-lg);
     align-items: center;
     position: relative;
@@ -346,27 +349,18 @@ ul {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* Adjust top to account for spacer offset if needed.
-       The spacer pushed content down 250px.
-       Grid center was approx below title.
-       Let's try center screen first, maybe nudge down. */
 
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 60;
-    /* Above Title (50) and Overlay (20) */
     pointer-events: none;
-    /* Let clicks pass */
 }
 
-/* Placeholder in grid to maintain layout */
 .hero-visual-placeholder {
     grid-column: 2;
     width: 310px;
-    /* Match image container width */
     height: 394px;
-    /* Match image container height */
 }
 
 .image-container {
@@ -379,9 +373,7 @@ ul {
     /* Essential for 3D tilt */
     transform-style: preserve-3d;
     pointer-events: auto;
-    /* Re-enable mouse interaction for tilt */
     cursor: pointer;
-    /* Visual cue */
 }
 
 .background-stack,
@@ -428,7 +420,7 @@ ul {
     object-fit: contain;
     display: block;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    /* Border optional, user didn't have it in code but old design did in comments */
+
 }
 
 .fg-card {
@@ -480,7 +472,7 @@ ul {
     position: relative;
     width: 100%;
     z-index: 1;
-    /* Background moved to .hero to limit scope */
+
     overflow: hidden;
 }
 
@@ -489,10 +481,6 @@ ul {
     width: 100%;
     z-index: 1;
 }
-
-/*.zoom-content {
-    Removed overflow-x: hidden to prevent double scrollbar 
-}*/
 
 .zoom-image-container {
     width: 100%;
@@ -598,8 +586,6 @@ ul {
 
 /* Responsive */
 
-
-
 /* General Components */
 .section-title {
     font-size: 2.5rem;
@@ -614,279 +600,7 @@ ul {
 
 /* About Section Styles Removed */
 
-
-
-/* Services */
-.services {
-    padding: var(--spacing-xl) 0;
-}
-
-.service-list {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.service-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: var(--spacing-md) 0;
-    border-bottom: 1px solid var(--color-accent);
-    cursor: pointer;
-    transition: padding 0.3s ease;
-}
-
-.service-item:hover {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    border-color: var(--color-primary);
-}
-
-.service-name {
-    font-family: var(--font-serif);
-    font-size: 2rem;
-}
-
-.service-desc {
-    color: var(--color-secondary);
-}
-
-
-
-/* Mobile */
-/* Tablet */
-@media (max-width: 1024px) {
-    .hero-title {
-        font-size: 14cqi !important;
-    }
-
-    .hero-main-content {
-        margin-top: 0;
-        grid-template-columns: 1fr;
-        /* Stack vertically */
-        gap: 0.5rem;
-        /* Minimal gap */
-    }
-
-    .image-container {
-        width: 280px;
-        height: 360px;
-        /* Slightly smaller as requested */
-        margin: 0 auto;
-        /* Center images */
-    }
-
-    .hero-visual {
-        top: 43%;
-        /* Move up slightly (default is 50%) */
-    }
-
-    .hero-visual-placeholder {
-        display: none;
-        /* Hide duplicate space */
-    }
-
-    .hero-spacer {
-        height: 60vh;
-        /* Increased significantly to push text down further */
-    }
-
-    .hero-content-right {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding-left: 0;
-        margin-top: 0;
-        /* Reset manual margin, spacer handles it */
-        width: 100%;
-        max-width: 600px;
-        /* Match text max-width */
-        margin-left: auto;
-        margin-right: auto;
-        /* Center the block */
-        position: relative;
-        /* Anchor for absolute SVG */
-    }
-
-    .hero-footer-strip {
-        margin-top: 1rem;
-        /* Reduce space above footer */
-        padding-top: 0.5rem;
-    }
-
-    .pd-text-img {
-        position: absolute;
-        top: 10px;
-        /* Float above text block */
-        left: -67px;
-        /* Align to left edge of text block */
-        margin: 0;
-        display: block;
-        width: 50px;
-        /* Slightly smaller to fit gap */
-    }
-
-    .hero-description {
-        text-align: center;
-        width: 100%;
-        /* Fill container */
-        margin: 0;
-        /* Container handles centering */
-    }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-
-    .hero-wrapper {
-        padding: 0 !important;
-        /* FULL WIDTH: Force removal of wrapper padding */
-        width: 100% !important;
-        max-width: none !important;
-    }
-
-    .hero-title {
-        font-size: 13.5vw !important;
-        font-size: 13.5cqi !important;
-        margin-top: -2vh;
-        width: 100%;
-    }
-
-    .hero-main-content,
-    .hero-footer-strip {
-        padding-left: var(--spacing-md);
-        padding-right: var(--spacing-md);
-        /* Restore padding for inner content */
-    }
-
-    .hero-header {
-        margin-bottom: 0;
-        /* Remove spacer push */
-    }
-
-    .hero-main-content {
-        margin-top: 0;
-        grid-template-columns: 1fr;
-        gap: 0.5rem;
-        /* Minimal gap */
-    }
-
-    .image-container {
-        width: 280px;
-        height: 360px;
-    }
-
-    .hero-visual {
-        top: 43% !important;
-    }
-
-    .hero-visual,
-    .hero-content-right {
-        grid-column: auto;
-    }
-
-    .hero-spacer {
-        height: 20vh;
-        /* Kept small */
-    }
-
-    .hero-content-right {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding-left: 0;
-        /* Negative margin to pull text up aggressively */
-        width: 100%;
-        max-width: 80%;
-        /* Narrower text on mobile */
-        margin-left: auto;
-        margin-right: auto;
-        /* Ensure centering */
-        position: relative;
-        /* Anchor */
-    }
-
-    .pd-text-img {
-        position: absolute;
-        top: -35px;
-        /* Slightly closer */
-        left: 0;
-        margin: 0;
-        width: 45px;
-        /* Smaller on mobile */
-    }
-
-    .hero-description {
-        text-align: center;
-        max-width: 100%;
-        padding: 0 var(--spacing-sm);
-    }
-
-    .hero-footer-strip {
-        margin-top: 2rem;
-    }
-
-    .footer-edition,
-    .footer-signature {
-        height: 10px;
-        /* Smaller on mobile */
-        width: auto;
-    }
-
-    .hero-footer-strip {
-        padding-bottom: 1.5rem !important;
-        /* Increase padding to raise SVGs from bottom */
-        /* Keep spacing */
-        flex-direction: row;
-        /* Force row */
-        justify-content: space-between;
-        /* Left, Center, Right */
-        align-items: flex-end;
-        /* Align bottom */
-        gap: 0;
-    }
-
-    .hero-footer-strip .footer-edition,
-    .hero-footer-strip .footer-signature,
-    .hero-footer-strip .copyright {
-        order: unset;
-        margin: 0;
-    }
-
-    .hero-footer-strip .copyright {
-        font-size: 0.9rem;
-        /* Slightly smaller on mobile if needed */
-    }
-
-    /* Services Mobile */
-    .service-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-    }
-}
-
-/* Specific adjustment for larger mobiles/small tablets */
-@media (min-width: 650px) and (max-width: 768px) {
-    .image-container {
-        width: 340px;
-        height: 430px;
-    }
-
-    .hero-title {
-        font-size: 14cqi !important;
-    }
-
-    .hero-description {
-        font-size: 1rem !important;
-        max-width: 100% !important;
-    }
-}
-
-
-
 /* Custom Cursor */
-
 
 .custom-cursor-active body,
 .custom-cursor-active a,
@@ -894,9 +608,7 @@ ul {
 .custom-cursor-active input,
 .custom-cursor-active textarea,
 .custom-cursor-active select,
-.custom-cursor-active .btn,
-.custom-cursor-active .service-item,
-.custom-cursor-active .nav-toggle {
+.custom-cursor-active .btn {
     cursor: none !important;
 }
 
@@ -911,7 +623,6 @@ ul {
     z-index: 1000;
 }
 
-/* Specific sizing for the new cursor images */
 .cursorball--big img {
     width: 49px;
     height: auto;
@@ -929,17 +640,11 @@ ul {
     left: 0;
     width: 100%;
     height: 100%;
-    /* Start full height */
+    background: var(--color-bg);
     backdrop-filter: blur(20px);
-    background: #FAFAF5;
-    /* Light Cream */
     z-index: 9999;
-    /* animation: loading-exit 1s ease forwards; Removed for JS control */
-    /* animation-delay: 4s; Removed */
     transition: opacity 0.5s ease, visibility 0.5s;
-    /* Smooth exit */
     overflow: hidden;
-    /* Ensure clean exit */
     user-select: none;
     display: flex;
     justify-content: center;
@@ -978,23 +683,6 @@ ul {
     align-items: center;
 }
 
-.loading-content {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    /* Side by side */
-    gap: 1.5rem;
-    /* Increased gap slightly */
-    animation: content-fade-in 0.6s ease;
-    /* Faster (was 0.8s) */
-    animation-delay: 0.1s;
-    /* Faster (was 0.5s) */
-    opacity: 0;
-    animation-fill-mode: forwards;
-}
-
 /* Logo Group Styles */
 .loading-logo-group {
     position: relative;
@@ -1005,7 +693,7 @@ ul {
     align-items: center;
     opacity: 0;
     animation: logo-reveal 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-    /* Faster (was 0.8s) */
+
     animation-delay: 0.1s;
     flex-shrink: 0;
     /* Prevent shrinking when text expands */
@@ -1021,9 +709,9 @@ ul {
     stroke-dasharray: 1000;
     stroke-dashoffset: 1000;
     animation: dash 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards, fill-in 0.3s ease forwards;
-    /* Ultra fast: dash 0.6s, fill 0.3s */
+
     animation-delay: 0.1s, 0.6s;
-    /* Delays: dash starts at 0.1, fill at 0.6 */
+
     /* Draw first, then fill */
 }
 
@@ -1063,8 +751,7 @@ ul {
     letter-spacing: .2em;
     color: #2c2c2c;
     white-space: nowrap;
-    /* width: 0; Removed for GSAP */
-    /* overflow: hidden; Removed for GSAP */
+
 }
 
 /* For GSAP Split Text */
@@ -1146,228 +833,6 @@ ul {
     }
 }
 
-/* Services Section */
-.filetabs-section {
-    padding: var(--spacing-xl) 0;
-    margin-top: -100px;
-    /* Slight overlap with previous section or just spacing adjustment */
-    position: relative;
-    z-index: 10;
-    overflow: hidden;
-}
-
-.filetabs-container {
-    width: 100vw;
-    /* Full width */
-    margin: 0;
-    position: relative;
-    display: flex;
-    /* Stack them vertically essentially, but we use absolute for overlap control or negative margins */
-    flex-direction: column;
-    align-items: center;
-}
-
-.filetab {
-    position: relative;
-    width: 100%;
-    /* Ensure it takes full width of container */
-    display: flex;
-    justify-content: center;
-    /* Center the image */
-    margin-top: -280px;
-    /* This creates the overlap */
-    transition: transform 0.5s ease-in-out;
-    /* Smooth animation */
-}
-
-.filetab.shifted {
-    transform: translateY(70px);
-    /* Push down slightly to reveal content behind */
-}
-
-.filetab:first-child {
-    margin-top: 0;
-}
-
-.filetab-bg {
-    width: 100%;
-    /* Occupy full width */
-    height: auto;
-    display: block;
-    object-fit: cover;
-    /* Subtle shadow for depth */
-}
-
-.filetab-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* Center text content too */
-    padding: 3rem;
-    z-index: 2;
-}
-
-/* Specific Stacking & Tuning */
-.filetab-pink {
-    z-index: 1;
-    bottom: 10px;
-}
-
-.filetab-blue {
-    z-index: 2;
-    bottom: 20px;
-}
-
-.filetab-white {
-    z-index: 3;
-    bottom: 20px;
-    /* Lifts higher than others */
-}
-
-/* Filetab Labels */
-.filetab-label {
-    position: absolute;
-    top: 30px;
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: 2rem;
-    z-index: 5;
-    pointer-events: none;
-    transform: translateX(-50%);
-    /* Centers text relative to left positioning */
-    white-space: nowrap;
-}
-
-.label-pink {
-    left: 23%;
-    /* Centered on left tab */
-    color: var(--color-bordeaux);
-}
-
-.label-blue {
-    left: auto;
-    right: 20%;
-    transform: translateX(50%);
-    /* Centers text relative to right positioning */
-    color: #4a6a74;
-}
-
-.label-white {
-    left: 14%;
-    /* White tab seems further left */
-    color: #5d665e;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .filetabs-section {
-        margin-top: 0;
-        padding: var(--spacing-lg) 0;
-    }
-
-    .filetab {
-        margin-top: -60px;
-        /* Less overlap on mobile */
-    }
-
-    .filetab-label {
-        font-size: 1.2rem;
-        /* Smaller font */
-        top: 25px;
-    }
-
-    .label-pink {
-        left: 25%;
-    }
-
-    .label-blue {
-        right: 25%;
-    }
-
-    .label-white {
-        left: 10%;
-    }
-
-
-    .filetab-content {
-        padding: 1.5rem;
-    }
-}
-
-/* Polaroids */
-.polaroid-deco {
-    position: absolute;
-    z-index: 6;
-    pointer-events: none;
-}
-
-
-
-/* Filetab Descriptions */
-.filetab-desc {
-    font-family: var(--font-sans);
-    font-size: 1.1rem;
-    line-height: 1.5;
-    color: #4a4a4a;
-    /* Dark gray/brown */
-    /* Keep reasonable width */
-    margin-top: 60px;
-    /* Push down from top */
-}
-
-.desc-pink {
-    align-self: flex-start;
-    max-width: 47%;
-    margin-left: 10%;
-    color: #5d4a46;
-    /* Brownish for pink tab */
-}
-
-.desc-blue {
-    align-self: flex-end;
-    margin-right: 15%;
-    text-align: right;
-    max-width: 40%;
-    color: #4a5d66;
-    /* Slate for blue tab */
-}
-
-.desc-white {
-    align-self: flex-start;
-    margin-left: 7%;
-    color: #4d5750;
-    max-width: 50%;
-    /* Greenish gray for white tab */
-}
-
-@media (max-width: 768px) {
-    .filetab-desc {
-        font-size: 0.9rem;
-        max-width: 80%;
-        margin-top: 40px;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center;
-        align-self: center;
-    }
-
-    .desc-pink,
-    .desc-blue,
-    .desc-white {
-        margin-left: 0;
-        margin-right: 0;
-    }
-}
-
-/* 
-    NAVIGATION REDESIGN (The Artisan) 
-    Mapping new variables to existing design system
-*/
 :root {
     --color-foreground: var(--color-text);
     --color-background: var(--color-bg);
@@ -1500,58 +965,6 @@ ul {
 }
 
 /* Mobile Dropdown Adaptation */
-@media (max-width: 768px) {
-    .dropdown {
-        width: 100%;
-        height: 100vh;
-        /* Full screen */
-        top: -100vh;
-        padding: 2rem 1.5rem;
-        justify-content: space-evenly;
-        /* Distribute vertical space */
-    }
-
-    .dropdown__section--one {
-        display: none;
-        /* Hidden on mobile as requested */
-    }
-
-    .dropdown__word {
-        font-size: 15vw;
-        /* Larger for mobile */
-    }
-
-    .dropdown__quote {
-        font-size: 1.2rem;
-        max-width: 100%;
-    }
-
-    .dropdown__section--three {
-        height: 100%;
-        /* Full height to center content if needed, or auto */
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        /* Center vertically */
-    }
-
-    .dropdown__nav {
-        flex-direction: column;
-        align-items: center;
-        gap: 2rem;
-        /* Increased gap */
-        margin-top: 20vh;
-        /* Significant white space at the top */
-    }
-
-    .dropdown__button {
-        font-size: 1.2rem;
-        margin-right: 0;
-        /* Reset margin */
-        padding: 0.5rem;
-    }
-}
 
 /* Content Shift Animation Classes */
 .content {
@@ -1593,20 +1006,15 @@ ul {
     width: 100%;
     height: 100vh;
     background-color: #232120;
-    /* Warm dark/black tone from reference */
     z-index: 20;
-    /* Above regular hero content (z-index ~1-10) */
     display: flex;
     align-items: center;
-    /* Vertically center the columns? Ref image has them lower. */
     justify-content: center;
     padding: var(--spacing-md);
     transform: translateY(100%);
-    /* Hidden initially */
     color: var(--color-white);
     will-change: transform;
     overflow: hidden;
-    /* Contain shader */
 }
 
 .pixel-trail-canvas {
@@ -1633,7 +1041,7 @@ ul {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    /* Ensure size matches the original cursor or adjusted if needed */
+
 }
 
 /* Background Noise Effect for Overlay */
@@ -1764,153 +1172,21 @@ ul {
     /* Center text */
 }
 
-/* 
-   Hero Title Z-Index & Blend Mode Strategy 
-   We need the title to be white with difference blend mode.
-   Background is Cream (#FAFAF5). White diff Cream = Dark.
-   Background is Black (#000000). White diff Black = White.
-*/
 .hero-title {
     position: fixed;
     top: 20px;
-    /* Moved to top as requested */
     left: 50%;
     transform: translateX(-50%);
-    /* Centered horizontally only */
     width: 100%;
     text-align: center;
     margin: 0;
     pointer-events: none;
-    /* Let clicks pass through to nav/hero */
-
     z-index: 50;
-    /* Higher than Overlay (20), Lower than Zoom Image Container (100) */
     color: #FFFFFF;
-    /* White for difference mode */
     mix-blend-mode: difference;
-    /* 
-       White title on Cream bg (FAFAF5) -> Inverts to Dark/Blackish.
-       White title on Black overlay (0c0c0c) -> Inverts to White.
-    */
+
 }
 
-/* Ensure hero title stays visible during scrolling if pinned */
-/* The main.js handles pinning of .zoom-wrapper, so .hero-title inside it pins too. */
-
-/* Responsive Overlay */
-/* Responsive Styles */
-@media (max-width: 1024px) {
-
-    /* Overlay becomes 1 column on Tablet/Mobile */
-    .overlay-content {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-        margin-top: 25vh;
-        width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 600px;
-    }
-
-    .overlay-col {
-        align-items: center;
-    }
-
-    .overlay-desc {
-        text-align: center;
-        /* Easier reading on mobile */
-    }
-
-    /* Hero Visual Scaling for Tablet */
-    .hero-visual {
-        transform: translate(-50%, -50%) scale(0.8);
-    }
-}
-
-@media (max-width: 768px) {
-
-    /* Hero Title: Single Line */
-    .hero-title {
-        font-size: 13vw;
-        /* Fit single line on screen */
-        line-height: 1.1;
-        word-spacing: normal;
-        top: 12%;
-        /* Moved up further to 12% */
-        transform: translate(-50%, -50%);
-        white-space: nowrap;
-        /* Keep on one line */
-        width: 100%;
-    }
-
-    /* Hero Visual: Centered below title */
-    .hero-visual {
-        top: 38%;
-        /* Moved up further (was 45%) */
-        transform: translate(-50%, -50%) scale(0.55);
-        z-index: 60;
-    }
-
-    /* Content Right (p.D text) - Moved below "Studio" */
-    .hero-main-content {
-        display: block;
-        /* Disable grid */
-    }
-
-    .hero-content-right {
-        position: fixed;
-        bottom: 15%;
-        /* Moved up more to 15% */
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100%;
-        padding: 0 1.5rem;
-        /* More space at sides */
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        gap: 1rem;
-        z-index: 50;
-        /* Removed blend mode as requested, handling color directly */
-        color: var(--color-text);
-    }
-
-    .postscript-svg {
-        width: 40px;
-        flex-shrink: 0;
-    }
-
-    .hero-description {
-        font-size: 0.9rem;
-        /* Slightly smaller to fit better */
-        line-height: 1.35;
-        text-align: left;
-        color: #2c2c2c;
-        /* Dark text as requested */
-    }
-
-    /* Footer adjustments */
-    .hero-footer-strip {
-        position: fixed;
-        bottom: 0.5rem;
-        /* Lowered slightly */
-        left: 0;
-        width: 100%;
-        padding: 0 1.5rem;
-        justify-content: space-between;
-        z-index: 50;
-        /* Ensure visible */
-    }
-
-    .footer-edition,
-    .footer-signature {
-        height: 1.5rem;
-    }
-
-    .copyright {
-        font-size: 0.7rem;
-    }
-}
 
 /* -------------------------------------------------------------
    Gallery Section (Polaroid Grid)
@@ -1928,23 +1204,17 @@ ul {
 }
 
 /* Mobile (< 768px) */
-@media (max-width: 768px) {
-    .gallery-section {
-        margin-top: 0;
-    }
-}
 
 .hero-title.scrolled-out {
     position: absolute;
     transform: translateX(-50%);
-    /* mix-blend-mode persists */
-    /* top is set inline by JS */
+
 }
 
 /* Infinite Text Loop */
 .travel-wrapper {
     width: 100vw;
-    /* height not fixed to 100vh to avoid layout issues in flex overlay */
+
     overflow: hidden;
     font-family: var(--font-sans);
     position: absolute;
@@ -1968,7 +1238,8 @@ ul {
 /* Gallery Section */
 .gallery-section {
     padding: var(--spacing-md);
-    padding-top: var(--spacing-lg);
+    padding-top: 0;
+    /* Removed top padding */
     position: relative;
     z-index: 5;
 }
@@ -1979,14 +1250,14 @@ ul {
     align-items: flex-end;
     justify-content: center;
     gap: 3rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0;
     /* Reduced from 4rem */
     width: 100%;
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
     flex-wrap: wrap;
-    /* allow wrapping on smaller screens */
+
 }
 
 .gallery-title {
@@ -2032,7 +1303,7 @@ ul {
     flex-direction: column;
     gap: 1rem;
     padding-bottom: 1.5rem;
-    /* align optically with bottom of text */
+
     max-width: 300px;
 }
 
@@ -2051,51 +1322,14 @@ ul {
 }
 
 /* Tablet / Mobile adjustments for Gallery Header */
-@media (max-width: 1024px) {
-    .gallery-header {
-        justify-content: flex-start;
-        padding: 0 1rem;
-        gap: 2rem;
-        flex-wrap: nowrap;
-        /* Prevent wrapping */
-        align-items: center;
-        /* Better alignment when tight */
-    }
-}
-
-@media (max-width: 768px) {
-    .gallery-header {
-        /* Keep flex-direction: row implied, adjust gap/padding */
-        gap: 1rem;
-        padding: 0;
-        align-items: flex-end;
-        /* Revert back to baseline alignment if possible */
-    }
-
-    .gallery-subtitle {
-        padding-bottom: 0.8rem;
-        padding-left: 0;
-        min-width: 120px;
-        /* Ensure small text doesn't collapse entirely */
-    }
-
-    .subtitle-number {
-        font-size: 0.75rem;
-    }
-
-    .subtitle-text {
-        font-size: 0.75rem;
-        line-height: 1.2;
-    }
-}
 
 /* Independent Pixel Cursor (Added via append) */
 .pixel-cursor-icon {
     position: fixed;
     top: 0;
     left: 0;
-    width: 40px;
-    height: 40px;
+    width: 20px;
+    height: 20px;
     background-image: url('../assets/images/cursor/cursor-pixel.svg');
     background-size: contain;
     background-repeat: no-repeat;
@@ -2133,6 +1367,12 @@ body {
     z-index: 9998;
 }
 
+.cursor-pixel-dom {
+    width: 25px;
+    height: 25px;
+    z-index: 9998;
+}
+
 .cursor-circle {
     width: 50px;
     /* Smaller than lotus */
@@ -2145,12 +1385,7 @@ body {
 .overlay-section {
     cursor: none !important;
     /* Managed via DOM now */
-    /* cursor: url('/static/assets/images/cursor/cursor-pixel.svg') 12 12, auto !important; */
-}
 
-/* Hide custom cursor when inside overlay */
-body.overlay-active .custom-cursor {
-    opacity: 0;
 }
 
 /* Strict Cursor Hiding Utility */
@@ -2164,8 +1399,8 @@ body.hide-custom-cursor .custom-cursor {
 .gallery-interactive {
     position: relative;
     width: 100%;
-    height: 60vh;
-    /* Tighter height to fit the camera zoom and remove gaps */
+    height: 90vh;
+
     background: transparent;
     overflow: hidden;
     margin-bottom: 0;
@@ -2207,7 +1442,8 @@ body.hide-custom-cursor .custom-cursor {
     height: 50%;
     overflow: hidden;
     cursor: grab;
-    margin-top: 2rem;
+    margin-top: 0;
+    /* Removed top margin */
     opacity: 0;
     transition: opacity 0.5s ease;
     user-select: none !important;
@@ -2261,7 +1497,7 @@ body.hide-custom-cursor .custom-cursor {
     /* Changed to serif */
     text-transform: uppercase;
     font-size: clamp(3.5rem, 9vw, 6rem);
-    /* Increased minimum and vw for better proportional scale down to mobile */
+
     line-height: 0.9;
     font-weight: 300;
     /* Adjusted for serif */
@@ -2288,4 +1524,428 @@ body.hide-custom-cursor .custom-cursor {
     background-color: #964015;
     /* Red accent matching PD svg */
     margin-right: 10px;
+}
+
+/* =========================================
+   RESPONSIVE DESIGN (Media Queries)
+   ========================================= */
+
+/* Hero Tablet (max 1024px) */
+@media (max-width: 1024px) {
+    .hero-title {
+        font-size: 14cqi !important;
+    }
+
+    .hero-main-content {
+        margin-top: 0;
+        grid-template-columns: 1fr;
+        /* Stack vertically */
+        gap: 0.5rem;
+        /* Minimal gap */
+    }
+
+    .image-container {
+        width: 280px;
+        height: 360px;
+        /* Slightly smaller as requested */
+        margin: 0 auto;
+        /* Center images */
+    }
+
+    .hero-visual {
+        top: 43%;
+        /* Move up slightly (default is 50%) */
+    }
+
+    .hero-visual-placeholder {
+        display: none;
+        /* Hide duplicate space */
+    }
+
+    .hero-spacer {
+        height: 60vh;
+        /* Increased significantly to push text down further */
+    }
+
+    .hero-content-right {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding-left: 0;
+        margin-top: 0;
+        width: 100%;
+        max-width: 600px;
+        /* Match text max-width */
+        margin-left: auto;
+        margin-right: auto;
+        /* Center the block */
+        position: relative;
+        /* Anchor for absolute SVG */
+    }
+
+    .hero-footer-strip {
+        margin-top: 1rem;
+        /* Reduce space above footer */
+        padding-top: 0.5rem;
+    }
+
+    .pd-text-img {
+        position: absolute;
+        top: 10px;
+        /* Float above text block */
+        left: -67px;
+        /* Align to left edge of text block */
+        margin: 0;
+        display: block;
+        width: 50px;
+        /* Slightly smaller to fit gap */
+    }
+
+    .hero-description {
+        text-align: center;
+        width: 100%;
+        /* Fill container */
+        margin: 0;
+        /* Container handles centering */
+    }
+}
+
+/* Hero Mobile (max 768px) */
+@media (max-width: 768px) {
+
+    .hero-wrapper {
+        padding: 0 !important;
+        /* FULL WIDTH: Force removal of wrapper padding */
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    .hero-title {
+        font-size: 13.5vw !important;
+        font-size: 13.5cqi !important;
+        margin-top: -2vh;
+        width: 100%;
+    }
+
+    .hero-main-content,
+    .hero-footer-strip {
+        padding-left: var(--spacing-md);
+        padding-right: var(--spacing-md);
+        /* Restore padding for inner content */
+    }
+
+    .hero-header {
+        margin-bottom: 0;
+        /* Remove spacer push */
+    }
+
+    .hero-main-content {
+        margin-top: 0;
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        /* Minimal gap */
+    }
+
+    .image-container {
+        width: 280px;
+        height: 360px;
+    }
+
+    .hero-visual {
+        top: 43% !important;
+    }
+
+    .hero-visual,
+    .hero-content-right {
+        grid-column: auto;
+    }
+
+    .hero-spacer {
+        height: 20vh;
+        /* Kept small */
+    }
+
+    .hero-content-right {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding-left: 0;
+        /* Negative margin to pull text up aggressively */
+        width: 100%;
+        max-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        /* Ensure centering */
+        position: relative;
+        /* Anchor */
+    }
+
+    .pd-text-img {
+        position: absolute;
+        top: -35px;
+        /* Slightly closer */
+        left: 0;
+        margin: 0;
+        width: 45px;
+        /* Smaller on mobile */
+    }
+
+    .hero-description {
+        text-align: center;
+        max-width: 100%;
+        padding: 0 var(--spacing-sm);
+    }
+
+    .hero-footer-strip {
+        margin-top: 2rem;
+    }
+
+    .footer-edition,
+    .footer-signature {
+        height: 10px;
+        /* Smaller on mobile */
+        width: auto;
+    }
+
+    .hero-footer-strip {
+        padding-bottom: 1.5rem !important;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 0;
+    }
+
+    .hero-footer-strip .footer-edition,
+    .hero-footer-strip .footer-signature,
+    .hero-footer-strip .copyright {
+        order: unset;
+        margin: 0;
+    }
+
+    .hero-footer-strip .copyright {
+        font-size: 0.9rem;
+    }
+}
+
+/* Hero Intermediate Landscape (min 650px - max 768px) */
+@media (min-width: 650px) and (max-width: 768px) {
+    .image-container {
+        width: 340px;
+        height: 430px;
+    }
+
+    .hero-title {
+        font-size: 14cqi !important;
+    }
+
+    .hero-description {
+        font-size: 1rem !important;
+        max-width: 100% !important;
+    }
+}
+
+/* Nav Dropdown Mobile */
+@media (max-width: 768px) {
+    .dropdown {
+        width: 100%;
+        height: 100vh;
+        /* Full screen */
+        top: -100vh;
+        padding: 2rem 1.5rem;
+        justify-content: space-evenly;
+        /* Distribute vertical space */
+    }
+
+    .dropdown__section--one {
+        display: none;
+        /* Hidden on mobile as requested */
+    }
+
+    .dropdown__word {
+        font-size: 15vw;
+        /* Larger for mobile */
+    }
+
+    .dropdown__quote {
+        font-size: 1.2rem;
+        max-width: 100%;
+    }
+
+    .dropdown__section--three {
+        height: 100%;
+        /* Full height to center content if needed, or auto */
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /* Center vertically */
+    }
+
+    .dropdown__nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        /* Increased gap */
+        margin-top: 20vh;
+        /* Significant white space at the top */
+    }
+
+    .dropdown__button {
+        font-size: 1.2rem;
+        margin-right: 0;
+        /* Reset margin */
+        padding: 0.5rem;
+    }
+}
+
+/* Overlay Section Mobile */
+@media (max-width: 1024px) {
+
+    /* Overlay becomes 1 column on Tablet/Mobile */
+    .overlay-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-top: 20vh;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 600px;
+        padding-bottom: 2rem;
+    }
+
+    .overlay-col {
+        align-items: center;
+        padding: 0 1rem;
+    }
+
+    .overlay-desc {
+        text-align: center;
+        /* Easier reading on mobile */
+    }
+
+    /* Hero Visual Scaling for Tablet */
+    .hero-visual {
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+}
+
+/* Hero Titles Mobile (repeated tweaks but merged below) */
+@media (max-width: 768px) {
+
+    /* Hero Title: Scalable */
+    .hero-title {
+        font-size: clamp(2.5rem, 11vw, 4rem);
+        line-height: 1.1;
+        word-spacing: normal;
+        top: 15%;
+        transform: translate(-50%, -50%);
+        white-space: normal;
+        text-align: center;
+        width: 90%;
+    }
+
+    /* Hero Visual: Centered below title */
+    .hero-visual {
+        top: 38%;
+        transform: translate(-50%, -50%) scale(0.35);
+        z-index: 60;
+    }
+
+    .hero-main-content {
+        display: block;
+        /* Disable grid */
+    }
+
+    .hero-content-right {
+        position: fixed;
+        bottom: 15%;
+        /* Moved up more to 15% */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        padding: 0 1.5rem;
+        /* More space at sides */
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 1rem;
+        z-index: 50;
+        /* Removed blend mode as requested, handling color directly */
+        color: var(--color-text);
+    }
+
+    .postscript-svg {
+        width: 20px;
+        flex-shrink: 0;
+    }
+
+    .hero-description {
+        font-size: 0.75rem;
+        line-height: 1.4;
+        text-align: left;
+        color: #2c2c2c;
+    }
+
+    /* Footer adjustments */
+    .hero-footer-strip {
+        position: fixed;
+        bottom: 1rem;
+        left: 0;
+        width: 100%;
+        padding: 0 1.5rem;
+        justify-content: space-between;
+        z-index: 50;
+        /* Ensure visible */
+    }
+
+    .footer-edition,
+    .footer-signature {
+        height: 1.5rem;
+    }
+
+    .copyright {
+        font-size: 0.7rem;
+    }
+}
+
+/* Gallery Responsive */
+@media (max-width: 1024px) {
+    .gallery-header {
+        justify-content: flex-start;
+        padding: 0 1rem;
+        gap: 2rem;
+        flex-wrap: nowrap;
+        /* Prevent wrapping */
+        align-items: center;
+        /* Better alignment when tight */
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery-section {
+        margin-top: 0;
+    }
+
+    .gallery-header {
+        /* Keep flex-direction: row implied, adjust gap/padding */
+        gap: 1rem;
+        padding: 0;
+        align-items: flex-end;
+        /* Revert back to baseline alignment if possible */
+    }
+
+    .gallery-subtitle {
+        padding-bottom: 0.8rem;
+        padding-left: 0;
+        min-width: 120px;
+    }
+
+    .subtitle-number {
+        font-size: 0.75rem;
+    }
+
+    .subtitle-text {
+        font-size: 0.75rem;
+        line-height: 1.2;
+    }
 }

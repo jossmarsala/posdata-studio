@@ -15,9 +15,7 @@
 
 
     <!-- Custom Cursor (Top priority) -->
-    <div class="cursor">
-        <!-- Cursor elements removed as they are now managed by JS -->
-    </div>
+    <div class="cursor"></div>
 
     <div class="loading-screen">
         <div class="loading-content">
@@ -103,7 +101,6 @@
         </div>
 
         <!-- Global Hero Visual (Rotating Images) -->
-        <!-- Moved out to separate z-index context from Hero Text -->
         <div class="hero-visual">
             <div class="image-container" id="imageContainer">
                 <div class="background-stack">
@@ -130,7 +127,6 @@
                             alt="Landscape 3"></div>
                 </div>
 
-                <!-- Interaction Hitbox for stable 3D tilt -->
                 <div class="tilt-hitbox"></div>
             </div>
         </div>
@@ -138,15 +134,11 @@
             <div class="zoom-content">
                 <section class="hero">
                     <div class="hero-wrapper">
-                        <div class="hero-header">
-                            <!-- Title moved to global scope for z-index layering -->
-                        </div>
+                        <div class="hero-header"></div>
 
-                        <!-- Spacer to push content down below fixed title -->
                         <div class="hero-spacer"></div>
 
                         <div class="hero-main-content">
-                            <!-- Placeholder to keep grid layout -->
                             <div class="hero-visual-placeholder"></div>
 
                             <div class="hero-content-right">
@@ -262,4 +254,4 @@
         <script type="module" src="{{ url_for('static', filename='js/pixel-trail.js') }}"></script>
 </body>
 
-</html>q
+</html>

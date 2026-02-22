@@ -1,4 +1,3 @@
-// animations using gsap
 console.log('Animations script loaded');
 
 document.addEventListener("DOMContentLoaded", () => {

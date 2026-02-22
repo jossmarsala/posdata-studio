@@ -1,12 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // register gsap scrolltrigger
     gsap.registerPlugin(ScrollTrigger);
 
     const header = document.querySelector('header');
 
     // --- Loader Logic ---
     const startTime = Date.now();
-    const minLoadTime = 1100; // Animation (0.9s) + Static (0.2s)
+    const minLoadTime = 1100;
     const loader = document.querySelector('.loading-screen');
 
     window.addEventListener('load', () => {
@@ -15,13 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setTimeout(() => {
             if (loader) {
-                loader.classList.add('loaded'); // Trigger CSS transition
+                loader.classList.add('loaded');
             }
         }, remainingTime);
     });
     // --------------------
 
-    // intersection observer for fade-in animations
     const observerOptions = {
         root: null,
         rootMargin: '0px',
@@ -32,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                observer.unobserve(entry.target); // Only animate once
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
@@ -40,8 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const fadeElements = document.querySelectorAll('.fade-in-up');
     fadeElements.forEach(el => observer.observe(el));
 
-
-    // image stack animation
     const container = document.getElementById("imageContainer");
     if (container) {
         const bgCards = container.querySelectorAll(".bg-card");
@@ -50,22 +46,19 @@ document.addEventListener('DOMContentLoaded', () => {
         let interval;
         const timelines = [];
 
-        // background rotation
         bgCards.forEach(card => {
-            // initial random rotation
             gsap.set(card, { rotation: Math.random() * 360 });
 
             const tl = gsap.timeline({ repeat: -1 });
             tl.to(card, {
                 rotate: "+=360",
                 rotate: "+=360",
-                duration: 20 + Math.random() * 5, // slower rotation
+                duration: 20 + Math.random() * 5,
                 ease: "none"
             });
             timelines.push(tl);
         });
 
-        // foreground sequence
         function nextImage() {
             if (fgCards.length > 0) {
                 fgCards[index].classList.remove("active");
@@ -75,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function start() {
-            interval = setInterval(nextImage, 1800); // slower interval
+            interval = setInterval(nextImage, 1800);
         }
 
         function pause() {
@@ -88,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
             start();
         }
 
-        // 3d tilt effect
         const rotateAmplitude = 14;
 
         function handleMouse(e) {
@@ -105,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const rotationX = (offsetY / centerY) * -rotateAmplitude;
             const rotationY = (offsetX / centerX) * rotateAmplitude;
 
-            // apply to active card
             const activeCard = container.querySelector('.fg-card.active');
             if (activeCard) {
                 gsap.to(activeCard, {
@@ -127,12 +118,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     ease: "back.out(1.7)"
                 });
             }
-            // pause rotation on hover
             pause();
         }
 
         function handleMouseLeave() {
-            // reset all cards
             fgCards.forEach(card => {
                 gsap.to(card, {
                     rotateX: 0,
@@ -142,7 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     ease: "power3.out"
                 });
             });
-            // resume rotation
             resume();
         }
 
@@ -150,33 +138,27 @@ document.addEventListener('DOMContentLoaded', () => {
         container.addEventListener('mouseenter', handleMouseEnter);
         container.addEventListener('mouseleave', handleMouseLeave);
 
-        // start rotation loop
         start();
     }
 
-    // hero title reveal animation
     const heroTitle = document.querySelector('.hero-title');
     if (heroTitle) {
-        // split text
         const text = heroTitle.textContent.trim();
         heroTitle.textContent = "";
         text.split("").forEach((char, index) => {
             const span = document.createElement("span");
             span.textContent = char === " " ? "\u00A0" : char;
-            // Apply retro font to P (0) and S (8)
             if (index === 0 || index === 8) {
                 span.classList.add("retro-initial");
             }
             heroTitle.appendChild(span);
         });
 
-        // set initial state hidden for all spans
         gsap.set(".hero-title span", {
             clipPath: "inset(100% 0 0 0)"
         });
     }
 
-    // loading text reveal
     const loadingText = document.querySelector('.loading-text');
     if (loadingText) {
         const text = loadingText.textContent.trim();
@@ -193,9 +175,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         gsap.to(".loading-text span", {
             clipPath: "inset(-20% -20% -20% -20%)",
-            duration: 0.6, // Even faster (was 0.8)
+            duration: 0.6,
             ease: "power2.out",
-            delay: 0.1, // Start almost immediately (was 0.2)
+            delay: 0.1,
             stagger: {
                 each: 0.05,
                 from: "start"
@@ -203,11 +185,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // zoom intro effect
     const zoomImageContainer = document.querySelector('.zoom-image-container');
 
     if (document.querySelector('.zoom-wrapper') && zoomImageContainer) {
-        // explicitly set transforms to avoid css conflicts
         gsap.set(".hero-visual", {
             xPercent: -50,
             yPercent: -50
@@ -216,11 +196,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const mm = gsap.matchMedia();
 
         mm.add("(min-width: 650px) and (max-width: 768px)", () => {
-            createZoomTimeline(0.92); // Reduced zoom for specific range
+            createZoomTimeline(0.92);
         });
 
         mm.add("(max-width: 649px), (min-width: 769px)", () => {
-            createZoomTimeline(1); // Normal full zoom
+            createZoomTimeline(1);
         });
 
         function createZoomTimeline(targetScale) {
@@ -228,17 +208,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrollTrigger: {
                     trigger: ".zoom-wrapper",
                     start: "top top",
-                    end: "+=100%", // Increased scroll distance for hold + exit effect (was 100%)
-                    pin: true,      // pin wrapper
-                    scrub: true,    // smooth scrubbing
+                    end: "+=100%",
+                    pin: true,
+                    scrub: true,
                     onLeave: () => {
                         const title = document.querySelector('.hero-title');
                         if (title) {
                             const rect = title.getBoundingClientRect();
-                            // Set absolute top to current scroll position + current visual top 
-                            // (rect.top should be top offset from viewport, window.scrollY is scroll)
-                            // But since it was fixed, rect.top is the visual position.
-                            // We need it to stay there relative to document.
                             title.style.top = (window.scrollY + rect.top) + "px";
                             title.classList.add('scrolled-out');
                         }
@@ -247,19 +223,18 @@ document.addEventListener('DOMContentLoaded', () => {
                         const title = document.querySelector('.hero-title');
                         if (title) {
                             title.classList.remove('scrolled-out');
-                            title.style.top = ""; // Reset to CSS default
+                            title.style.top = "";
                         }
                     }
                 }
             })
                 .to(zoomImageContainer, {
-                    scale: 50,      // massive scale
+                    scale: 50,
                     z: 350,
                     transformOrigin: "center center",
                     ease: "power1.inOut",
                     duration: 1
                 })
-                // animate background content (wrapper only, so bg stays static)
                 .fromTo(".zoom-content .hero .hero-wrapper", {
                     scale: 0.9,
                     transformOrigin: "center center"
@@ -268,21 +243,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     ease: "power1.inOut",
                     duration: 1
                 }, "<")
-                // sync rotating images zoom
                 .fromTo(".hero-visual", {
                     scale: 0.9,
                     transformOrigin: "50% 50%",
-                    xPercent: -48, // ensure stability
+                    xPercent: -48,
                     yPercent: -50
                 }, {
                     scale: targetScale,
                     transformOrigin: "50% 50%",
-                    xPercent: -48, // ensure stability
+                    xPercent: -48,
                     yPercent: -50,
                     ease: "power1.inOut",
                     duration: 1
                 }, "<")
-                // sync hero title zoom
                 .from(".hero-title", {
                     scale: 0.9,
                     transformOrigin: "center center",
@@ -290,25 +263,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     duration: 1
                 }, "<")
                 .call(animateHeroTitle, null, 0.08)
-                // phase 2: stacking overlay
-                // overlay rises
                 .to(".overlay-section", {
                     y: "0%",
                     ease: "none",
                     duration: 1
                 }, ">+1")
-                // dissolve rotating images and hero content
                 .to([".hero-visual", ".hero-content-right", ".hero-footer-strip"], {
                     opacity: 0,
                     duration: 0.3,
                     ease: "power1.in"
                 }, "<-0")
-                // HOLD PHASE: Keep it static for a while
                 .to({}, { duration: 1.5 })
-                // EXIT PHASE: Zoom out (scale down)
                 .to(".overlay-section", {
                     scale: 0.9,
-                    borderRadius: "20px", // Optional: adds to the "card" feel if they want
+                    borderRadius: "20px",
                     transformOrigin: "center center",
                     ease: "power1.inOut",
                     duration: 1
@@ -324,7 +292,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function animateHeroTitle() {
         if (!heroTitle) return;
-        // Animate regular letters
         gsap.to(".hero-title span:not(.retro-initial)", {
             clipPath: "inset(-20% -20% -20% -20%)",
             duration: 1.2,
@@ -335,7 +302,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 from: "start"
             }
         });
-        // Animate retro initials separately with larger clip-path
         gsap.to(".hero-title span.retro-initial", {
             clipPath: "inset(-75% -75% -75% -75%)",
             duration: 1.2,
@@ -348,7 +314,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // navbar logic
     const menuBtn = document.getElementById("menu-btn");
     const dropdown = document.getElementById("dropdown");
     const content = document.getElementById("content");
@@ -358,10 +323,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (menuBtn && dropdown && content && navigation) {
         menuBtn.addEventListener("click", () => {
             if (!isOpen) {
-                // opening menu
                 const openTimeline = gsap.timeline();
 
-                // reset visibility and position
                 gsap.set(
                     ".dropdown__section--one h1, .dropdown__section--one p, .dropdown__button", {
                     opacity: 1,
@@ -381,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         y: 20,
                         duration: 0.4,
                         ease: "power2.out",
-                        delay: 0.2 // Start soon after dropdown starts
+                        delay: 0.2
                     },
                         "-=0.3"
                     )
@@ -390,12 +353,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         opacity: 0,
                         y: 20,
                         duration: 0.4,
-                        delay: 0.1, // Start immediately after h1
+                        delay: 0.1,
                         ease: "power2.out"
                     },
                         "-=0.2"
                     )
-                    // stagger buttons
                     .from(
                         ".dropdown__button", {
                         opacity: 0,
@@ -418,11 +380,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 dropdown.classList.add("open");
                 menuBtn.textContent = "CLOSE";
             } else {
-                // closing menu
                 const closeTimeline = gsap.timeline();
 
                 closeTimeline
-                    // reverse animations
                     .to(".dropdown__button", {
                         opacity: 0,
                         y: 20,
@@ -453,7 +413,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         duration: 0.4,
                         ease: "power2.in"
                     })
-                    // slide dropdown back up
                     .add(() => {
                         gsap.to(dropdown, {
                             y: "0",
@@ -461,7 +420,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             ease: "power2.in"
                         });
                     })
-                    // update menu button text
                     .add(() => {
                         dropdown.classList.remove("open");
                         menuBtn.textContent = "MENU";
@@ -474,62 +432,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// Infinite Text Loop Logic
 const travelTxt = document.querySelector('.travel-txt');
 if (travelTxt) {
-    // Initial setup
     const w = window.innerWidth;
 
-    // Use GSAP (modern syntax)
     const tweenLoop = gsap.to('.travel-txt', {
         xPercent: -100,
         duration: 15,
         ease: "none",
         repeat: -1,
-        // Logic to reset is handled by repeat -1 if we have duplicate content seamlessly
-        // But user requested specific logic: check rect left < 0
-        // Since xPercent -100 moves it completely left, standard repeat works if content is duplicated enough.
-        // However, to strictly follow user logic of manual reset:
         onUpdate: function () {
-            // Determine if we need to reset manually? 
-            // GSAP repeat -1 is cleaner, but let's see user request:
-            // "if( < 0) TweenLoop.play(0)"
-            // This implies non-infinite GSAP tween that gets restarted.
-            // Let's implement seamless loop with GSAP native duplicate/modifier if we can,
-            // OR just use the restart logic.
         }
     });
 
-    // Actually, for seamless marquee, xPercent -100 of a 300vw element means it moves 300vw left.
-    // If viewport is 100vw, we need to reset when valid. 
-    // Let's stick to the simplest GSAP infinite loop pattern:
-    // Move -50% (if duplicated) or -33% etc.
-    // User's logic: Move -100, reset when LAST item passes 0.
-    // Let's use the provided logic:
-
-    // Kill previous simple tween and use precise logic
     tweenLoop.kill();
 
     const loopAnim = gsap.to('.travel-txt', {
-        xPercent: -33.333, // Move 1/3 since width is 300vw? 
-        // User code: xPercent: -100.
-        // Let's implement exact user request logic with GSAP ticker
+        xPercent: -33.333,
         duration: 15,
         ease: "none",
-        paused: true // Controlled by ticker
+        paused: true
     });
 
     const eachTxt = document.querySelectorAll('.travel-txt__each');
-    // User logic: last = length - 4. 
-    // 12 items. last is index 8.
     const lastItem = eachTxt[eachTxt.length - 4];
 
     gsap.ticker.add(() => {
-        // Move via tween time? Or use the tween?
-        // User code: TweenLoop.play(0) if distance < 0.
-        // This implies the tween runs, and we blindly reset it.
 
-        // Let's just run the tween:
         if (!loopAnim.isActive()) loopAnim.play();
 
         if (lastItem) {
@@ -540,7 +469,6 @@ if (travelTxt) {
         }
     });
 
-    // Hover
     travelTxt.addEventListener('mouseenter', () => loopAnim.pause());
     travelTxt.addEventListener('mouseleave', () => loopAnim.play());
 }

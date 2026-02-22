@@ -1,7 +1,6 @@
 import * as THREE from "https://esm.sh/three";
 import { Pane } from "https://cdn.skypack.dev/tweakpane@4.0.4";
 
-// Create ambient particles.
 const particlesContainer = document.getElementById("particles");
 const particleCount = 80;
 for (let i = 0; i < particleCount; i++) {
@@ -30,6 +29,15 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 const scene = new THREE.Scene();
 
+// --- Slides and Global Settings ---
+const slideWidth = 1.4;
+const slideHeight = 2.0;
+const gap = 1;
+const slideCount = 10;
+const imagesCount = 5;
+const totalWidth = slideCount * (slideWidth + gap);
+const slideUnit = slideWidth + gap;
+
 const camera = new THREE.PerspectiveCamera(
     50,
     window.innerWidth / window.innerHeight,
@@ -37,42 +45,32 @@ const camera = new THREE.PerspectiveCamera(
     100
 );
 
-// Function to keep the gallery slides proportional on all screen sizes (desktop to mobile)
 const updateCameraFov = () => {
     const aspect = window.innerWidth / window.innerHeight;
-    // Base FOV for wide screens (desktop)
     let fov = 50;
 
-    // If the screen is taller than it is wide (like a mobile phone)
     if (aspect < 1) {
-        // Increase FOV to shrink the camera view, maintaining relative slide size
-        // 1.5 is an arbitrary multiplier that looks good, adjust if needed
         fov = 50 * (1 / aspect) * 0.8;
     }
 
     camera.fov = fov;
     camera.aspect = aspect;
     camera.updateProjectionMatrix();
+
+    const vFovRad = (camera.fov * Math.PI) / 180;
+    const visibleHeight = 2 * Math.tan(vFovRad / 2) * Math.abs(camera.position.z);
+
+    camera.position.y = (slideHeight / 2) - (visibleHeight / 2) + 0.1;
 };
 
-camera.position.z = 3.5; // Moved closer to fill more space
-updateCameraFov(); // Call initially
+camera.position.z = 3.5;
+updateCameraFov();
 
-// Lights.
-const ambientLight = new THREE.AmbientLight(0x404040, 1);
+const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
 scene.add(ambientLight);
 const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
 directionalLight.position.set(0, 1, 1);
 scene.add(directionalLight);
-
-// --- Slides and Global Settings ---
-const slideWidth = 1.4;
-const slideHeight = 5;
-const gap = 1;
-const slideCount = 10;
-const imagesCount = 5;
-const totalWidth = slideCount * (slideWidth + gap);
-const slideUnit = slideWidth + gap;
 
 const settings = {
     wheelSensitivity: 0.05,
@@ -86,7 +84,7 @@ const settings = {
     distortionSmoothing: 0.5,
     rotationFactor: 0.2,
     animationSpeed: 0.5,
-    textFadeStart: slideWidth / 2, // e.g., 1.6 for slideWidth=3.2
+    textFadeStart: slideWidth / 2,
     textFadeEnd: slideWidth / 2 + 0.5,
     textMaxBlur: 5,
     distortionIntensity: 0.07,
@@ -98,7 +96,6 @@ const settings = {
     directionSmoothing: 0.03
 };
 
-// Setup Tweakpane controls.
 const pane = new Pane();
 const distortionFolder = pane.addFolder({ title: "Distortion" });
 distortionFolder.addBinding(settings, "maxDistortion", { min: 1.0, max: 10.0 });
@@ -129,7 +126,6 @@ distortionFolder.expanded = false;
 controlsFolder.expanded = false;
 effectsFolder.expanded = false;
 
-// Remove pane HTML from view as it's usually only for development.
 pane.element.style.display = 'none';
 
 // --- Slides and Titles Initialization ---
@@ -155,7 +151,6 @@ const pointLight = new THREE.PointLight(0xffffff, 2, 10);
 pointLight.position.set(0, 0, 2);
 scene.add(pointLight);
 
-// Interaction logic inside gallery wrapper instead of window
 const galleryInteractive = document.querySelector('.gallery-interactive');
 
 if (galleryInteractive) {
@@ -200,7 +195,7 @@ if (galleryInteractive) {
         titleNumber.textContent = `0${i + 1}`;
         titleEl.appendChild(titleText);
         titleEl.appendChild(titleNumber);
-        titleEl.style.opacity = "1"; // Show the text
+        titleEl.style.opacity = "1";
         titleEl.style.filter = "blur(0px)";
         titlesContainer.appendChild(titleEl);
         titleElements.push({
@@ -246,16 +241,23 @@ if (galleryInteractive) {
                 material.needsUpdate = true;
                 const imgAspect = texture.image.width / texture.image.height;
                 const slideAspect = slideWidth / slideHeight;
-                if (imgAspect > slideAspect) {
-                    // Image is wider than the 3D plane. Scale texture horizontally (cover)
-                    const repeatX = slideAspect / imgAspect;
-                    texture.repeat.set(repeatX, 1);
-                    texture.offset.set((1 - repeatX) / 2, 0);
+
+                if (imagePath.includes('gypsy')) {
+                    if (imgAspect > slideAspect) {
+                        mesh.scale.y = slideAspect / imgAspect;
+                    } else {
+                        mesh.scale.x = imgAspect / slideAspect;
+                    }
                 } else {
-                    // Image is taller than the 3D plane. Scale texture vertically (cover)
-                    const repeatY = imgAspect / slideAspect;
-                    texture.repeat.set(1, repeatY);
-                    texture.offset.set(0, (1 - repeatY) / 2);
+                    if (imgAspect > slideAspect) {
+                        const repeatX = slideAspect / imgAspect;
+                        texture.repeat.set(repeatX, 1);
+                        texture.offset.set((1 - repeatX) / 2, 0);
+                    } else {
+                        const repeatY = imgAspect / slideAspect;
+                        texture.repeat.set(1, repeatY);
+                        texture.offset.set(0, (1 - repeatY) / 2);
+                    }
                 }
             },
             undefined,
@@ -282,9 +284,11 @@ if (galleryInteractive) {
             const slide = slides[titleObj.index];
             const { element, offset } = titleObj;
 
+            const bottomY = slide.position.y - (slideHeight * slide.scale.y / 2);
+
             const vector = new THREE.Vector3(
                 slide.position.x,
-                slide.position.y,
+                bottomY,
                 slide.position.z
             );
             vector.project(camera);
@@ -396,7 +400,6 @@ if (galleryInteractive) {
         mesh.rotation.z = rotFactor * 0.05 * Math.sin(time * 0.1);
     };
 
-    // Drag and scroll functionality.
     let isDragging = false;
     let dragStartX = 0;
     let dragLastX = 0;
@@ -448,10 +451,8 @@ if (galleryInteractive) {
     });
 
     galleryInteractive.addEventListener("wheel", (e) => {
-        // Only trigger gallery scroll on horizontal (trackpad / shift+scroll)
-        // or prioritize vertical page scrolling if deltaY is large.
         if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
-            e.preventDefault(); // Only prevent default if scrolling horizontally
+            e.preventDefault();
             const wheelStrength = Math.abs(e.deltaX) * 0.001;
             targetDistortionFactor = Math.min(1.0, targetDistortionFactor + wheelStrength);
             targetPosition -= e.deltaX * settings.wheelSensitivity;
@@ -494,7 +495,7 @@ if (galleryInteractive) {
             isScrolling = true;
         }
     },
-        { passive: false } // Need to prevent default occasionally? Allowed it to flow 
+        { passive: false }
     );
 
     galleryInteractive.addEventListener("touchend", () => {
@@ -510,7 +511,7 @@ if (galleryInteractive) {
 
     window.addEventListener("resize", () => {
         const rect = galleryInteractive.getBoundingClientRect();
-        updateCameraFov(); // Call the dynamic scaler instead of manually setting aspect
+        updateCameraFov();
         renderer.setSize(rect.width, rect.height);
         updateTitlePositions();
     });
@@ -604,10 +605,8 @@ if (galleryInteractive) {
             if (Math.abs(slide.userData.currentX) < totalWidth / 2 + slideWidth * 1.5) {
                 slide.position.x = slide.userData.currentX;
                 const distanceFromCenter = Math.abs(slide.position.x);
-                slide.position.z = distanceFromCenter * -0.2; // Increase depth drop-off slightly to enhance perspective
+                slide.position.z = distanceFromCenter * -0.2;
 
-                // Scale down based on distance from center
-                // Play with 0.15 (strength) and 0.5 (minimum scale bound)
                 const scale = Math.max(0.5, 1 - distanceFromCenter * 0.15);
                 slide.scale.setScalar(scale);
 
@@ -619,14 +618,12 @@ if (galleryInteractive) {
         renderer.render(scene, camera);
     };
 
-    // Initial setup sizing
     const rect = galleryInteractive.getBoundingClientRect();
     renderer.setSize(rect.width, rect.height);
 
-    // Show elements that were initially set to 0 opacity in user's prompt (now managed by JS or specific section)
-    document.getElementById('canvas').style.opacity = 1;
-    document.getElementById('particles').style.opacity = 1;
-    document.getElementById('titles-container').style.opacity = 1;
+    document.getElementById('canvas').classList.add('is-initialized');
+    document.getElementById('particles').classList.add('is-initialized');
+    document.getElementById('titles-container').classList.add('is-initialized');
 
     animate(0);
 
