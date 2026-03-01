@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Detail - Posdata Studio</title>
+
+    <!-- CSS -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Lexend', sans-serif;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+            background: #000;
+        }
+
+        h1 {
+            position: absolute;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 900;
+            font-size: clamp(2rem, 10vw, 5rem);
+            color: #fff;
+            inset: 0;
+            width: fit-content;
+            height: fit-content;
+            margin: auto;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .hero-section {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+        }
+
+        .mini-gallery {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            will-change: transform;
+        }
+
+        .mini-gallery picture {
+            position: absolute;
+            display: block;
+            width: 100%;
+            max-width: 200px;
+            height: 250px;
+            overflow: hidden;
+            transform: scale(.5);
+            will-change: transform;
+            opacity: 0;
+        }
+
+        .mini-gallery img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .double-image {
+            position: absolute;
+            margin: auto;
+            inset: 0;
+            width: 100%;
+            max-width: 1000px;
+            height: 500px;
+            display: flex;
+            transform: scale(0);
+            overflow: hidden;
+            will-change: transform;
+            pointer-events: none;
+        }
+
+        .double-image .double-image-item {
+            position: relative;
+            flex: 1;
+            height: 100%;
+        }
+
+        .double-image .double-image-item picture,
+        .double-image .double-image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .double-image picture img {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .about-section {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .about-section-content {
+            position: relative;
+            margin: auto;
+            width: 100%;
+            max-width: 1000px;
+            padding: 0 2rem;
+        }
+
+        .about-section-content h2 {
+            color: #fff;
+            font-size: clamp(2rem, 10vw, 5rem);
+            font-weight: 900;
+            text-align: center;
+            line-height: 1.1;
+        }
+
+        #error-message {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        #error-message a {
+            color: #fff;
+            margin-top: 2rem;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .about-section-content h2 {
+                font-size: clamp(1.5rem, 8vw, 2.5rem);
+            }
+
+            .double-image {
+                flex-direction: column;
+                height: 80vh;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="error-message" style="display: none;">
+        <h1 style="position: static; font-size: 2rem;">Proyecto no encontrado</h1>
+        <p>Lo sentimos, no pudimos encontrar la información del proyecto.</p>
+        <a href="/">Volver al inicio</a>
+    </div>
+
+    <div id="project-content">
+        <section class="hero-section">
+            <h1 id="hero-title"></h1>
+            <div class="mini-gallery" id="mini-gallery">
+                <!-- Rendered dynamically -->
+            </div>
+            <div class="double-image" id="double-image">
+                <!-- Rendered dynamically -->
+            </div>
+        </section>
+
+        <section class="about-section">
+            <div class="about-section-content">
+                <h2 id="about-text"></h2>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <!-- Use a local or CDN for SplitText if available, or a fallback. 
+         Since the user provided logic for SplitText, I'll use it but might need a shim or CDN if accessible. 
+         For now, I'll use a placeholder URL and hope it works or provide a simplified version. -->
+    <script src="https://assets.codepen.io/16327/SplitText3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+    <script src="/static/js/project.js"></script>
+</body>
+
+</html>

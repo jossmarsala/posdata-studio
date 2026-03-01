@@ -37,6 +37,22 @@ class CustomCursor {
         this.ctx.pixel.src = '/static/assets/images/cursor/cursor-pixel.svg';
         this.ctx.pixel.className = 'custom-cursor cursor-pixel-dom u-hidden';
         document.body.appendChild(this.ctx.pixel);
+
+        // New "VER MÁS" text element
+        this.ctx.textEl = document.createElement('span');
+        this.ctx.textEl.textContent = 'VER MÁS';
+        this.ctx.textEl.className = 'custom-cursor cursor-text u-hidden';
+        document.body.appendChild(this.ctx.textEl);
+    }
+
+    setTextMode(active) {
+        if (active) {
+            this.ctx.lotus.classList.add('u-hidden');
+            this.ctx.textEl.classList.remove('u-hidden');
+        } else {
+            this.ctx.lotus.classList.remove('u-hidden');
+            this.ctx.textEl.classList.add('u-hidden');
+        }
     }
 
     bindEvents() {
@@ -61,18 +77,37 @@ class CustomCursor {
             this.ctx.isInsideOverlay = isInside;
 
         }, { passive: true });
+
+        // Add hover detection for interactive elements
+        window.addEventListener('mouseover', (e) => {
+            const interactive = e.target.closest('a, button, input, select, textarea, [onclick], .cursor-pointer, .tilt-hitbox');
+            if (interactive && this.ctx.circle) {
+                this.ctx.circle.classList.add('is-hovering');
+            }
+        });
+
+        window.addEventListener('mouseout', (e) => {
+            const interactive = e.target.closest('a, button, input, select, textarea, [onclick], .cursor-pointer, .tilt-hitbox');
+            if (interactive && this.ctx.circle) {
+                const relatedTarget = e.relatedTarget;
+                if (!relatedTarget || !relatedTarget.closest('a, button, input, select, textarea, [onclick], .cursor-pointer, .tilt-hitbox')) {
+                    this.ctx.circle.classList.remove('is-hovering');
+                }
+            }
+        });
     }
 
     loop() {
         requestAnimationFrame(this.loop.bind(this));
 
-        const { lotus, circle, pixel, mouse, circlePos, isInsideOverlay } = this.ctx;
+        const { lotus, circle, pixel, textEl, mouse, circlePos, isInsideOverlay } = this.ctx;
 
         if (isInsideOverlay) {
             // --- MODE: PIXEL (Overlay) ---
 
             if (lotus) lotus.classList.add('u-hidden');
             if (circle) circle.classList.add('u-hidden');
+            if (textEl) textEl.classList.add('u-hidden');
 
             if (pixel) {
                 pixel.classList.remove('u-hidden');
@@ -85,9 +120,12 @@ class CustomCursor {
             if (pixel) pixel.classList.add('u-hidden');
 
             if (lotus) {
-                lotus.classList.remove('u-hidden');
                 lotus.style.transform = `translate(${mouse.x}px, ${mouse.y}px) translate(-50%, -50%)`;
             }
+            if (textEl) {
+                textEl.style.transform = `translate(${mouse.x}px, ${mouse.y}px) translate(-50%, -50%)`;
+            }
+
             if (circle) circle.classList.remove('u-hidden');
 
             const ease = 0.15;
@@ -108,7 +146,9 @@ class CustomCursor {
 }
 
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => new CustomCursor());
+    document.addEventListener('DOMContentLoaded', () => {
+        window.customCursor = new CustomCursor();
+    });
 } else {
-    new CustomCursor();
+    window.customCursor = new CustomCursor();
 }

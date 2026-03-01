@@ -1,0 +1,31 @@
+{
+    "projects": [
+        {
+            "id": "project-1",
+            "heroTitle": "Creative visual experience",
+            "miniGallery": [
+                "https://images.unsplash.com/photo-1637088660675-6930e63e51a7?q=80&w=688&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1655400108350-80022d39d06d?q=80&w=687&auto=format&fit=crop",
+                "https://plus.unsplash.com/premium_photo-1706727289730-cffaa60fd29e?q=80&w=687&auto=format&fit=crop",
+                "https://plus.unsplash.com/premium_photo-1747852228961-37e4705335d0?q=80&w=687&auto=format&fit=crop",
+                "https://plus.unsplash.com/premium_photo-1696959082289-bb0266dfd241?q=80&w=687&auto=format&fit=crop",
+                "https://plus.unsplash.com/premium_photo-1678935941799-7e69cac90719?q=80&w=687&auto=format&fit=crop",
+                "https://plus.unsplash.com/premium_photo-1678937611513-720220f9105e?q=80&w=687&auto=format&fit=crop",
+                "https://plus.unsplash.com/premium_photo-1747851578327-11ae3ca0b189?q=80&w=687&auto=format&fit=crop"
+            ],
+            "doubleImages": [
+                {
+                    "base": "https://images.unsplash.com/photo-1637088660675-6930e63e51a7?q=80&w=688&auto=format&fit=crop",
+                    "overlay": "https://images.unsplash.com/photo-1655400108350-80022d39d06d?q=80&w=687&auto=format&fit=crop",
+                    "overlayClass": "top-move"
+                },
+                {
+                    "base": "https://plus.unsplash.com/premium_photo-1706727289730-cffaa60fd29e?q=80&w=687&auto=format&fit=crop",
+                    "overlay": "https://plus.unsplash.com/premium_photo-1747852228961-37e4705335d0?q=80&w=687&auto=format&fit=crop",
+                    "overlayClass": "bottom-move"
+                }
+            ],
+            "aboutText": "Visual creativity redefined through stunning imagery."
+        }
+    ]
+}

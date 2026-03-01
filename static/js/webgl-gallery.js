@@ -30,7 +30,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 const scene = new THREE.Scene();
 
 // --- Slides and Global Settings ---
-const slideWidth = 1.4;
+const slideWidth = 1.5516; // Based on 1900:2449 with height 2.0
 const slideHeight = 2.0;
 const gap = 1;
 const slideCount = 10;
@@ -79,7 +79,7 @@ const settings = {
     rotationFactor: 0.2,
     animationSpeed: 0.5,
     textFadeStart: slideWidth / 2,
-    textFadeEnd: slideWidth / 2 + 0.5,
+    textFadeEnd: slideWidth / 2 + 0.6,
     textMaxBlur: 5,
     distortionIntensity: 0.07,
     horizontalDistortionDamping: 0.07,
@@ -152,7 +152,7 @@ if (galleryInteractive) {
     });
 
     const imageUrls = [
-        "https://cdn.cosmos.so/2f49a117-05e7-4ae9-9e95-b9917f970adb?format=jpeg",
+        "/static/assets/images/vitalia-poster.webp",
         "/static/assets/images/gypsy-poster.webp",
         "https://cdn.cosmos.so/f733585a-081e-48e7-a30e-e636446f2168?format=jpeg",
         "https://cdn.cosmos.so/47caf8a0-f456-41c5-98ea-6d0476315731?format=jpeg",
@@ -160,11 +160,11 @@ if (galleryInteractive) {
     ];
 
     const imageTitles = [
-        { title: "VITALIA SELFCARE", offset: { x: 0, y: -25 } },
-        { title: "GYPSY JOYAS", offset: { x: 0, y: 30 } },
-        { title: "THE JOLLY EATERY", offset: { x: 0, y: 20 } },
-        { title: "SAVORS COFFEE", offset: { x: 0, y: -20 } },
-        { title: "CELESTIAL FLOW", offset: { x: 0, y: -15 } }
+        { title: "VITALIA SELFCARE", url: "/vitalia-selfcare", offset: { x: 0, y: -25 } },
+        { title: "GYPSY JOYAS", url: "#", offset: { x: 0, y: 30 } },
+        { title: "THE JOLLY EATERY", url: "#", offset: { x: 0, y: 20 } },
+        { title: "SAVORS COFFEE", url: "#", offset: { x: 0, y: -20 } },
+        { title: "CELESTIAL FLOW", url: "#", offset: { x: 0, y: -15 } }
     ];
 
     const titlesContainer = document.getElementById("titles-container");
@@ -257,22 +257,15 @@ if (galleryInteractive) {
                 const imgAspect = texture.image.width / texture.image.height;
                 const slideAspect = slideWidth / slideHeight;
 
-                if (imagePath.includes('gypsy')) {
-                    if (imgAspect > slideAspect) {
-                        mesh.scale.y = slideAspect / imgAspect;
-                    } else {
-                        mesh.scale.x = imgAspect / slideAspect;
-                    }
+                // Adjust to cover the slide while maintaining 1900:2449 aspect ratio
+                if (imgAspect > slideAspect) {
+                    const repeatX = slideAspect / imgAspect;
+                    texture.repeat.set(repeatX, 1);
+                    texture.offset.set((1 - repeatX) / 2, 0);
                 } else {
-                    if (imgAspect > slideAspect) {
-                        const repeatX = slideAspect / imgAspect;
-                        texture.repeat.set(repeatX, 1);
-                        texture.offset.set((1 - repeatX) / 2, 0);
-                    } else {
-                        const repeatY = imgAspect / slideAspect;
-                        texture.repeat.set(1, repeatY);
-                        texture.offset.set(0, (1 - repeatY) / 2);
-                    }
+                    const repeatY = imgAspect / slideAspect;
+                    texture.repeat.set(1, repeatY);
+                    texture.offset.set(0, (1 - repeatY) / 2);
                 }
             },
             undefined,
@@ -423,7 +416,7 @@ if (galleryInteractive) {
         isDragging = true;
         dragStartX = e.clientX;
         dragLastX = dragStartX;
-        canvas.style.cursor = "grabbing";
+        // canvas.style.cursor = "grabbing";
     });
 
     window.addEventListener("mousemove", (e) => {
@@ -448,7 +441,7 @@ if (galleryInteractive) {
     window.addEventListener("mouseup", () => {
         if (!isDragging) return;
         isDragging = false;
-        canvas.style.cursor = "grab";
+        // canvas.style.cursor = "grab";
         const velocity = (dragLastX - dragStartX) * 0.005;
         if (Math.abs(velocity) > 0.5) {
             autoScrollSpeed = -velocity * settings.momentumMultiplier * 0.05;
@@ -461,7 +454,53 @@ if (galleryInteractive) {
     canvas.addEventListener("mouseleave", () => {
         if (isDragging) {
             isDragging = false;
-            canvas.style.cursor = "grab";
+            // canvas.style.cursor = "grab";
+        }
+    });
+
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+
+    canvas.addEventListener("mousemove", (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects(slides);
+
+        if (window.customCursor) {
+            if (intersects.length > 0) {
+                window.customCursor.setTextMode(true);
+            } else {
+                window.customCursor.setTextMode(false);
+            }
+        }
+    });
+
+    canvas.addEventListener("mouseleave", () => {
+        if (window.customCursor) {
+            window.customCursor.setTextMode(false);
+        }
+    });
+
+    canvas.addEventListener("click", (e) => {
+        if (Math.abs(lastDeltaX) > 2) return; // Don't click if dragging
+
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects(slides);
+
+        if (intersects.length > 0) {
+            const clickedSlide = intersects[0].object;
+            const imageIndex = clickedSlide.userData.index % imagesCount;
+            const url = imageTitles[imageIndex].url;
+            if (url && url !== "#") {
+                window.location.href = url;
+            }
         }
     });
 
