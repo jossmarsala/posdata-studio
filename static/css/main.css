@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'PF Pixelscript';
-    src: url('../fonts/PF Pixelscript Pro Regular.ttf') format('truetype');
+    src: url('../fonts/pf-pixelscript.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -9,6 +9,8 @@
     font-family: 'PF Pixelscript', var(--font-serif) !important;
     font-weight: normal;
     font-size: 6.5cqi;
+    display: inline-block;
+    vertical-align: baseline;
 }
 
 
@@ -758,7 +760,7 @@ ul {
     letter-spacing: .2em;
     color: #2c2c2c;
     white-space: nowrap;
-
+    opacity: 0;
 }
 
 
@@ -1293,6 +1295,10 @@ ul {
     line-height: 0.8;
 }
 
+.gallery-nav-arrow {
+    display: none;
+}
+
 .travel-txt__each {
     cursor: pointer;
     transition: 0.8s color ease-out;
@@ -1334,9 +1340,6 @@ ul {
     color: var(--color-black);
     margin: 0;
 }
-
-
-
 
 .pixel-cursor-icon {
     position: fixed;
@@ -1524,14 +1527,9 @@ body.hide-custom-cursor .custom-cursor,
 
 .title-text {
     font-family: var(--font-serif);
-
-    text-transform: uppercase;
-    font-size: clamp(3.5rem, 9vw, 6rem);
-
+    font-size: clamp(2rem, 5vw, 3rem);
     line-height: 0.9;
     font-weight: 300;
-
-    letter-spacing: -0.03em;
     margin: 0;
     white-space: nowrap;
 }
@@ -1659,7 +1657,7 @@ body.hide-custom-cursor .custom-cursor,
     .hero-title {
         font-size: 30vw !important;
         font-size: 30cqi !important;
-        margin-top: 2rem;
+        margin-top: 0.5rem;
         width: 100%;
     }
 
@@ -1741,16 +1739,13 @@ body.hide-custom-cursor .custom-cursor,
 
     .footer-edition,
     .footer-signature {
-        height: 20px !important;
-
-        width: auto;
+        display: none !important;
     }
 
     .hero-footer-strip {
         padding-bottom: 1.5rem !important;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: flex-end;
+        justify-content: center;
+        align-items: center;
         gap: 0;
     }
 
@@ -1763,6 +1758,7 @@ body.hide-custom-cursor .custom-cursor,
 
     .hero-footer-strip .copyright {
         font-size: 0.9rem;
+        text-align: center;
     }
 }
 
@@ -1978,6 +1974,58 @@ body.hide-custom-cursor .custom-cursor,
 
     }
 
+    .gallery-title {
+        display: flex;
+        align-items: center;
+        margin-bottom: -15px;
+        /* Offset spacing introduced by flexbox to match retro design */
+    }
+
+    .gallery-title .retro-initial {
+        line-height: 1;
+        /* Match normal height of other letters */
+        transform: translateY(-8%);
+        /* Specific alignment tweak */
+    }
+
+    .gallery-nav-arrow {
+        display: flex;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: none;
+        color: var(--color-black);
+        z-index: 100;
+        cursor: pointer;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+        padding: 0;
+        opacity: 0.6;
+    }
+
+    .gallery-nav-arrow:active {
+        transform: translateY(-50%) scale(0.9);
+        opacity: 1;
+    }
+
+    .gallery-nav-arrow svg {
+        width: 32px;
+        height: 32px;
+        stroke-width: 1.5;
+    }
+
+    .gallery-nav-arrow.left-arrow {
+        left: 5px;
+    }
+
+    .gallery-nav-arrow.right-arrow {
+        right: 5px;
+    }
+
     .gallery-subtitle {
         padding-bottom: 0.8rem;
         padding-left: 0;
@@ -1991,5 +2039,43 @@ body.hide-custom-cursor .custom-cursor,
     .subtitle-text {
         font-size: 0.75rem;
         line-height: 1.2;
+    }
+}
+
+/* Hide custom cursor on tablets and phones */
+@media (max-width: 1024px) {
+
+    /* Restore default cursors */
+    body,
+    .custom-cursor-active body,
+    .overlay-section {
+        cursor: auto !important;
+    }
+
+    a,
+    button,
+    .btn,
+    .custom-cursor-active a,
+    .custom-cursor-active button,
+    .custom-cursor-active .btn {
+        cursor: pointer !important;
+    }
+
+    input,
+    textarea,
+    select,
+    .custom-cursor-active input,
+    .custom-cursor-active textarea,
+    .custom-cursor-active select {
+        cursor: text !important;
+    }
+
+    /* Hide custom cursor elements */
+    .custom-cursor,
+    .cursorball,
+    .cursor {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
     }
 }

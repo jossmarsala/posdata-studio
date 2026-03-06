@@ -145,53 +145,64 @@ let accumulatedMovement = 0;
 const galleryInteractive = document.querySelector('.gallery-interactive');
 
 if (galleryInteractive) {
-
-    galleryInteractive.addEventListener("mousemove", (e) => {
-        const rect = galleryInteractive.getBoundingClientRect();
-        // Mouse interaction for light removed as it's no longer used
-    });
-
-    const imageUrls = [
-        "/static/assets/images/vitalia-poster.webp",
-        "/static/assets/images/gypsy-poster.webp",
-        "https://cdn.cosmos.so/f733585a-081e-48e7-a30e-e636446f2168?format=jpeg",
-        "https://cdn.cosmos.so/47caf8a0-f456-41c5-98ea-6d0476315731?format=jpeg",
-        "https://cdn.cosmos.so/f99f8445-6a19-4a9a-9de3-ac382acc1a3f?format=jpeg"
-    ];
-
-    const imageTitles = [
-        { title: "VITALIA SELFCARE", url: "/vitalia-selfcare", offset: { x: 0, y: -25 } },
-        { title: "GYPSY JOYAS", url: "#", offset: { x: 0, y: 30 } },
-        { title: "THE JOLLY EATERY", url: "#", offset: { x: 0, y: 20 } },
-        { title: "SAVORS COFFEE", url: "#", offset: { x: 0, y: -20 } },
-        { title: "CELESTIAL FLOW", url: "#", offset: { x: 0, y: -15 } }
-    ];
-
     const titlesContainer = document.getElementById("titles-container");
     const titleElements = [];
 
-    for (let i = 0; i < slideCount; i++) {
-        const imageIndex = i % imagesCount;
-        const titleInfo = imageTitles[imageIndex];
-        const titleEl = document.createElement("div");
-        titleEl.className = "slide-title";
-        const titleText = document.createElement("h2");
-        titleText.className = "title-text";
-        titleText.textContent = titleInfo.title;
-        const titleNumber = document.createElement("p");
-        titleNumber.className = "title-number";
-        titleNumber.textContent = `0${i + 1}`;
-        titleEl.appendChild(titleText);
-        titleEl.appendChild(titleNumber);
-        titleEl.style.opacity = "1";
-        titleEl.style.filter = "blur(0px)";
-        titlesContainer.appendChild(titleEl);
-        titleElements.push({
-            element: titleEl,
-            offset: titleInfo.offset,
-            index: i
-        });
-    }
+    // Fetch dynamic project data
+    fetch('/static/projects.json')
+        .then(res => res.json())
+        .then(data => {
+            const projects = data.projects;
+            const imagesCount = projects.length;
+            const slideCount = Math.max(10, imagesCount * 2); // Ensure enough slides for a smooth loop
+            const totalWidth = slideCount * (slideWidth + gap);
+
+            for (let i = 0; i < slideCount; i++) {
+                const project = projects[i % imagesCount];
+
+                // Create Slide
+                const slide = createSlide(i, project.galleryImage);
+                slides.push(slide);
+
+                // Create Title Element
+                const titleEl = document.createElement("div");
+                titleEl.className = "slide-title";
+                const titleText = document.createElement("h2");
+                titleText.className = "title-text";
+                titleText.textContent = project.title;
+                const titleNumber = document.createElement("p");
+                titleNumber.className = "title-number";
+                titleNumber.textContent = `0${i + 1}`;
+                titleEl.appendChild(titleText);
+                titleEl.appendChild(titleNumber);
+                titleEl.style.opacity = "1";
+                titleEl.style.filter = "blur(0px)";
+                titlesContainer.appendChild(titleEl);
+
+                titleElements.push({
+                    element: titleEl,
+                    offset: project.offset,
+                    index: i,
+                    url: project.url,
+                    projectId: project.id
+                });
+            }
+
+            // Adjust initial positions for looping
+            slides.forEach((slide) => {
+                slide.position.x -= totalWidth / 2;
+                slide.userData.targetX = slide.position.x;
+                slide.userData.currentX = slide.position.x;
+                slide.rotation.x = (Math.random() - 0.5) * 0.1;
+                slide.rotation.y = (Math.random() - 0.5) * 0.1;
+                slide.userData.totalWidth = totalWidth; // Store for the animate loop
+            });
+
+            // Re-render components that depend on slides being loaded
+            updateTitlePositions();
+            animate(0);
+        })
+        .catch(err => console.error("Error loading projects:", err));
 
     const correctImageColor = (texture) => {
         texture.colorSpace = THREE.SRGBColorSpace;
@@ -218,7 +229,7 @@ if (galleryInteractive) {
 
     const shadowTexture = createShadowTexture();
 
-    const createSlide = (index) => {
+    const createSlide = (index, imagePath) => {
         const geometry = new THREE.PlaneGeometry(slideWidth, slideHeight, 64, 32);
         const material = new THREE.MeshBasicMaterial({
             side: THREE.DoubleSide,
@@ -246,8 +257,6 @@ if (galleryInteractive) {
             wavePhase: Math.random() * Math.PI * 2
         };
 
-        const imageIndex = index % imagesCount;
-        const imagePath = imageUrls[imageIndex];
         new THREE.TextureLoader().load(
             imagePath,
             (texture) => {
@@ -257,7 +266,6 @@ if (galleryInteractive) {
                 const imgAspect = texture.image.width / texture.image.height;
                 const slideAspect = slideWidth / slideHeight;
 
-                // Adjust to cover the slide while maintaining 1900:2449 aspect ratio
                 if (imgAspect > slideAspect) {
                     const repeatX = slideAspect / imgAspect;
                     texture.repeat.set(repeatX, 1);
@@ -272,20 +280,8 @@ if (galleryInteractive) {
             (err) => console.warn(`Couldn't load image ${imagePath}`, err)
         );
         scene.add(mesh);
-        slides.push(mesh);
+        return mesh;
     };
-
-    for (let i = 0; i < slideCount; i++) {
-        createSlide(i);
-    }
-
-    slides.forEach((slide) => {
-        slide.position.x -= totalWidth / 2;
-        slide.userData.targetX = slide.position.x;
-        slide.userData.currentX = slide.position.x;
-        slide.rotation.x = (Math.random() - 0.5) * 0.1;
-        slide.rotation.y = (Math.random() - 0.5) * 0.1;
-    });
 
     const updateTitlePositions = () => {
         titleElements.forEach((titleObj) => {
@@ -307,7 +303,8 @@ if (galleryInteractive) {
             const screenY = (-vector.y * 0.5 + 0.5) * rect.height;
 
             element.style.left = `${screenX}px`;
-            element.style.top = `${screenY + offset.y}px`;
+            // Apply a uniform fixed offset instead of the varying offset.y
+            element.style.top = `${screenY + 25}px`;
             const textRect = element.getBoundingClientRect();
             element.style.left = `${screenX - textRect.width / 2}px`;
 
@@ -496,10 +493,12 @@ if (galleryInteractive) {
 
         if (intersects.length > 0) {
             const clickedSlide = intersects[0].object;
-            const imageIndex = clickedSlide.userData.index % imagesCount;
-            const url = imageTitles[imageIndex].url;
-            if (url && url !== "#") {
-                window.location.href = url;
+            const titleObj = titleElements[clickedSlide.userData.index];
+
+            if (titleObj && titleObj.url && titleObj.url !== "#") {
+                window.location.href = titleObj.url;
+            } else if (titleObj && titleObj.projectId) {
+                window.location.href = `/project?id=${titleObj.projectId}`;
             }
         }
     });
@@ -590,6 +589,37 @@ if (galleryInteractive) {
             targetPosition += settings.autoScrollSpeed;
         }
 
+        // --- Navigation Arrows Support ---
+        const leftArrow = document.querySelector('.gallery-nav-arrow.left-arrow');
+        const rightArrow = document.querySelector('.gallery-nav-arrow.right-arrow');
+
+        if (leftArrow && rightArrow && !leftArrow.dataset.bound) {
+            leftArrow.dataset.bound = "true"; // Prevent duplicate listeners
+            rightArrow.dataset.bound = "true";
+
+            const handleNavClick = (direction) => {
+                // Approximate width of 1.5 elements to scroll by
+                const moveAmount = (slideWidth + gap) * 1.5;
+                // Reversed: Left arrow pushes slides left (showing right items), Right shows left items
+                targetPosition += (direction === 'left' ? -moveAmount : moveAmount);
+                isScrolling = true;
+
+                // Temporary momentum boost to simulate a swipe
+                autoScrollSpeed = (direction === 'left' ? -0.02 : 0.02);
+                targetDistortionFactor = Math.min(1.0, 0.5 * settings.distortionSensitivity);
+                movementDirection.x = direction === 'left' ? -1 : 1;
+
+                setTimeout(() => { isScrolling = false; }, 800);
+            };
+
+            leftArrow.addEventListener('click', () => handleNavClick('left'));
+            leftArrow.addEventListener('touchstart', (e) => { e.preventDefault(); handleNavClick('left'); }, { passive: false });
+
+            rightArrow.addEventListener('click', () => handleNavClick('right'));
+            rightArrow.addEventListener('touchstart', (e) => { e.preventDefault(); handleNavClick('right'); }, { passive: false });
+        }
+        // ---------------------------------
+
         if (isScrolling) {
             targetPosition += autoScrollSpeed;
             const speedBasedDecay = 0.97 - Math.abs(autoScrollSpeed) * 0.5;
@@ -659,7 +689,7 @@ if (galleryInteractive) {
             slide.userData.targetX = baseX;
             slide.userData.currentX += (slide.userData.targetX - slide.userData.currentX) * settings.slideLerp;
 
-            if (Math.abs(slide.userData.currentX) < totalWidth / 2 + slideWidth * 1.5) {
+            if (Math.abs(slide.userData.currentX) < slide.userData.totalWidth / 2 + slideWidth * 1.5) {
                 slide.position.x = slide.userData.currentX;
                 const distanceFromCenter = Math.abs(slide.position.x);
                 slide.position.z = distanceFromCenter * -0.2;
@@ -681,7 +711,5 @@ if (galleryInteractive) {
     document.getElementById('canvas').classList.add('is-initialized');
     document.getElementById('particles').classList.add('is-initialized');
     document.getElementById('titles-container').classList.add('is-initialized');
-
-    animate(0);
 
 }

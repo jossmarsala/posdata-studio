@@ -1,31 +1,84 @@
 {
     "projects": [
         {
-            "id": "project-1",
+            "id": "vitalia-selfcare",
+            "title": "Vitalia Selfcare",
+            "url": "/vitalia-selfcare",
+            "galleryImage": "/static/assets/images/vitalia-poster.webp",
+            "offset": {
+                "x": 0,
+                "y": -25
+            },
             "heroTitle": "Creative visual experience",
             "miniGallery": [
                 "https://images.unsplash.com/photo-1637088660675-6930e63e51a7?q=80&w=688&auto=format&fit=crop",
                 "https://images.unsplash.com/photo-1655400108350-80022d39d06d?q=80&w=687&auto=format&fit=crop",
-                "https://plus.unsplash.com/premium_photo-1706727289730-cffaa60fd29e?q=80&w=687&auto=format&fit=crop",
-                "https://plus.unsplash.com/premium_photo-1747852228961-37e4705335d0?q=80&w=687&auto=format&fit=crop",
-                "https://plus.unsplash.com/premium_photo-1696959082289-bb0266dfd241?q=80&w=687&auto=format&fit=crop",
-                "https://plus.unsplash.com/premium_photo-1678935941799-7e69cac90719?q=80&w=687&auto=format&fit=crop",
-                "https://plus.unsplash.com/premium_photo-1678937611513-720220f9105e?q=80&w=687&auto=format&fit=crop",
-                "https://plus.unsplash.com/premium_photo-1747851578327-11ae3ca0b189?q=80&w=687&auto=format&fit=crop"
+                "https://plus.unsplash.com/premium_photo-1706727289730-cffaa60fd29e?q=80&w=687&auto=format&fit=crop"
             ],
             "doubleImages": [
                 {
                     "base": "https://images.unsplash.com/photo-1637088660675-6930e63e51a7?q=80&w=688&auto=format&fit=crop",
                     "overlay": "https://images.unsplash.com/photo-1655400108350-80022d39d06d?q=80&w=687&auto=format&fit=crop",
                     "overlayClass": "top-move"
-                },
-                {
-                    "base": "https://plus.unsplash.com/premium_photo-1706727289730-cffaa60fd29e?q=80&w=687&auto=format&fit=crop",
-                    "overlay": "https://plus.unsplash.com/premium_photo-1747852228961-37e4705335d0?q=80&w=687&auto=format&fit=crop",
-                    "overlayClass": "bottom-move"
                 }
             ],
             "aboutText": "Visual creativity redefined through stunning imagery."
+        },
+        {
+            "id": "gypsy-joyas",
+            "title": "Gypsy Joyas",
+            "url": "#",
+            "galleryImage": "/static/assets/images/gypsy-poster.webp",
+            "offset": {
+                "x": 0,
+                "y": 30
+            },
+            "heroTitle": "Handmade Jewelry",
+            "miniGallery": [],
+            "doubleImages": [],
+            "aboutText": "Unique handmade pieces."
+        },
+        {
+            "id": "jolly-eatery",
+            "title": "The Jolly Eatery",
+            "url": "#",
+            "galleryImage": "https://cdn.cosmos.so/f733585a-081e-48e7-a30e-e636446f2168?format=jpeg",
+            "offset": {
+                "x": 0,
+                "y": 20
+            },
+            "heroTitle": "Gourmet Experience",
+            "miniGallery": [],
+            "doubleImages": [],
+            "aboutText": "Delicious moments."
+        },
+        {
+            "id": "savors-coffee",
+            "title": "Savors Coffee",
+            "url": "#",
+            "galleryImage": "https://cdn.cosmos.so/47caf8a0-f456-41c5-98ea-6d0476315731?format=jpeg",
+            "offset": {
+                "x": 0,
+                "y": -20
+            },
+            "heroTitle": "Morning Rituals",
+            "miniGallery": [],
+            "doubleImages": [],
+            "aboutText": "Best coffee in town."
+        },
+        {
+            "id": "celestial-flow",
+            "title": "Celestial Flow",
+            "url": "#",
+            "galleryImage": "https://cdn.cosmos.so/f99f8445-6a19-4a9a-9de3-ac382acc1a3f?format=jpeg",
+            "offset": {
+                "x": 0,
+                "y": -15
+            },
+            "heroTitle": "Balance & Harmony",
+            "miniGallery": [],
+            "doubleImages": [],
+            "aboutText": "Find your inner peace."
         }
     ]
 }

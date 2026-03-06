@@ -173,6 +173,8 @@ document.addEventListener('DOMContentLoaded', () => {
             clipPath: "inset(100% 0 0 0)"
         });
 
+        gsap.set(".loading-text", { opacity: 1 });
+
         gsap.to(".loading-text span", {
             clipPath: "inset(-20% -20% -20% -20%)",
             duration: 0.6,
@@ -208,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrollTrigger: {
                     trigger: ".zoom-wrapper",
                     start: "top top",
-                    end: "+=100%",
+                    end: "+=150%",
                     pin: true,
                     scrub: true,
                     onLeave: () => {
@@ -267,26 +269,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     y: "0%",
                     ease: "none",
                     duration: 1
-                }, ">+1")
+                }, ">+0.08")
                 .to([".hero-visual", ".hero-content-right", ".hero-footer-strip"], {
                     opacity: 0,
                     duration: 0.3,
                     ease: "power1.in"
                 }, "<-0")
-                .to({}, { duration: 1.5 })
-                .to(".overlay-section", {
-                    scale: 0.9,
-                    borderRadius: "20px",
-                    transformOrigin: "center center",
-                    ease: "power1.inOut",
-                    duration: 1
-                })
-                .to(".hero-title", {
-                    scale: 0.9,
-                    transformOrigin: "center center",
-                    ease: "power1.inOut",
-                    duration: 1
-                }, "<");
+                // Added a small "holding" period at full screen before it unpins
+                .to({}, { duration: 0.5 });
         }
     }
 
