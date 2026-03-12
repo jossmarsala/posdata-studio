@@ -269,14 +269,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     y: "0%",
                     ease: "none",
                     duration: 1
-                }, ">+0.08")
+                }, ">")
                 .to([".hero-visual", ".hero-content-right", ".hero-footer-strip"], {
                     opacity: 0,
                     duration: 0.3,
                     ease: "power1.in"
-                }, "<-0")
-                // Added a small "holding" period at full screen before it unpins
-                .to({}, { duration: 0.5 });
+                }, "<-0");
         }
     }
 

@@ -1288,9 +1288,11 @@ ul {
 }
 
 
-.gallery-title .retro-initial {
-    font-size: 0.5em;
-
+.gallery-retro-initial {
+    font-family: 'PF Pixelscript', var(--font-serif) !important;
+    font-weight: normal;
+    display: inline-block;
+    font-size: 0.4em;
     vertical-align: middle;
     line-height: 0.8;
 }
@@ -1981,7 +1983,7 @@ body.hide-custom-cursor .custom-cursor,
         /* Offset spacing introduced by flexbox to match retro design */
     }
 
-    .gallery-title .retro-initial {
+    .gallery-retro-initial {
         line-height: 1;
         /* Match normal height of other letters */
         transform: translateY(-8%);

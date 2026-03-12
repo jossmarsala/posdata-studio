@@ -34,8 +34,26 @@
                 "y": 30
             },
             "heroTitle": "Handmade Jewelry",
-            "miniGallery": [],
-            "doubleImages": [],
+            "description": "Gypsy is an artisanal jewelry brand based in Mendoza, Argentina. The project involved designing and developing a dedicated web catalog to present the brand's pieces. Beyond showcasing the collections, a parallel stock managing platform was built.",
+            "miniGallery": [
+                "/static/assets/images/projects/gypsy/gypsy__uifooter.webp",
+                "/static/assets/images/projects/gypsy/gypsy__catalog.webp",
+                "/static/assets/images/projects/gypsy/gypsy__responsivemockup.webp",
+                "/static/assets/images/projects/gypsy/gypsy__designsystem.webp",
+                "/static/assets/images/projects/gypsy/gypsy__dashboard.webp",
+                "/static/assets/images/projects/gypsy/gypsy__mockupphone.webp"
+            ],
+            "scrollPreview": "/static/assets/images/projects/gypsy/gypsy___longscreen.webp",
+            "fullscreenImages": [
+                "/static/assets/images/projects/gypsy/gypsy___dashboardscreen.webp"
+            ],
+            "doubleImages": [
+                {
+                    "base": "https://images.unsplash.com/photo-1515562141207-7a8efd3c7e7b?q=80&w=1200&auto=format&fit=crop",
+                    "overlay": "https://images.unsplash.com/photo-1611085583191-a3b181a88401?q=80&w=1200&auto=format&fit=crop",
+                    "overlayClass": "top-move"
+                }
+            ],
             "aboutText": "Unique handmade pieces."
         },
         {

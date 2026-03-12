@@ -46,8 +46,17 @@ function showError(message) {
 
 function renderProject(project) {
     // 1. Hero Title
-    document.getElementById('hero-title').textContent = project.heroTitle;
-    document.title = `${project.heroTitle} - Posdata Studio`;
+    const titleText = project.title;
+    const firstLetter = titleText.charAt(0);
+    const restOfTitle = titleText.slice(1);
+    document.getElementById('hero-title').innerHTML = `<span class="retro-initial">${firstLetter}</span>${restOfTitle}`;
+    document.title = `${titleText} - Posdata Studio`;
+
+    // 1.5 Hero Description
+    const descEl = document.getElementById('hero-description');
+    if (descEl) {
+        descEl.textContent = project.description || project.aboutText || "";
+    }
 
     // 2. Mini Gallery
     const miniGallery = document.getElementById('mini-gallery');
@@ -55,13 +64,33 @@ function renderProject(project) {
         const pic = document.createElement('picture');
         const img = document.createElement('img');
         img.src = src;
-        img.alt = project.heroTitle;
+        img.alt = titleText;
         pic.appendChild(img);
         miniGallery.appendChild(pic);
     });
 
     // 3. Double Images
     const doubleImageContainer = document.getElementById('double-image');
+
+    // If scrollPreview exists, it takes the FULL container — no other images rendered
+    if (project.scrollPreview) {
+        const previewItem = document.createElement('div');
+        previewItem.className = 'double-image-item scroll-preview-full';
+
+        const previewPic = document.createElement('picture');
+        previewPic.classList.add('scroll-preview-card');
+
+        const previewImg = document.createElement('img');
+        previewImg.src = project.scrollPreview;
+        previewImg.alt = 'Scroll preview';
+
+        previewPic.appendChild(previewImg);
+        previewItem.appendChild(previewPic);
+        doubleImageContainer.appendChild(previewItem);
+        return; // skip rendering doubleImages pairs
+    }
+
+    // No scrollPreview: render regular double image pairs
     project.doubleImages.forEach(pair => {
         const item = document.createElement('div');
         item.className = 'double-image-item';
@@ -85,6 +114,22 @@ function renderProject(project) {
 
     // 4. About Text
     document.getElementById('about-text').textContent = project.aboutText;
+
+    // 5. Fullscreen Images (rendered after about section)
+    const fullscreenSection = document.getElementById('fullscreen-images');
+    if (fullscreenSection && project.fullscreenImages && project.fullscreenImages.length > 0) {
+        project.fullscreenImages.forEach(src => {
+            const figure = document.createElement('figure');
+            figure.className = 'fullscreen-image-item';
+
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = titleText;
+
+            figure.appendChild(img);
+            fullscreenSection.appendChild(figure);
+        });
+    }
 }
 
 function initLenis() {
@@ -100,34 +145,15 @@ function initAnimations(project) {
     gsap.registerPlugin(ScrollTrigger, SplitText);
 
     // --- Hero Title Animation ---
-    const h1 = new SplitText('#hero-title', { type: 'words' });
-    const titleTimeline = gsap.timeline();
-    titleTimeline.fromTo(h1.words, {
+    const h1El = document.getElementById('hero-title');
+    gsap.fromTo(h1El, {
         opacity: 0,
-        y: '100%',
+        y: 50,
     }, {
         opacity: 1,
         y: 0,
-        stagger: 0.1,
-        duration: 0.5,
-        ease: 'power2.inOut'
-    });
-
-    gsap.fromTo(h1.words, {
-        opacity: 1,
-        y: 0
-    }, {
-        opacity: 0,
-        y: '100%',
-        stagger: 0.1,
-        duration: 0.5,
-        ease: 'power2.inOut',
-        scrollTrigger: {
-            trigger: '.hero-section',
-            start: 'top top',
-            end: 'bottom 50%',
-            toggleActions: "play none none reverse",
-        }
+        duration: 1,
+        ease: 'power2.out'
     });
 
     // --- Core Scroll Animation ---
@@ -153,7 +179,7 @@ function initAnimations(project) {
                         scale: scaleProgress,
                         x: 0,
                         y: 0,
-                        opacity: scaleProgress
+                        opacity: progress > 0 ? 1 : 0
                     });
                 });
                 gsap.set('.double-image', { scale: 0 });

@@ -1,0 +1,308 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Raleway', sans-serif;
+}
+
+@font-face {
+    font-family: 'PF Pixelscript';
+    src: url('../fonts/pf-pixelscript.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --color-bg-dark: #232120;
+    --color-text-cream: #EFECE3;
+}
+
+html,
+body {
+    overflow-x: hidden;
+    background: var(--color-bg-dark);
+    color: var(--color-text-cream);
+}
+
+h1 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(4rem, 12vw, 10rem);
+    color: #fff;
+    mix-blend-mode: difference;
+    position: relative;
+    z-index: 50;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    text-align: left;
+    margin: 0;
+    padding: 0.2em 0;
+    overflow: visible;
+}
+
+.retro-initial {
+    font-family: 'PF Pixelscript', 'Instrument Serif', serif !important;
+    font-weight: normal;
+    font-size: 0.5em;
+    display: inline-block;
+    vertical-align: middle;
+    letter-spacing: -0.04em;
+    line-height: normal;
+    padding: 0.2em 0.1em;
+}
+
+.hero-section {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: var(--color-bg-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-content {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 4rem;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hero-bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    pointer-events: auto;
+    position: relative;
+    z-index: 50;
+}
+
+.hero-description {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.4;
+    max-width: 320px;
+    color: var(--color-text-cream);
+    opacity: 0.9;
+}
+
+.scroll-cta {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    font-size: 1rem;
+    color: var(--color-text-cream);
+    display: flex;
+    align-items: center;
+    opacity: 0.9;
+}
+
+@keyframes bounceScroll {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+}
+
+.scroll-cta span {
+    display: inline-block;
+    animation: bounceScroll 2s infinite ease-in-out;
+}
+
+.mini-gallery {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    will-change: transform;
+    z-index: 5;
+}
+
+.mini-gallery picture {
+    position: absolute;
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    height: 400px;
+    overflow: hidden;
+    transform: scale(.5);
+    will-change: transform;
+    opacity: 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+    border-radius: 8px; /* Added subtle radius typical of modern UI cards */
+}
+
+.mini-gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.double-image {
+    position: absolute;
+    margin: auto;
+    inset: 0;
+    width: 100%;
+    max-width: 1200px;
+    height: 600px;
+    display: flex;
+    transform: scale(0);
+    overflow: hidden;
+    will-change: transform;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.double-image .double-image-item {
+    position: relative;
+    flex: 1;
+    height: 100%;
+}
+
+.double-image .double-image-item picture,
+.double-image .double-image-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.double-image picture img {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.about-section {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: var(--color-bg-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-section-content {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    max-width: 1000px;
+    padding: 0 2rem;
+}
+
+.about-section-content h2 {
+    color: var(--color-text-cream);
+    font-size: clamp(2rem, 10vw, 5rem);
+    font-weight: 900;
+    text-align: center;
+    line-height: 1.1;
+}
+
+#error-message {
+    position: fixed;
+    inset: 0;
+    background: var(--color-bg-dark);
+    color: var(--color-text-cream);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    padding: 2rem;
+    text-align: center;
+}
+
+#error-message a {
+    color: var(--color-text-cream);
+    margin-top: 2rem;
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .hero-content {
+        padding: 1.5rem;
+    }
+    .hero-bottom-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+    .scroll-cta {
+        align-self: flex-end;
+    }
+    .about-section-content h2 {
+        font-size: clamp(1.5rem, 8vw, 2.5rem);
+    }
+
+    .double-image {
+        flex-direction: column;
+        height: 80vh;
+    }
+}
+
+/* ─── Scroll Preview Card ──────────────────────────────────────────────── */
+
+/* Inside the double-image layout it fills the full parent item */
+.scroll-preview-card {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;          /* clip whatever is outside the window */
+    border-radius: 0;          /* no radius inside double-image */
+}
+
+/* When scroll-preview is the only item, stretch it to full container width */
+.scroll-preview-full {
+    flex: 1 1 100%;
+    width: 100%;
+}
+
+/* The image scrolls vertically — height auto to preserve full longscreen */
+.scroll-preview-card img:first-child {
+    width: 100%;
+    height: auto;
+    display: block;
+    animation: autoScrollPreview 14s ease-in-out infinite;
+    will-change: transform;
+}
+
+/* Keyframes: pause at top, scroll down to bottom edge, pause, loop */
+@keyframes autoScrollPreview {
+    0%   { transform: translateY(0%); }
+    5%   { transform: translateY(0%); }              /* pause at top */
+    90%  { transform: translateY(calc(-100% + 600px)); } /* scroll to very bottom */
+    95%  { transform: translateY(calc(-100% + 600px)); } /* pause at bottom */
+    100% { transform: translateY(0%); }              /* loop back to top */
+}
+
+/* ─── Fullscreen Images Section ────────────────────────────────────────── */
+
+#fullscreen-images {
+    width: 100vw;
+}
+
+.fullscreen-image-item {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: block;
+    margin: 0;
+}
+
+.fullscreen-image-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+}
