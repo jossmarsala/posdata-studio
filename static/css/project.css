@@ -137,7 +137,7 @@ h1 {
     will-change: transform;
     opacity: 0;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
-    border-radius: 8px; /* Added subtle radius typical of modern UI cards */
+    border-radius: 3px; /* Added subtle radius typical of modern UI cards */
 }
 
 .mini-gallery img {
@@ -207,6 +207,131 @@ h1 {
     line-height: 1.1;
 }
 
+/* ─── Static Gallery Section ───────────────────────────────────────────── */
+
+.static-gallery-section {
+    width: 100vw;
+    padding: 6rem 4rem;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2rem;
+    align-items: start;
+    background: var(--color-bg-dark);
+}
+
+.static-gallery-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+
+.static-gallery-item img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+    border-radius: 3px; /* Match mini-gallery style */
+    display: block;
+}
+
+.static-gallery-item figcaption {
+    margin-top: 1.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: var(--color-text-cream);
+    opacity: 0.7;
+    text-align: left;
+}
+
+/* ─── Case Study Section ────────────────────────────────────────────────── */
+
+.case-study-section {
+    width: 100vw;
+    background: var(--color-bg-dark);
+    padding: 0 4rem 8rem 4rem;
+    display: flex;
+    justify-content: center;
+}
+
+.project-overview-section {
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+}
+
+.cs-container {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 6rem;
+}
+
+.cs-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.cs-heading {
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--color-text-cream);
+    opacity: 0.5;
+    margin: 0;
+}
+
+/* Technologies List */
+.cs-tech-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cs-tech-list li {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 1rem;
+    row-gap: 0.25rem;
+    align-items: baseline;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.cs-tech-label {
+    font-weight: 500;
+    color: var(--color-text-cream);
+    min-width: 200px;
+}
+
+.cs-tech-value {
+    font-weight: 300;
+    color: var(--color-text-cream);
+    opacity: 0.8;
+}
+
+/* Text & Paragraphs */
+.cs-text {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    font-weight: 300;
+    color: var(--color-text-cream);
+    opacity: 0.9;
+    max-width: 800px;
+    margin: 0;
+}
+
+/* Text & Paragraphs */
+
 #error-message {
     position: fixed;
     inset: 0;
@@ -247,6 +372,34 @@ h1 {
         flex-direction: column;
         height: 80vh;
     }
+
+    .static-gallery-section {
+        grid-template-columns: repeat(3, 1fr);
+        padding: 4rem 1.5rem;
+        gap: 1.5rem;
+    }
+    .static-gallery-item figcaption {
+        font-size: 0.65rem;
+    }
+
+    .case-study-section {
+        padding: 0 1.5rem 4rem 1.5rem;
+    }
+    
+    .cs-container {
+        gap: 4rem;
+    }
+
+    .cs-tech-label {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .static-gallery-section {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
 }
 
 /* ─── Scroll Preview Card ──────────────────────────────────────────────── */
@@ -274,6 +427,23 @@ h1 {
     display: block;
     animation: autoScrollPreview 14s ease-in-out infinite;
     will-change: transform;
+}
+
+/* Dashboard overlay image superimposed absolutely over the scrolling image */
+.scroll-preview-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 10;
+    transform: translateY(100%);
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scroll-preview-overlay.is-visible {
+    transform: translateY(0);
 }
 
 /* Keyframes: pause at top, scroll down to bottom edge, pause, loop */

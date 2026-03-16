@@ -80,55 +80,117 @@ function renderProject(project) {
         const previewPic = document.createElement('picture');
         previewPic.classList.add('scroll-preview-card');
 
+        // Longscreen animated image
         const previewImg = document.createElement('img');
         previewImg.src = project.scrollPreview;
         previewImg.alt = 'Scroll preview';
-
         previewPic.appendChild(previewImg);
+
+        // Overlay dashboardscreen image
+        if (project.fullscreenImages && project.fullscreenImages.length > 0) {
+            const overlayImg = document.createElement('img');
+            overlayImg.src = project.fullscreenImages[0];
+            overlayImg.alt = 'Dashboard overlay';
+            overlayImg.classList.add('scroll-preview-overlay');
+            previewPic.appendChild(overlayImg);
+        }
+
         previewItem.appendChild(previewPic);
         doubleImageContainer.appendChild(previewItem);
-        return; // skip rendering doubleImages pairs
+    } else {
+        // No scrollPreview: render regular double image pairs
+        project.doubleImages.forEach(pair => {
+            const item = document.createElement('div');
+            item.className = 'double-image-item';
+
+            const pic = document.createElement('picture');
+
+            const baseImg = document.createElement('img');
+            baseImg.src = pair.base;
+            baseImg.alt = 'Base layer';
+
+            const overlayImg = document.createElement('img');
+            overlayImg.src = pair.overlay;
+            overlayImg.alt = 'Overlay layer';
+            overlayImg.className = pair.overlayClass;
+
+            pic.appendChild(baseImg);
+            pic.appendChild(overlayImg);
+            item.appendChild(pic);
+            doubleImageContainer.appendChild(item);
+        });
     }
 
-    // No scrollPreview: render regular double image pairs
-    project.doubleImages.forEach(pair => {
-        const item = document.createElement('div');
-        item.className = 'double-image-item';
-
-        const pic = document.createElement('picture');
-
-        const baseImg = document.createElement('img');
-        baseImg.src = pair.base;
-        baseImg.alt = 'Base layer';
-
-        const overlayImg = document.createElement('img');
-        overlayImg.src = pair.overlay;
-        overlayImg.alt = 'Overlay layer';
-        overlayImg.className = pair.overlayClass;
-
-        pic.appendChild(baseImg);
-        pic.appendChild(overlayImg);
-        item.appendChild(pic);
-        doubleImageContainer.appendChild(item);
-    });
-
-    // 4. About Text
-    document.getElementById('about-text').textContent = project.aboutText;
-
-    // 5. Fullscreen Images (rendered after about section)
-    const fullscreenSection = document.getElementById('fullscreen-images');
-    if (fullscreenSection && project.fullscreenImages && project.fullscreenImages.length > 0) {
-        project.fullscreenImages.forEach(src => {
+    // 3.5 Static Gallery (recap of the 6 mini gallery images)
+    const staticGallery = document.getElementById('static-gallery');
+    if (staticGallery && project.miniGallery && project.miniGallery.length > 0) {
+        project.miniGallery.forEach(src => {
             const figure = document.createElement('figure');
-            figure.className = 'fullscreen-image-item';
+            figure.className = 'static-gallery-item';
 
             const img = document.createElement('img');
             img.src = src;
             img.alt = titleText;
 
+            const figcaption = document.createElement('figcaption');
+            // Generate simple caption from filename (e.g., "uifooter" -> "UI FOOTER")
+            let rawName = src.split('/').pop().split('.')[0];
+            if (rawName.includes('__')) rawName = rawName.split('__')[1];
+            
+            // Basic formatting to look like "UI FOOTER" or "RESPONSIVE MOCKUP"
+            let captionText = rawName
+                .replace(/([A-Z])/g, ' $1')      // Add space before capitals
+                .replace(/([a-z])([A-Z])/g, '$1 $2') 
+                .replace(/-/g, ' ')              // Replace dashes
+                .trim()
+                .toUpperCase();
+            
+            // Hardcode some nicer spaces if it stays glued (e.g. uifooter => UI FOOTER)
+            if (captionText === 'UIFOOTER') captionText = 'UI FOOTER';
+            if (captionText === 'RESPONSIVEMOCKUP') captionText = 'RESPONSIVE MOCKUP';
+            if (captionText === 'DESIGNTECHNICAL') captionText = 'DESIGN TECHNICAL';
+            if (captionText === 'MOCKUPPHONE') captionText = 'MOCKUP PHONE';
+            if (captionText === 'DESIGNSYSTEM') captionText = 'DESIGN SYSTEM';
+
+            figcaption.textContent = captionText || titleText.toUpperCase();
+
             figure.appendChild(img);
-            fullscreenSection.appendChild(figure);
+            figure.appendChild(figcaption);
+            staticGallery.appendChild(figure);
         });
+    }
+
+    // 4. Project Overview block
+    const overviewSection = document.getElementById('project-overview');
+    if (overviewSection && project.caseStudy && project.caseStudy.overview) {
+        overviewSection.innerHTML = `
+            <div class="cs-container">
+                <div class="cs-block cs-overview">
+                    <h3 class="cs-heading">PROJECT OVERVIEW</h3>
+                    <p class="cs-text">${project.caseStudy.overview}</p>
+                </div>
+            </div>
+        `;
+    }
+
+    // 5. Tech Stack (Case Study) block
+    const caseStudySection = document.getElementById('case-study');
+    if (caseStudySection && project.caseStudy && project.caseStudy.technologies && project.caseStudy.technologies.length > 0) {
+        caseStudySection.innerHTML = `
+            <div class="cs-container">
+                <div class="cs-block cs-tech-stack">
+                    <h3 class="cs-heading">TOOLS / TECHNOLOGIES</h3>
+                    <ul class="cs-tech-list">
+                        ${project.caseStudy.technologies.map(tech => `
+                            <li>
+                                <span class="cs-tech-label">${tech.label}</span>
+                                <span class="cs-tech-value">${tech.value}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+            </div>
+        `;
     }
 }
 
@@ -230,7 +292,7 @@ function initAnimations(project) {
                 gsap.set('.bottom-move', { y: '0%' });
 
             } else if (progress > 0.8) {
-                // Phase 5: Split double image
+                // Phase 5: Split double image OR reveal preview overlay
                 const moveProgress = (progress - 0.8) / 0.2;
                 gsap.set('.double-image', { scale: 1 });
                 gsap.set('.top-move', {
@@ -241,19 +303,19 @@ function initAnimations(project) {
                     opacity: 1 - moveProgress,
                     y: (100 * moveProgress) + '%'
                 });
+
+                // Show the overlay image via CSS transition
+                document.querySelectorAll('.scroll-preview-overlay').forEach(el => {
+                    el.classList.add('is-visible');
+                });
+            }
+
+            // Hide the overlay image if we scroll back up
+            if (progress <= 0.8) {
+                document.querySelectorAll('.scroll-preview-overlay').forEach(el => {
+                    el.classList.remove('is-visible');
+                });
             }
         }
-    });
-
-    // --- About Section Text Animation ---
-    const h2 = new SplitText('#about-text', { type: 'words' });
-    h2.words.forEach((word, index) => {
-        ScrollTrigger.create({
-            trigger: '.about-section',
-            start: `top+=${index * 25 - 250} top`,
-            end: `+=${index * 25 - 150} top`,
-            scrub: 2,
-            animation: gsap.fromTo(word, { y: 100 }, { y: 0, ease: 'power2.inOut' })
-        });
     });
 }
