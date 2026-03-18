@@ -200,6 +200,45 @@ if (galleryInteractive) {
 
             // Re-render components that depend on slides being loaded
             updateTitlePositions();
+            
+            // Build Mobile Grid
+            let mobileGrid = document.createElement("div");
+            mobileGrid.className = "mobile-gallery-grid";
+            projects.forEach((project, i) => {
+                const item = document.createElement("a");
+                item.className = "mobile-gallery-item";
+                item.href = project.url && project.url !== "#" ? project.url : `/project?id=${project.id}`;
+
+                const imgWrapper = document.createElement("div");
+                imgWrapper.className = "mobile-gallery-img-wrapper";
+                
+                const img = document.createElement("img");
+                img.src = project.galleryImage;
+                img.alt = project.title;
+                img.loading = "lazy";
+                
+                imgWrapper.appendChild(img);
+                
+                const titleContainer = document.createElement("div");
+                titleContainer.className = "mobile-gallery-title";
+
+                const titleText = document.createElement("h2");
+                titleText.className = "title-text";
+                titleText.textContent = project.title;
+
+                const titleNumber = document.createElement("p");
+                titleNumber.className = "title-number";
+                titleNumber.textContent = `0${i + 1}`;
+
+                titleContainer.appendChild(titleText);
+                titleContainer.appendChild(titleNumber);
+
+                item.appendChild(imgWrapper);
+                item.appendChild(titleContainer);
+                mobileGrid.appendChild(item);
+            });
+            galleryInteractive.appendChild(mobileGrid);
+
             animate(0);
         })
         .catch(err => console.error("Error loading projects:", err));
@@ -504,6 +543,7 @@ if (galleryInteractive) {
     });
 
     galleryInteractive.addEventListener("wheel", (e) => {
+        if (window.innerWidth <= 768) return;
         if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
             e.preventDefault();
             const wheelStrength = Math.abs(e.deltaX) * 0.001;
@@ -523,6 +563,7 @@ if (galleryInteractive) {
     );
 
     galleryInteractive.addEventListener("touchstart", (e) => {
+        if (window.innerWidth <= 768) return;
         touchStartX = e.touches[0].clientX;
         touchLastX = touchStartX;
         isScrolling = false;
@@ -531,6 +572,7 @@ if (galleryInteractive) {
     );
 
     galleryInteractive.addEventListener("touchmove", (e) => {
+        if (window.innerWidth <= 768) return;
         const touchX = e.touches[0].clientX;
         const deltaX = touchX - touchLastX;
         lastDeltaX = deltaX;
@@ -552,6 +594,7 @@ if (galleryInteractive) {
     );
 
     galleryInteractive.addEventListener("touchend", () => {
+        if (window.innerWidth <= 768) return;
         const velocity = (touchLastX - touchStartX) * 0.005;
         if (Math.abs(velocity) > 0.5) {
             autoScrollSpeed = -velocity * settings.momentumMultiplier * 0.05;
@@ -579,6 +622,10 @@ if (galleryInteractive) {
 
     const animate = (time) => {
         requestAnimationFrame(animate);
+
+        // Skip WebGL rendering and physics updates if on mobile (viewport <= 768px)
+        if (window.innerWidth <= 768) return;
+
         const deltaTime = lastTime ? (time - lastTime) / 1000 : 0.016;
         lastTime = time;
         globalTime += deltaTime;
