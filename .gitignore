@@ -1,1 +1,40 @@
+# python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# entornos virtuales
+.venv/
+venv/
+env/
+
+# variables de entorno
+.env
+
+# logs
+*.log
+server_log.txt
+
+# bases de datos
+*.sqlite3
+*.db
+
+# node.js
+node_modules/
+
+# deploy
 .vercel
+
+# OS
+.DS_Store
+Thumbs.db
+
+# onfiguración de editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# backups
+*.bak
+*_backup
