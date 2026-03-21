@@ -7,12 +7,9 @@ app.config['SECRET_KEY'] = 'dev-key-posdata-studio-2026' # Change this in produc
 def index():
     return render_template('index.html')
 
-@app.route('/vitalia-selfcare')
-def vitalia_selfcare():
-    return render_template('vitalia-selfcare.html')
-
 @app.route('/project')
-def project():
+@app.route('/projects/<project_id>')
+def project_detail(project_id=None):
     return render_template('project.html')
 
 if __name__ == '__main__':

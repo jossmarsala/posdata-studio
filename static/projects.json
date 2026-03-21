@@ -3,7 +3,7 @@
         {
             "id": "vitalia-selfcare",
             "title": "Vitalia Selfcare",
-            "url": "/vitalia-selfcare",
+            "url": "/projects/vitalia-selfcare",
             "galleryImage": "/static/assets/images/vitalia-poster.webp",
             "offset": {
                 "x": 0,
@@ -27,7 +27,7 @@
         {
             "id": "gypsy-joyas",
             "title": "Gypsy Joyas",
-            "url": "#",
+            "url": "/projects/gypsy-joyas",
             "galleryImage": "/static/assets/images/gypsy-poster.webp",
             "offset": {
                 "x": 0,
@@ -56,11 +56,26 @@
             ],
             "caseStudy": {
                 "technologies": [
-                    {"label": "Frontend (Public Site)", "value": "HTML5, Vanilla CSS, Vanilla JavaScript"},
-                    {"label": "Admin Dashboard", "value": "React.js, Vite"},
-                    {"label": "Backend", "value": "Node.js, Express (Vercel Serverless Functions)"},
-                    {"label": "Database & ORM", "value": "PostgreSQL, Prisma"},
-                    {"label": "Storage & Hosting", "value": "Vercel Blob, Vercel Continuous Integration"}
+                    {
+                        "label": "Frontend (Public Site)",
+                        "value": "HTML5, Vanilla CSS, Vanilla JavaScript"
+                    },
+                    {
+                        "label": "Admin Dashboard",
+                        "value": "React.js, Vite"
+                    },
+                    {
+                        "label": "Backend",
+                        "value": "Node.js, Express (Vercel Serverless Functions)"
+                    },
+                    {
+                        "label": "Database & ORM",
+                        "value": "PostgreSQL, Prisma"
+                    },
+                    {
+                        "label": "Storage & Hosting",
+                        "value": "Vercel Blob, Vercel Continuous Integration"
+                    }
                 ],
                 "overview": "The brand initially operated entirely through Instagram, so the main technical challenge was creating an official digital catalog that was both scalable and easy to manage for a brand owner. Building a static website would have made updating product availability, pricing, and images inefficient. To solve this, the project expanded to include a custom internal dashboard connected directly to a database, creating an autonomous system where updates are instantly reflected on the public catalog."
             }
@@ -68,7 +83,7 @@
         {
             "id": "jolly-eatery",
             "title": "The Jolly Eatery",
-            "url": "#",
+            "url": "/projects/jolly-eatery",
             "galleryImage": "https://cdn.cosmos.so/f733585a-081e-48e7-a30e-e636446f2168?format=jpeg",
             "offset": {
                 "x": 0,
@@ -82,7 +97,7 @@
         {
             "id": "savors-coffee",
             "title": "Savors Coffee",
-            "url": "#",
+            "url": "/projects/savors-coffee",
             "galleryImage": "https://cdn.cosmos.so/47caf8a0-f456-41c5-98ea-6d0476315731?format=jpeg",
             "offset": {
                 "x": 0,
@@ -96,7 +111,7 @@
         {
             "id": "celestial-flow",
             "title": "Celestial Flow",
-            "url": "#",
+            "url": "/projects/celestial-flow",
             "galleryImage": "https://cdn.cosmos.so/f99f8445-6a19-4a9a-9de3-ac382acc1a3f?format=jpeg",
             "offset": {
                 "x": 0,
