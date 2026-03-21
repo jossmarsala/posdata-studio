@@ -4,42 +4,76 @@
  */
 
 document.addEventListener('DOMContentLoaded', async () => {
+    // Support both URL formats:
+    //   /projects/gypsy-joyas  (path-based, Flask dynamic route)
+    //   /project?id=gypsy-joyas (query string fallback)
+    const pathMatch = window.location.pathname.match(/\/projects\/([^\/]+)/);
     const params = new URLSearchParams(window.location.search);
-    const projectId = params.get('id');
+    const projectId = (pathMatch && pathMatch[1]) || params.get('id');
 
     if (!projectId) {
         showError('No se especificó un ID de proyecto.');
         return;
     }
 
+    // Phase 1: Fetch + find project
+    let project;
     try {
         const response = await fetch('/static/projects.json');
-        if (!response.ok) throw new Error('Falló la carga de datos.');
-
+        if (!response.ok) throw new Error(`Fetch falló: ${response.status}`);
         const data = await response.json();
-        const project = data.projects.find(p => p.id === projectId);
-
+        project = data.projects.find(p => p.id === projectId);
         if (!project) {
-            showError(`No se encontró el proyecto: ${projectId}`);
+            showError(`No se encontró el proyecto: "${projectId}"`);
             return;
         }
-
-        renderProject(project);
-        initLenis();
-        initAnimations(project);
-
     } catch (error) {
-        console.error(error);
-        showError('Hubo un error al cargar la información del proyecto.');
+        console.error('[project.js] Error en fetch:', error);
+        showError(`Error cargando datos: ${error.message}`);
+        return;
+    }
+
+    // Phase 2: Render DOM — always runs, stops on failure
+    try {
+        renderProject(project);
+    } catch (error) {
+        console.error('[project.js] Error en renderProject:', error);
+        showError(`Error al renderizar: ${error.message}`);
+        return;
+    }
+
+    // Phase 3: Lenis smooth scroll — optional
+    try {
+        if (typeof Lenis !== 'undefined' && typeof gsap !== 'undefined') {
+            initLenis();
+        } else {
+            console.warn('[project.js] Lenis/GSAP no disponibles, omitiendo scroll suave.');
+        }
+    } catch (error) {
+        console.warn('[project.js] initLenis falló (no crítico):', error.message);
+    }
+
+    // Phase 4: GSAP animations — optional
+    try {
+        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+            initAnimations(project);
+        } else {
+            console.warn('[project.js] GSAP/ScrollTrigger no disponibles, omitiendo animaciones.');
+        }
+    } catch (error) {
+        console.warn('[project.js] initAnimations falló (no crítico):', error.message);
     }
 });
 
 function showError(message) {
     const errorEl = document.getElementById('error-message');
     const contentEl = document.getElementById('project-content');
-    if (errorEl && contentEl) {
-        errorEl.querySelector('p').textContent = message;
+    if (errorEl) {
+        const pEl = errorEl.querySelector('p');
+        if (pEl) pEl.textContent = message;
         errorEl.style.display = 'flex';
+    }
+    if (contentEl) {
         contentEl.style.display = 'none';
     }
 }
@@ -196,7 +230,9 @@ function renderProject(project) {
 
 function initLenis() {
     const lenis = new Lenis();
-    lenis.on('scroll', ScrollTrigger.update);
+    lenis.on('scroll', () => {
+        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.update();
+    });
     gsap.ticker.add((time) => {
         lenis.raf(time * 1000);
     });
@@ -204,7 +240,10 @@ function initLenis() {
 }
 
 function initAnimations(project) {
-    gsap.registerPlugin(ScrollTrigger, SplitText);
+    // Register only what's available — SplitText is not reliable as a CDN global
+    const pluginsToRegister = [ScrollTrigger].filter(Boolean);
+    if (typeof SplitText !== 'undefined') pluginsToRegister.push(SplitText);
+    gsap.registerPlugin(...pluginsToRegister);
 
     // --- Hero Title Animation ---
     const h1El = document.getElementById('hero-title');
