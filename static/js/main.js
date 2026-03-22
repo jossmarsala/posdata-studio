@@ -418,6 +418,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const contactSection = document.querySelector('.contact-section');
+    if (contactSection && document.querySelector('.zoom-wrapper')) {
+        // Enforce fixed position so it acts as an overlay
+        gsap.set(contactSection, {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100vh",
+            y: "100%",
+            zIndex: 100,
+            overflowY: "auto"
+        });
+
+        // Trigger slide-up when we reach the bottom of the zoom wrapper
+        gsap.to(contactSection, {
+            y: "0%",
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".zoom-wrapper",
+                start: "bottom bottom",
+                end: "+=100%",
+                pin: true,
+                scrub: true,
+                pinSpacing: true
+            }
+        });
+    }
+
 });
 
 const travelTxt = document.querySelector('.travel-txt');
