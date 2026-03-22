@@ -37,15 +37,25 @@ body {
     background-color: var(--color-cream);
     color: var(--color-text);
     line-height: 1.6;
-    overflow-x: clip; 
+    overflow-x: clip;
     position: relative;
     scroll-behavior: smooth;
 
+}
 
-    background-image: url('../assets/images/resources/texture.webp');
-    background-repeat: repeat-y;
-    background-size: 100% auto;
-    background-blend-mode: multiply;
+/* --- Global Fixed Texture --- */
+.global-fixed-texture {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -10;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    opacity: 0.8;
+    /* Adjust opacity as needed to match design */
 }
 
 
@@ -475,7 +485,8 @@ ul {
     width: 100%;
     z-index: 1;
 
-    overflow: clip; /* clip instead of hidden allows sticky elements to work */
+    overflow: clip;
+    /* clip instead of hidden allows sticky elements to work */
 }
 
 .zoom-content {
@@ -674,10 +685,6 @@ ul {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('../assets/images/resources/texture.webp');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     pointer-events: none;
     z-index: 1;
     opacity: 0.6;
@@ -2086,151 +2093,156 @@ body.hide-custom-cursor .custom-cursor,
         visibility: hidden !important;
     }
 }
+
 /* --- Stack Gallery --- */
 .stack-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  min-height: 60vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  perspective: 1000px;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  margin-top: 2rem;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    margin-top: 2rem;
 }
 
 .stack-container.is-initialized {
-  opacity: 1;
+    opacity: 1;
 }
 
 .card-rotate {
-  position: absolute;
-  width: 380px;
-  height: 520px;
-  cursor: grab;
-  will-change: transform;
-  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: absolute;
+    width: 380px;
+    height: 520px;
+    cursor: grab;
+    will-change: transform;
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .card-rotate.dragging {
-  transition: none;
-  cursor: grabbing;
+    transition: none;
+    cursor: grabbing;
 }
 
 .card {
-  border-radius: 0;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.2);
-  background: var(--color-bg);
-  position: relative;
+    border-radius: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.2);
+    background: var(--color-bg);
+    position: relative;
 }
 
 .card::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60%;
-  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
-  pointer-events: none;
-  z-index: 1;
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
+    pointer-events: none;
+    z-index: 1;
 }
 
 .card-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-drag: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .carousel-card-content {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 2.5rem 2rem;
-  color: white;
-  z-index: 2;
-  pointer-events: none;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2.5rem 2rem;
+    color: white;
+    z-index: 2;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .carousel-card-number {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 0.4rem 1rem;
-  border-radius: 0;
-  font-size: 0.85rem;
-  font-family: var(--font-sans);
-  font-weight: 500;
-  letter-spacing: 1px;
-  color: white;
-  z-index: 3;
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 0.4rem 1rem;
+    border-radius: 0;
+    font-size: 0.85rem;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: white;
+    z-index: 3;
 }
 
 .carousel-card-title {
-  font-family: var(--font-serif);
-  font-size: 3rem;
-  margin: 0 0 0.5rem 0;
-  line-height: 1.1;
-  font-weight: 400;
-  color: var(--color-cream);
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.1;
+    font-weight: 400;
+    color: var(--color-cream);
 }
 
 .carousel-card-subtitle {
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  opacity: 0.9;
-  margin: 0;
-  letter-spacing: 0.5px;
-  color: var(--color-white);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    opacity: 0.9;
+    margin: 0;
+    letter-spacing: 0.5px;
+    color: var(--color-white);
 }
 
 @media (max-width: 1024px) {
-  .card-rotate {
-    width: 320px;
-    height: 480px;
-  }
+    .card-rotate {
+        width: 320px;
+        height: 480px;
+    }
 }
 
 @media (max-width: 768px) {
-  .card-rotate {
-    width: 260px;
-    height: 380px;
-  }
-  .carousel-card-title {
-    font-size: 2.2rem;
-  }
-  .stack-container {
-    min-height: 60vh;
-  }
+    .card-rotate {
+        width: 260px;
+        height: 380px;
+    }
+
+    .carousel-card-title {
+        font-size: 2.2rem;
+    }
+
+    .stack-container {
+        min-height: 60vh;
+    }
 }
 
 @media (max-width: 480px) {
-  .card-rotate {
-    width: 220px;
-    height: 340px;
-  }
-  .carousel-card-title {
-    font-size: 1.8rem;
-  }
-  .stack-container {
-    min-height: 50vh;
-    margin-top: 1rem;
-  }
+    .card-rotate {
+        width: 220px;
+        height: 340px;
+    }
+
+    .carousel-card-title {
+        font-size: 1.8rem;
+    }
+
+    .stack-container {
+        min-height: 50vh;
+        margin-top: 1rem;
+    }
 }

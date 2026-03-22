@@ -19,17 +19,7 @@
     overflow: hidden;
 }
 
-.contact-section::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url('../assets/images/resources/texture.webp');
-    background-size: cover;
-    opacity: 0.3;
-    mix-blend-mode: multiply;
-    pointer-events: none;
-    z-index: 0;
-}
+
 
 .contact-wrapper {
     position: relative;

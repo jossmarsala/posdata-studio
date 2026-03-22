@@ -13,6 +13,8 @@
 </head>
 
 <body>
+    <img src="{{ url_for('static', filename='assets/images/resources/texture.webp') }}" class="global-fixed-texture"
+        alt="texture">
 
 
     <!-- Custom Cursor (Top priority) -->
@@ -239,81 +241,81 @@
                                 Configuramos el dominio, el hosting y los detalles técnicos necesarios para que
                                 la web esté publicada y lista para usarse.
                             </p>
-                    </div>
+                        </div>
                 </section>
             </div>
         </div>
 
         <!-- Contact Section moved outside zoom-wrapper -->
-                <section class="contact-section" id="contact">
-                    <div class="contact-wrapper">
-                        <div class="contact-header">
-                            <h2 class="contact-title"><span class="retro-initial">H</span>ablemos</h2>
-                            <p class="contact-subtitle">¿Tenés un proyecto en mente? Escribinos y te respondemos a la
-                                brevedad.</p>
-                            <div class="contact-info">
-                                <span class="contact-info-label">Email</span>
-                                <a href="mailto:isposdata@gmail.com" class="contact-info-value">isposdata@gmail.com</a>
-                                <span class="contact-info-label">Redes</span>
-                                <a href="https://instagram.com/posdata.studio" target="_blank" rel="noopener"
-                                    class="contact-info-value">Instagram</a>
-                            </div>
-                        </div>
-
-                        <div class="contact-form-wrapper">
-                            <form id="contact-form" class="contact-form" novalidate>
-                                <div class="form-field">
-                                    <input type="text" id="contact-name" name="name" placeholder=" " required
-                                        maxlength="200" autocomplete="name">
-                                    <label for="contact-name">Tu nombre</label>
-                                </div>
-
-                                <div class="form-field">
-                                    <input type="email" id="contact-email" name="email" placeholder=" " required
-                                        maxlength="320" autocomplete="email">
-                                    <label for="contact-email">Tu email</label>
-                                </div>
-
-                                <div class="form-field form-field--select">
-                                    <select id="contact-subject" name="subject" required>
-                                        <option value="" disabled selected></option>
-                                        <option value="Nuevo proyecto">Nuevo proyecto</option>
-                                        <option value="Consulta general">Consulta general</option>
-                                        <option value="Colaboración">Colaboración</option>
-                                        <option value="Otro">Otro</option>
-                                    </select>
-                                    <label for="contact-subject">Asunto</label>
-                                </div>
-
-                                <div class="form-field">
-                                    <textarea id="contact-message" name="message" placeholder=" " required
-                                        maxlength="5000" rows="5"></textarea>
-                                    <label for="contact-message">Tu mensaje</label>
-                                </div>
-
-                                <!-- Honeypot -->
-                                <div class="form-field form-field--hp" aria-hidden="true">
-                                    <input type="text" name="website" tabindex="-1" autocomplete="off">
-                                    <label>Website</label>
-                                </div>
-
-                                <div class="contact-submit-row">
-                                    <button type="submit" class="contact-submit-btn">
-                                        <span class="submit-text">Enviar mensaje</span>
-                                        <span class="submit-arrow">
-                                            <svg viewBox="0 0 24 24">
-                                                <line x1="7" y1="17" x2="17" y2="7"></line>
-                                                <polyline points="7 7 17 7 17 17"></polyline>
-                                            </svg>
-                                        </span>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+        <section class="contact-section" id="contact">
+            <div class="contact-wrapper">
+                <div class="contact-header">
+                    <h2 class="contact-title"><span class="retro-initial">H</span>ablemos</h2>
+                    <p class="contact-subtitle">¿Tenés un proyecto en mente? Escribinos y te respondemos a la
+                        brevedad.</p>
+                    <div class="contact-info">
+                        <span class="contact-info-label">Email</span>
+                        <a href="mailto:isposdata@gmail.com" class="contact-info-value">isposdata@gmail.com</a>
+                        <span class="contact-info-label">Redes</span>
+                        <a href="https://instagram.com/posdata.studio" target="_blank" rel="noopener"
+                            class="contact-info-value">Instagram</a>
                     </div>
-                </section>
+                </div>
 
+                <div class="contact-form-wrapper">
+                    <form id="contact-form" class="contact-form" novalidate>
+                        <div class="form-field">
+                            <input type="text" id="contact-name" name="name" placeholder=" " required maxlength="200"
+                                autocomplete="name">
+                            <label for="contact-name">Tu nombre</label>
+                        </div>
+
+                        <div class="form-field">
+                            <input type="email" id="contact-email" name="email" placeholder=" " required maxlength="320"
+                                autocomplete="email">
+                            <label for="contact-email">Tu email</label>
+                        </div>
+
+                        <div class="form-field form-field--select">
+                            <select id="contact-subject" name="subject" required>
+                                <option value="" disabled selected></option>
+                                <option value="Nuevo proyecto">Nuevo proyecto</option>
+                                <option value="Consulta general">Consulta general</option>
+                                <option value="Colaboración">Colaboración</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                            <label for="contact-subject">Asunto</label>
+                        </div>
+
+                        <div class="form-field">
+                            <textarea id="contact-message" name="message" placeholder=" " required maxlength="5000"
+                                rows="5"></textarea>
+                            <label for="contact-message">Tu mensaje</label>
+                        </div>
+
+                        <!-- Honeypot -->
+                        <div class="form-field form-field--hp" aria-hidden="true">
+                            <input type="text" name="website" tabindex="-1" autocomplete="off">
+                            <label>Website</label>
+                        </div>
+
+                        <div class="contact-submit-row">
+                            <button type="submit" class="contact-submit-btn">
+                                <span class="submit-text">Enviar mensaje</span>
+                                <span class="submit-arrow">
+                                    <svg viewBox="0 0 24 24">
+                                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                                        <polyline points="7 7 17 7 17 17"></polyline>
+                                    </svg>
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
+        </section>
+
+        </div>
         </div>
 
         <script src="{{ url_for('static', filename='js/vendors/jquery.min.js') }}" defer></script>
