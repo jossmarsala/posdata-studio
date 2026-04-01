@@ -14,6 +14,12 @@ class CustomCursor {
     }
 
     init() {
+        // DESACTIVA COMPLETAMENTE LOS CUSTOM CURSORS PARA CELULAR Y TABLET
+        if (window.innerWidth <= 1024 || 'ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            document.body.classList.remove('custom-cursor-active');
+            return; // Abort completely for mobile/tablet
+        }
+
         this.createElements();
         this.ctx.overlay = document.querySelector('.overlay-section');
         this.bindEvents();

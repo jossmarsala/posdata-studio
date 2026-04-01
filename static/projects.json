@@ -33,8 +33,8 @@
                 "x": 0,
                 "y": 30
             },
-            "heroTitle": "Handmade Jewelry",
-            "description": "Gypsy is an artisanal jewelry brand based in Mendoza, Argentina. The project involved designing and developing a dedicated web catalog to present the brand's pieces. Beyond showcasing the collections, a parallel stock managing platform was built.",
+            "heroTitle": "Joyería Artesanal",
+            "description": "Gypsy es una marca de joyería artesanal con sede en Mendoza, Argentina. El proyecto consistió en diseñar y desarrollar un catálogo web dedicado para presentar las piezas de la marca. Más allá de exhibir las colecciones, se construyó una plataforma paralela de gestión de stock.",
             "miniGallery": [
                 "/static/assets/images/projects/gypsy/gypsy__uifooter.webp",
                 "/static/assets/images/projects/gypsy/gypsy__catalog.webp",
@@ -57,11 +57,11 @@
             "caseStudy": {
                 "technologies": [
                     {
-                        "label": "Frontend (Public Site)",
+                        "label": "Frontend (Sitio Público)",
                         "value": "HTML5, Vanilla CSS, Vanilla JavaScript"
                     },
                     {
-                        "label": "Admin Dashboard",
+                        "label": "Panel de Administración",
                         "value": "React.js, Vite"
                     },
                     {
@@ -69,15 +69,15 @@
                         "value": "Node.js, Express (Vercel Serverless Functions)"
                     },
                     {
-                        "label": "Database & ORM",
+                        "label": "Base de Datos y ORM",
                         "value": "PostgreSQL, Prisma"
                     },
                     {
-                        "label": "Storage & Hosting",
+                        "label": "Almacenamiento y Hosting",
                         "value": "Vercel Blob, Vercel Continuous Integration"
                     }
                 ],
-                "overview": "The brand initially operated entirely through Instagram, so the main technical challenge was creating an official digital catalog that was both scalable and easy to manage for a brand owner. Building a static website would have made updating product availability, pricing, and images inefficient. To solve this, the project expanded to include a custom internal dashboard connected directly to a database, creating an autonomous system where updates are instantly reflected on the public catalog."
+                "overview": "La marca operaba inicialmente de manera exclusiva a través de Instagram, por lo que el principal desafío técnico fue crear un catálogo digital oficial que fuera a la vez escalable y fácil de gestionar para el dueño de la marca. Construir un sitio web estático hubiera hecho ineficiente la actualización de la disponibilidad de productos, precios e imágenes. Para resolver esto, el proyecto se expandió para incluir un panel de administración interno hecho a medida y conectado directamente a una base de datos, creando un sistema autónomo donde las actualizaciones se ven reflejadas instantáneamente en el catálogo público."
             }
         },
         {

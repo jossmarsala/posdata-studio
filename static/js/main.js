@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ease: "power1.inOut",
                     duration: 1
                 }, "<")
-                .call(animateHeroTitle, null, 0.08)
+                .call(animateHeroTitle, null, 0.15)
                 .to(".overlay-section", {
                     y: "0%",
                     ease: "none",
@@ -415,6 +415,40 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             isOpen = !isOpen;
+        });
+
+        // Close dropdown when a link is clicked
+        document.querySelectorAll(".dropdown__button").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const targetId = btn.getAttribute("href");
+                
+                if (targetId && targetId.startsWith("#")) {
+                    e.preventDefault();
+                    
+                    if (isOpen) {
+                        menuBtn.click();
+                    }
+
+                    setTimeout(() => {
+                        if (targetId === "#hero") {
+                            gsap.to(window, {duration: 1, scrollTo: {y: 0, autoKill: false}, ease: "power2.inOut"});
+                        } else if (targetId === "#contact") {
+                            gsap.to(window, {duration: 1, scrollTo: {y: "max", autoKill: false}, ease: "power2.inOut"});
+                        } else if (targetId === "#overlay-section") {
+                            // Target the end of the zoom wrapper timeline where overlay is visible
+                            const zoomTrigger = ScrollTrigger.getAll().find(st => st.vars.trigger === ".zoom-wrapper");
+                            if (zoomTrigger) {
+                                gsap.to(window, {duration: 1, scrollTo: {y: zoomTrigger.end, autoKill: false}, ease: "power2.inOut"});
+                            } else {
+                                gsap.to(window, {duration: 1, scrollTo: {y: targetId, autoKill: false}, ease: "power2.inOut"});
+                            }
+                        } else {
+                            // Rely on ScrollToPlugin to offset #gallery automatically
+                            gsap.to(window, {duration: 1, scrollTo: {y: targetId, autoKill: false}, ease: "power2.inOut"});
+                        }
+                    }, 400);
+                }
+            });
         });
     }
 

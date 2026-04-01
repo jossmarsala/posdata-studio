@@ -7,14 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('contact-form');
     if (!form) return;
 
-    // --- Floating label for <select> ---
-    const selectField = form.querySelector('.form-field--select');
-    const selectEl = selectField?.querySelector('select');
-    if (selectEl) {
-        selectEl.addEventListener('change', () => {
-            selectField.classList.toggle('has-value', selectEl.value !== '');
-        });
-    }
 
     // --- GSAP entry animations ---
     if (typeof gsap !== 'undefined') {
@@ -26,15 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        tl.to('.contact-eyebrow', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' })
-          .to('.contact-title',    { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.4')
-          .to('.contact-subtitle', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.5')
-          .to('.contact-info',     { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4')
-          .to('.form-field',       { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.1 }, '-=0.3')
+        tl.to('.contact-visual__img', { opacity: 1, y: 0, duration: 1, ease: 'power2.out' })
+          .to('.contact-title',    { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.7')
+          .to('.form-field',       { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.1 }, '-=0.4')
           .to('.contact-submit-row', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.2');
     } else {
         // Fallback: show everything immediately
-        document.querySelectorAll('.contact-eyebrow, .contact-title, .contact-subtitle, .contact-info, .form-field, .contact-submit-row')
+        document.querySelectorAll('.contact-visual__img, .contact-title, .form-field, .contact-submit-row')
             .forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
     }
 
@@ -49,10 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Client-side validation
         const name = form.querySelector('#contact-name').value.trim();
         const email = form.querySelector('#contact-email').value.trim();
-        const subject = form.querySelector('#contact-subject').value;
         const message = form.querySelector('#contact-message').value.trim();
 
-        if (!name || !email || !subject || !message) {
+        if (!name || !email || !message) {
             showToast('Por favor, completá todos los campos.', 'error');
             return;
         }
@@ -84,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok && data.success) {
                 showToast('¡Mensaje enviado! Te responderemos pronto.', 'success');
                 form.reset();
-                if (selectField) selectField.classList.remove('has-value');
             } else {
                 showToast(data.error || 'Hubo un error. Intentá de nuevo.', 'error');
             }

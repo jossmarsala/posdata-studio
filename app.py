@@ -69,11 +69,10 @@ def contact_submit():
     # Extract and sanitize
     name    = sanitize(request.form.get('name', ''), 200)
     email   = sanitize(request.form.get('email', ''), 320)
-    subject = sanitize(request.form.get('subject', ''), 200)
     message = sanitize(request.form.get('message', ''), 5000)
 
     # Validate required fields
-    if not all([name, email, subject, message]):
+    if not all([name, email, message]):
         return jsonify({'success': False, 'error': 'Todos los campos son obligatorios.'}), 400
 
     # Validate email format
@@ -85,12 +84,11 @@ def contact_submit():
         return jsonify({'success': False, 'error': 'El mensaje es muy corto.'}), 400
 
     # Build email
-    subject_line = f'[Posdata Studio] {subject} — de {name}'
+    subject_line = f'[Posdata Studio] Consulta de {name}'
     body = f"""Nuevo mensaje desde el formulario de contacto de Posdata Studio.
 
 Nombre: {name}
 Email: {email}
-Asunto: {subject}
 
 Mensaje:
 {message}
