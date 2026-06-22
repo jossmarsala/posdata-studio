@@ -1,3 +1,31 @@
+// --- Smooth Scroll (Lenis + GSAP) ---
+const lenis = new Lenis({
+    lerp: 0.08,          // suavidad: más bajo = más inercia (0.05–0.15 es el rango ideal)
+    smoothWheel: true,
+    syncTouch: false,    // sin inercia en móvil (evita conflictos con touch)
+});
+
+gsap.ticker.add((time) => {
+    lenis.raf(time * 1000);
+});
+
+gsap.ticker.lagSmoothing(0);
+
+ScrollTrigger.scrollerProxy(document.body, {
+    scrollTop(value) {
+        if (arguments.length) {
+            lenis.scrollTo(value, { immediate: true });
+        }
+        return lenis.scroll;
+    },
+    getBoundingClientRect() {
+        return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+    }
+});
+
+lenis.on('scroll', ScrollTrigger.update);
+// ------------------------------------
+
 document.addEventListener('DOMContentLoaded', () => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -210,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrollTrigger: {
                     trigger: ".zoom-wrapper",
                     start: "top top",
-                    end: "+=150%",
+                    end: "+=100%",
                     pin: true,
                     scrub: true,
                     onLeave: () => {
@@ -235,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     z: 350,
                     transformOrigin: "center center",
                     ease: "power1.inOut",
-                    duration: 1
+                    duration: 0.8
                 })
                 .fromTo(".zoom-content .hero .hero-wrapper", {
                     scale: 0.9,
@@ -243,7 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, {
                     scale: 1,
                     ease: "power1.inOut",
-                    duration: 1
+                    duration: 0.8
                 }, "<")
                 .fromTo(".hero-visual", {
                     scale: 0.9,
@@ -256,25 +284,28 @@ document.addEventListener('DOMContentLoaded', () => {
                     xPercent: -48,
                     yPercent: -50,
                     ease: "power1.inOut",
-                    duration: 1
+                    duration: 0.8
                 }, "<")
                 .from(".hero-title", {
                     scale: 0.9,
                     transformOrigin: "center center",
                     ease: "power1.inOut",
-                    duration: 1
+                    duration: 0.8
                 }, "<")
-                .call(animateHeroTitle, null, 0.15)
+                .call(animateHeroTitle, null, 0.05)
+                // Pausa: el hero se mantiene visible un momento antes del overlay
+                .to({}, { duration: 0.3 })
+                // El overlay entra al final
                 .to(".overlay-section", {
                     y: "0%",
                     ease: "none",
-                    duration: 1
-                }, ">")
+                    duration: 0.8
+                })
                 .to([".hero-visual", ".hero-content-right", ".hero-footer-strip"], {
                     opacity: 0,
-                    duration: 0.3,
+                    duration: 0.15,
                     ease: "power1.in"
-                }, "<-0");
+                }, "<");
         }
     }
 
@@ -421,30 +452,30 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll(".dropdown__button").forEach(btn => {
             btn.addEventListener("click", (e) => {
                 const targetId = btn.getAttribute("href");
-                
+
                 if (targetId && targetId.startsWith("#")) {
                     e.preventDefault();
-                    
+
                     if (isOpen) {
                         menuBtn.click();
                     }
 
                     setTimeout(() => {
                         if (targetId === "#hero") {
-                            gsap.to(window, {duration: 1, scrollTo: {y: 0, autoKill: false}, ease: "power2.inOut"});
+                            gsap.to(window, { duration: 1, scrollTo: { y: 0, autoKill: false }, ease: "power2.inOut" });
                         } else if (targetId === "#contact") {
-                            gsap.to(window, {duration: 1, scrollTo: {y: "max", autoKill: false}, ease: "power2.inOut"});
+                            gsap.to(window, { duration: 1, scrollTo: { y: "max", autoKill: false }, ease: "power2.inOut" });
                         } else if (targetId === "#overlay-section") {
                             // Target the end of the zoom wrapper timeline where overlay is visible
                             const zoomTrigger = ScrollTrigger.getAll().find(st => st.vars.trigger === ".zoom-wrapper");
                             if (zoomTrigger) {
-                                gsap.to(window, {duration: 1, scrollTo: {y: zoomTrigger.end, autoKill: false}, ease: "power2.inOut"});
+                                gsap.to(window, { duration: 1, scrollTo: { y: zoomTrigger.end, autoKill: false }, ease: "power2.inOut" });
                             } else {
-                                gsap.to(window, {duration: 1, scrollTo: {y: targetId, autoKill: false}, ease: "power2.inOut"});
+                                gsap.to(window, { duration: 1, scrollTo: { y: targetId, autoKill: false }, ease: "power2.inOut" });
                             }
                         } else {
                             // Rely on ScrollToPlugin to offset #gallery automatically
-                            gsap.to(window, {duration: 1, scrollTo: {y: targetId, autoKill: false}, ease: "power2.inOut"});
+                            gsap.to(window, { duration: 1, scrollTo: { y: targetId, autoKill: false }, ease: "power2.inOut" });
                         }
                     }, 400);
                 }
@@ -462,23 +493,30 @@ document.addEventListener('DOMContentLoaded', () => {
             width: "100%",
             height: "100vh",
             y: "100%",
+            scale: 0.96,
             zIndex: 100,
             overflowY: "auto"
         });
 
-        // Trigger slide-up when we reach the bottom of the zoom wrapper
-        gsap.to(contactSection, {
-            y: "0%",
-            ease: "none",
+        // Smooth slide-up with scale + blur reveal
+        const contactTl = gsap.timeline({
             scrollTrigger: {
                 trigger: ".zoom-wrapper",
                 start: "bottom bottom",
-                end: "+=100%",
+                end: "+=110%",
                 pin: true,
-                scrub: true,
+                scrub: 1.2,
                 pinSpacing: true
             }
         });
+
+        contactTl
+            .to(contactSection, {
+                y: "0%",
+                scale: 1,
+                ease: "power3.out",
+                duration: 1
+            });
     }
 
 });

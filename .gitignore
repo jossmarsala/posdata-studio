@@ -29,7 +29,7 @@ node_modules/
 .DS_Store
 Thumbs.db
 
-# onfiguración de editores
+# configuración de editores
 .vscode/
 .idea/
 *.swp
@@ -37,4 +37,8 @@ Thumbs.db
 
 # backups
 *.bak
+*.bak*
 *_backup
+*.tmp
+*.temp
+*~
