@@ -14,11 +14,14 @@ class CustomCursor {
     }
 
     init() {
-        // DESACTIVA COMPLETAMENTE LOS CUSTOM CURSORS PARA CELULAR Y TABLET
+        // desactiva los custom cursors para celular y tablet
         if (window.innerWidth <= 1024 || 'ontouchstart' in window || navigator.maxTouchPoints > 0) {
             document.body.classList.remove('custom-cursor-active');
-            return; // Abort completely for mobile/tablet
+            return;
         }
+
+        document.body.classList.add('custom-cursor-active');
+        document.body.style.cursor = 'none';
 
         this.createElements();
         this.ctx.overlay = document.querySelector('.overlay-section');
@@ -80,14 +83,14 @@ class CustomCursor {
             this.ctx.mouse.x = e.clientX;
             this.ctx.mouse.y = e.clientY;
 
-            // Solo calcular hit-test cuando el overlay está visible en viewport
             if (this.ctx.overlayVisible && this.ctx.overlay) {
                 const rect = this.ctx.overlay.getBoundingClientRect();
+                const margin = 2;
                 this.ctx.isInsideOverlay = (
-                    e.clientX >= rect.left &&
-                    e.clientX <= rect.right &&
-                    e.clientY >= rect.top &&
-                    e.clientY <= rect.bottom
+                    e.clientX >= rect.left - margin &&
+                    e.clientX <= rect.right + margin &&
+                    e.clientY >= rect.top - margin &&
+                    e.clientY <= rect.bottom + margin
                 );
             } else {
                 this.ctx.isInsideOverlay = false;
@@ -137,6 +140,7 @@ class CustomCursor {
             if (pixel) pixel.classList.add('u-hidden');
 
             if (lotus) {
+                lotus.classList.remove('u-hidden');
                 lotus.style.transform = `translate(${mouse.x}px, ${mouse.y}px) translate(-50%, -50%)`;
             }
             if (textEl) {
