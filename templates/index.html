@@ -5,16 +5,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posdata Studio | Diseño Web</title>
+    <meta name="description" content="Posdata Studio — Estudio de diseño y desarrollo web. Diseñamos sitios estéticos, claros y bien pensados.">
     <link rel="icon" type="image/svg+xml"
         href="{{ url_for('static', filename='assets/images/cursor/lotus-cursor.svg') }}">
+
+    <!-- Preconnect para ScrollToPlugin CDN (única dependencia externa restante) -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Preload: imagen LCP (postcards hero) según viewport -->
+    <link rel="preload" as="image"
+        href="{{ url_for('static', filename='assets/images/postcards-zoomin.webp') }}"
+        media="(min-width: 1025px)">
+    <link rel="preload" as="image"
+        href="{{ url_for('static', filename='assets/images/postcards-zoomin-medium.webp') }}"
+        media="(min-width: 769px) and (max-width: 1024px)">
+    <link rel="preload" as="image"
+        href="{{ url_for('static', filename='assets/images/postcards-zoomin-mobile.webp') }}"
+        media="(max-width: 768px)">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
 </head>
 
 <body>
+    <!-- SVG noise filter local (reemplaza imagen HTTP externa del overlay) -->
+    <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+        <defs>
+            <filter id="noise-filter" x="0%" y="0%" width="100%" height="100%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+                <feColorMatrix type="saturate" values="0"/>
+            </filter>
+        </defs>
+    </svg>
+
     <img src="{{ url_for('static', filename='assets/images/resources/texture.webp') }}" class="global-fixed-texture"
-        alt="texture">
+        alt="" aria-hidden="true">
 
 
     <!-- Custom Cursor (Top priority) -->
@@ -89,8 +115,8 @@
                     srcset="{{ url_for('static', filename='assets/images/texture-zoomin-mobile.webp') }}">
                 <source media="(max-width: 1024px)"
                     srcset="{{ url_for('static', filename='assets/images/texture-zoomin-medium.webp') }}">
-                <img src="{{ url_for('static', filename='assets/images/texture-zoomin.png') }}" class="zoom-texture"
-                    alt="Texture Background">
+                <img src="{{ url_for('static', filename='assets/images/texture-zoomin.webp') }}" class="zoom-texture"
+                    alt="" aria-hidden="true" fetchpriority="low">
             </picture>
             <picture>
                 <source media="(max-width: 768px)"
@@ -98,7 +124,7 @@
                 <source media="(max-width: 1024px)"
                     srcset="{{ url_for('static', filename='assets/images/postcards-zoomin-medium.webp') }}">
                 <img src="{{ url_for('static', filename='assets/images/postcards-zoomin.webp') }}"
-                    class="zoom-postcards" alt="Postcards Frame">
+                    class="zoom-postcards" alt="Postcards Frame" fetchpriority="high">
             </picture>
         </div>
 
@@ -108,25 +134,25 @@
                 <div class="background-stack">
                     <div class="bg-card"><img
                             src="{{ url_for('static', filename='assets/images/mountains-polaroid.webp') }}"
-                            alt="Landscape 1"></div>
+                            alt="" loading="lazy"></div>
                     <div class="bg-card"><img
                             src="{{ url_for('static', filename='assets/images/flowers-polaroid.webp') }}"
-                            alt="Landscape 2"></div>
+                            alt="" loading="lazy"></div>
                     <div class="bg-card"><img
                             src="{{ url_for('static', filename='assets/images/bouquette-polaroid.webp') }}"
-                            alt="Landscape 3"></div>
+                            alt="" loading="lazy"></div>
                 </div>
 
                 <div class="foreground-stack">
                     <div class="fg-card active"><img
                             src="{{ url_for('static', filename='assets/images/mountains-polaroid.webp') }}"
-                            alt="Landscape 1"></div>
+                            alt="" loading="lazy"></div>
                     <div class="fg-card"><img
                             src="{{ url_for('static', filename='assets/images/flowers-polaroid.webp') }}"
-                            alt="Landscape 2"></div>
+                            alt="" loading="lazy"></div>
                     <div class="fg-card"><img
                             src="{{ url_for('static', filename='assets/images/bouquette-polaroid.webp') }}"
-                            alt="Landscape 3"></div>
+                            alt="" loading="lazy"></div>
                 </div>
 
                 <div class="tilt-hitbox"></div>
@@ -291,13 +317,12 @@
         </div>
         </div>
 
-        <script src="{{ url_for('static', filename='js/vendors/jquery.min.js') }}" defer></script>
         <script src="{{ url_for('static', filename='js/vendors/lenis.min.js') }}" defer></script>
         <script src="{{ url_for('static', filename='js/vendors/gsap.min.js') }}" defer></script>
         <script src="{{ url_for('static', filename='js/vendors/ScrollTrigger.min.js') }}" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js" defer></script>
         <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
-        <script src="{{ url_for('static', filename='js/animations.js') }}" defer></script>
+        <!-- animations.js eliminado: solo tenía gsap.registerPlugin duplicado -->
 
         <script type="module" src="{{ url_for('static', filename='js/shader.js') }}" defer></script>
         <script src="{{ url_for('static', filename='js/cursor.js') }}" defer></script>

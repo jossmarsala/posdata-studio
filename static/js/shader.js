@@ -173,7 +173,26 @@ window.addEventListener("mouseup", () => {
     shaderMaterial.uniforms.mouseDown.value = 0.0;
 });
 
+let shaderVisible = false;
+let shaderRafId = null;
+
+// Pausar el loop cuando el shader no está visible en el viewport
+const shaderObserver = new IntersectionObserver(([entry]) => {
+    shaderVisible = entry.isIntersecting;
+    if (shaderVisible && !shaderRafId) {
+        shaderRafId = requestAnimationFrame(animate);
+    }
+}, { threshold: 0.01 });
+
+if (container) {
+    shaderObserver.observe(container);
+}
+
 function animate() {
+    if (!shaderVisible) {
+        shaderRafId = null;
+        return; // Pausa el loop cuando no está visible
+    }
 
     const time = performance.now() * 0.001;
     shaderMaterial.uniforms.iTime.value = time;
@@ -185,10 +204,9 @@ function animate() {
     );
 
     renderer.render(scene, camera);
-    requestAnimationFrame(animate);
+    shaderRafId = requestAnimationFrame(animate);
 }
 
-animate();
 
 window.addEventListener("resize", () => {
     const width = window.innerWidth;

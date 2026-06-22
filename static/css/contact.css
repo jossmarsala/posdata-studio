@@ -222,18 +222,16 @@
     min-height: 120px;
 }
 
-/* Floating label */
+/* Floating label activo — usa transform en lugar de top+font-size */
 .form-field input:focus+label,
 .form-field input:not(:placeholder-shown)+label,
 .form-field textarea:focus+label,
 .form-field textarea:not(:placeholder-shown)+label,
 .form-field select:focus+label,
 .form-field.has-value label {
-    top: 0.3rem;
-    font-size: 0.7rem;
+    transform: translateY(-1.9rem) scale(0.72);
     font-style: normal;
     font-family: var(--font-sans);
-    text-transform: uppercase;
     letter-spacing: 0.12em;
     color: var(--color-bordeaux);
 }
@@ -333,16 +331,17 @@
 /* --- Toast --- */
 .contact-toast {
     position: fixed;
-    bottom: -100px;
+    /* Posición base fija; ocultado via transform (GPU compositor, sin layout) */
+    bottom: 2rem;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) translateY(calc(100% + 3rem));
     padding: 1rem 2.5rem;
     font-family: var(--font-sans);
     font-size: 0.9rem;
     letter-spacing: 0.05em;
     border-radius: 2px;
     z-index: 9000;
-    transition: bottom 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.5s ease;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.5s ease;
     opacity: 0;
     pointer-events: none;
     text-align: center;
@@ -350,10 +349,11 @@
 }
 
 .contact-toast.is-visible {
-    bottom: 2rem;
+    transform: translateX(-50%) translateY(0);
     opacity: 1;
     pointer-events: auto;
 }
+
 
 .contact-toast--success {
     background: var(--color-text);

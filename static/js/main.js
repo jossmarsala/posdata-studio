@@ -1,33 +1,33 @@
-// --- Smooth Scroll (Lenis + GSAP) ---
-const lenis = new Lenis({
-    lerp: 0.08,          // suavidad: más bajo = más inercia (0.05–0.15 es el rango ideal)
-    smoothWheel: true,
-    syncTouch: false,    // sin inercia en móvil (evita conflictos con touch)
-});
-
-gsap.ticker.add((time) => {
-    lenis.raf(time * 1000);
-});
-
-gsap.ticker.lagSmoothing(0);
-
-ScrollTrigger.scrollerProxy(document.body, {
-    scrollTop(value) {
-        if (arguments.length) {
-            lenis.scrollTo(value, { immediate: true });
-        }
-        return lenis.scroll;
-    },
-    getBoundingClientRect() {
-        return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
-    }
-});
-
-lenis.on('scroll', ScrollTrigger.update);
-// ------------------------------------
-
 document.addEventListener('DOMContentLoaded', () => {
     gsap.registerPlugin(ScrollTrigger);
+
+    // --- Smooth Scroll (Lenis + GSAP) ---
+    const lenis = new Lenis({
+        lerp: 0.08,
+        smoothWheel: true,
+        syncTouch: false,
+    });
+
+    gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+
+    ScrollTrigger.scrollerProxy(document.body, {
+        scrollTop(value) {
+            if (arguments.length) {
+                lenis.scrollTo(value, { immediate: true });
+            }
+            return lenis.scroll;
+        },
+        getBoundingClientRect() {
+            return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+        }
+    });
+
+    lenis.on('scroll', ScrollTrigger.update);
+    // ------------------------------------
 
     const header = document.querySelector('header');
 
@@ -355,7 +355,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     .to(dropdown, {
                         y: "50vh",
                         duration: 0.4,
-                        ease: "power2.out"
+                        ease: "power2.out",
+                        onStart: () => { dropdown.style.willChange = 'transform'; }
                     })
                     .from(
                         ".dropdown__section--one h1", {
@@ -389,7 +390,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     )
                     .to(
                         ".divider", {
-                        width: "100%",
+                        scaleX: 1,        /* scaleX en lugar de width — GPU compositor */
                         duration: 0.2,
                         ease: "power2.out"
                     },
@@ -428,7 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         "-=0.1"
                     )
                     .to(".divider", {
-                        width: "0%",
+                        scaleX: 0,        /* scaleX en lugar de width — GPU compositor */
                         duration: 0.4,
                         ease: "power2.in"
                     })
@@ -436,7 +437,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         gsap.to(dropdown, {
                             y: "0",
                             duration: 0.4,
-                            ease: "power2.in"
+                            ease: "power2.in",
+                            onComplete: () => { dropdown.style.willChange = 'auto'; }
                         });
                     })
                     .add(() => {

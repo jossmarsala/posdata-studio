@@ -62,25 +62,36 @@ class CustomCursor {
     }
 
     bindEvents() {
+        // IntersectionObserver para saber si el overlay está visible
+        // Evita llamar getBoundingClientRect() en cada mousemove
+        this.ctx.overlayVisible = false;
+        if (this.ctx.overlay) {
+            const overlayObserver = new IntersectionObserver(([entry]) => {
+                this.ctx.overlayVisible = entry.isIntersecting;
+                // Reset flag cuando el overlay sale del viewport
+                if (!entry.isIntersecting) {
+                    this.ctx.isInsideOverlay = false;
+                }
+            }, { threshold: 0.01 });
+            overlayObserver.observe(this.ctx.overlay);
+        }
+
         window.addEventListener('mousemove', (e) => {
             this.ctx.mouse.x = e.clientX;
             this.ctx.mouse.y = e.clientY;
 
-            let isInside = false;
-
-            if (this.ctx.overlay) {
+            // Solo calcular hit-test cuando el overlay está visible en viewport
+            if (this.ctx.overlayVisible && this.ctx.overlay) {
                 const rect = this.ctx.overlay.getBoundingClientRect();
-                if (
+                this.ctx.isInsideOverlay = (
                     e.clientX >= rect.left &&
                     e.clientX <= rect.right &&
                     e.clientY >= rect.top &&
                     e.clientY <= rect.bottom
-                ) {
-                    isInside = true;
-                }
+                );
+            } else {
+                this.ctx.isInsideOverlay = false;
             }
-
-            this.ctx.isInsideOverlay = isInside;
 
         }, { passive: true });
 

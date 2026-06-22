@@ -1,5 +1,6 @@
-import * as THREE from "https://esm.sh/three";
-import { Pane } from "https://cdn.skypack.dev/tweakpane@4.0.4";
+import * as THREE from "./vendors/three.module.js";
+/* tweakpane eliminado de producción (panel estaba oculto con display:none) */
+
 
 const particlesContainer = document.getElementById("particles");
 const particleCount = 80;
@@ -91,37 +92,10 @@ const settings = {
     autoScrollSpeed: 0.005
 };
 
-const pane = new Pane();
-const distortionFolder = pane.addFolder({ title: "Distortion" });
-distortionFolder.addBinding(settings, "maxDistortion", { min: 1.0, max: 10.0 });
-distortionFolder.addBinding(settings, "distortionSensitivity", { min: 0.1, max: 1.0 });
-distortionFolder.addBinding(settings, "distortionDecay", { min: 0.8, max: 0.99 });
-distortionFolder.addBinding(settings, "distortionSmoothing", { min: 0.01, max: 0.2 });
-distortionFolder.addBinding(settings, "distortionIntensity", { min: 0.0, max: 1.0 });
-distortionFolder.addBinding(settings, "horizontalDistortionDamping", { min: 0.0, max: 1.0 });
-distortionFolder.addBinding(settings, "momentumDistortionBoost", { min: 0.0, max: 1.0 });
-distortionFolder.addBinding(settings, "directionInfluence", { min: 0.0, max: 1.0 });
-distortionFolder.addBinding(settings, "waveAmplitudeBoost", { min: 0.0, max: 1.0 });
-distortionFolder.addBinding(settings, "directionChangeThreshold", { min: 0.0, max: 0.1 });
-distortionFolder.addBinding(settings, "directionSmoothing", { min: 0.01, max: 0.2 });
+/* Panel de debug removido de producción */
+/* Si necesitás tweakpane en desarrollo, re-agregar el import y este bloque */
 
-const controlsFolder = pane.addFolder({ title: "Controls" });
-controlsFolder.addBinding(settings, "wheelSensitivity", { min: 0.001, max: 0.05 });
-controlsFolder.addBinding(settings, "touchSensitivity", { min: 0.001, max: 0.05 });
-controlsFolder.addBinding(settings, "momentumMultiplier", { min: 0.5, max: 5.0 });
 
-const effectsFolder = pane.addFolder({ title: "Effects" });
-effectsFolder.addBinding(settings, "rotationFactor", { min: 0.0, max: 0.5 });
-effectsFolder.addBinding(settings, "animationSpeed", { min: 0.1, max: 2.0 });
-effectsFolder.addBinding(settings, "textFadeStart", { min: 0.0, max: 5.0 });
-effectsFolder.addBinding(settings, "textFadeEnd", { min: 0.0, max: 5.0 });
-effectsFolder.addBinding(settings, "textMaxBlur", { min: 0, max: 20 });
-
-distortionFolder.expanded = false;
-controlsFolder.expanded = false;
-effectsFolder.expanded = false;
-
-pane.element.style.display = 'none';
 
 // --- Slides and Titles Initialization ---
 const slides = [];
@@ -620,6 +594,9 @@ if (galleryInteractive) {
         camera.lookAt(0, 0, 0);
     };
 
+    let lastTitleUpdate = 0;
+    const TITLE_UPDATE_INTERVAL = 1000 / 30; // Throttle: actualizar títulos a 30fps, no 60fps
+
     const animate = (time) => {
         requestAnimationFrame(animate);
 
@@ -748,7 +725,12 @@ if (galleryInteractive) {
             }
         });
 
-        updateTitlePositions();
+        // Throttle: actualizar posiciones de títulos a 30fps (reduce layout thrashing)
+        if (time - lastTitleUpdate > TITLE_UPDATE_INTERVAL) {
+            updateTitlePositions();
+            lastTitleUpdate = time;
+        }
+
         renderer.render(scene, camera);
     };
 
